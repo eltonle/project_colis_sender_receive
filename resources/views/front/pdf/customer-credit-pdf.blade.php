@@ -69,7 +69,7 @@
                         </td>
                         <td>{{ date('d-m-Y',strtotime($payment['invoice']['date'])) }}</td>
                         <td>{{ $payment->paid_status}}</td>
-                        <td>{{ $payment->due_amount}}</td>
+                        <td>{{ number_format($payment->due_amount,0,' ',',')}} fcfa</td>
                         @php
                         $total_due += $payment ->due_amount;
                         @endphp
@@ -77,7 +77,7 @@
                     @endforeach
                     <tr>
                         <td colspan="4" style="text-align: right; font-weight: bold">Grand Total</td>
-                        <td>{{ $total_due }}</td>
+                        <td>{{ number_format($total_due,0,' ',',') }} fcfa</td>
                     </tr>
                 </tbody>
             </table>

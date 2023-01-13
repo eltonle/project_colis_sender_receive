@@ -30,7 +30,7 @@
         <table style="border: 1px solid #333;" width="100%">
             <thead>
                 <tr>
-                    <th colspan="2">INFORMATION DU PERSONNELLE</th>
+                    <th colspan="2">FACTURE</th>
                 </tr>
             </thead>
         </table>
@@ -45,7 +45,7 @@
                         <td width="40%">
                             <strong>
                                 <div class="col-sm-4 ">
-                                    <span class="" style="font-size: 18px">partir de</span>
+                                    <span class="" style="font-size: 18px">Expedition</span>
                                     <address>
                                         <strong>{{ $payment['customer']['nom'] }}, {{ $payment['customer']['prenom']
                                             }}.</strong><br>
@@ -60,14 +60,14 @@
                         <td width="40%">
                             <strong>
                                 <div class="col-sm-4 ">
-                                    <span class="" style="font-size: 18px">Pour</span>
+                                    <span class="" style="font-size: 18px">Destination</span>
                                     <address>
-                                        <strong>{{ $payment['receive']['nomr'] }}, {{ $payment['receive']['prenomr']
+                                        <strong>{{ $payment['receive']['nom'] }}, {{ $payment['receive']['prenom']
                                             }}.</strong><br>
-                                        {{ $payment['receive']['addressr'] }}<br>
+                                        {{ $payment['receive']['address'] }}<br>
                                         San Lorenipsum, CA 94107<br>
-                                        Phone: {{ $payment['receive']['phoner'] }}<br>
-                                        Email: {{ $payment['receive']['emailr'] }}
+                                        Phone: {{ $payment['receive']['phone'] }}<br>
+                                        Email: {{ $payment['receive']['email'] }}
                                     </address>
                                 </div>
                             </strong>
@@ -78,12 +78,14 @@
                                     <b style="font-size: 17px">Facture N0:<strong class="text-primary">#{{
                                             $invoice->invoice_no }}</strong> </b><br>
                                     <br>
-                                    <b style="font-size: 13px;">Zip ID:</b> #{{ $invoice->invoice_zip }}<br>
+                                    <b style="font-size: 13px;">Bordereau №:</b> #{{ $invoice->invoice_zip }}<br>
 
                                     {{-- <b>Order ID:</b> 4F3S8J<br> --}}
-                                    <b>Montant Du :</b> <b class="" style="color: red">{{ $payment->due_amount }}
+                                    <b>Montant Du :</b> <b class="" style="color: red">{{
+                                        number_format($payment->due_amount,0,' ',',')}}
                                     </b>fcfa<br>
-                                    <b>Montant Paye :</b> <b style="color: blue">{{ $payment->paid_amount }}</b> fcfa
+                                    <b>Montant Paye :</b> <b style="color: blue">{{
+                                        number_format($payment->paid_amount,0,' ',',')}}</b> fcfa
                                 </div>
                             </strong>
                         </td>
@@ -139,9 +141,9 @@
                             <td>{{ $details->longueur }}</td>
                             <td>{{ $details->largeur }}</td>
                             <td>{{ $details->hauteur}}</td>
-                            <td>{{ $details->unit_price }}</td>
+                            <td>{{ number_format($details->unit_price ,0,' ',',')}}</td>
                             <td>{{ $details->qty }}</td>
-                            <td>{{ $details->item_total }}</td>
+                            <td>{{ number_format($details->item_total,0,' ',',')}}</td>
                             @php
                             $total_sum += $details->item_total
                             @endphp
@@ -150,25 +152,27 @@
                         <tr>
                             <td colspan="8" style="text-align: right"><strong>Sub Total</strong>
                             </td>
-                            <td class="text-center"> <span>{{ $total_sum }}</span></td>
+                            <td class="text-center"> <span>{{ number_format($total_sum,0,' ',',')}}</span></td>
                         </tr>
                         <tr>
                             <td colspan="8" style="text-align: right"><span>Discount</span> </td>
-                            <td class="text-center"> <span>{{ $payment->discount_amount }}</span></td>
+                            <td class="text-center"> <span>{{ number_format($payment->discount_amount,0,' ',',')
+                                    }}</span></td>
                         </tr>
                         <tr>
                             <td colspan="8" style="text-align: right"><span>Montant Paye</span> </td>
-                            <td class="text-center"> <span style="background-color: #0be881">{{ $payment->paid_amount
-                                    }}</span></td>
+                            <td class="text-center"> <span style="background-color: #0be881">{{
+                                    number_format($payment->paid_amount,0,' ',',')}}</span></td>
                         </tr>
                         <tr>
                             <td colspan="8" style="text-align: right"><span>Montant due</span> </td>
-                            <td class="text-center"> <span style="background-color: #ff5e57">{{ $payment->due_amount
-                                    }}</span></td>
+                            <td class="text-center"> <span style="background-color: #ff5e57">{{
+                                    number_format($payment->due_amount,0,' ',',')}}</span></td>
                         </tr>
                         <tr>
                             <td colspan="8" style="text-align: right"><strong>Grand total</strong> </td>
-                            <td class="text-center"> <strong>{{ $payment->total_amount }}</strong></td>
+                            <td class="text-center"> <strong>{{ number_format($payment->total_amount,0,'
+                                    ',',')}}</strong></td>
                         </tr>
                     </tbody>
                 </table>

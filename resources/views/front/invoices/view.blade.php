@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h3 class="m-0 font-weight-bold">Manage Facture</h3>
+                    <h3 class="m-0 font-weight-bold">Control Facture</h3>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -64,9 +64,10 @@
                                             </td>
                                             <td>{{ date('d-m-Y',strtotime($invoice->date)) }}</td>
                                             <td>Zip_code № #{{$invoice->invoice_zip }}</td>
-                                            <td>{{ $invoice['payement']['paid_amount'] }}</td>
-                                            <td>
-                                                {{-- <div style="display: flex; align-items: center">
+                                            <td>{{ number_format($invoice['payement']['paid_amount'],0,' ',',')}} fcfa
+                                            </td>
+                                            {{-- <td>
+                                                <div style="display: flex; align-items: center">
 
 
                                                     <a href="{{ route('units.edit',$invoice->id) }}" title="edit"
@@ -83,8 +84,8 @@
                                                             data-toggle="tooltip" title='Delete'><i
                                                                 class="fa fa-trash"></i></button>
                                                     </form>
-                                                </div> --}}
-                                            </td>
+                                                </div>
+                                            </td> --}}
                                         </tr>
                                         @endforeach
 

@@ -8,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h3 class="m-0 font-weight-bold">Manage Units</h3>
+                    <h3 class="m-0 font-weight-bold">Control villes</h3>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Clients</li>
+                        <li class="breadcrumb-item active">countries</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -30,9 +30,9 @@
                     {{-- custom tabs --}}
                     <div class="card">
                         <div class="card-header">
-                            <h3> Units Lists
-                                <a href="{{ route('units.create') }}" class="btn btn-success float-right btn-sm">
-                                    <i class="fa fa-plus-circle"></i> Ajouter un conteneur
+                            <h3> Listes des villes
+                                <a href="{{ route('states.create') }}" class="btn btn-success float-right btn-sm">
+                                    <i class="fa fa-plus-circle"></i> Ajouter ville
                                 </a>
                             </h3>
                         </div><!-- /.card-header -->
@@ -42,21 +42,21 @@
                                 <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th>Numero Package</th>
-                                            <th>Name Package</th>
+                                            <th>Pays</th>
+                                            <th>Ville</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($units as $unit)
+                                        @foreach ($states as $state)
                                         <tr>
-                                            <td>{{ $unit->numero_id }}</td>
-                                            <td>{{ $unit->name }}</td>
+                                            <td>{{ $state['country']['name'] }}</td>
+                                            <td>{{ $state->name }}</td>
                                             <td>
                                                 <div style="display: flex; align-items: center">
 
 
-                                                    <a href="{{ route('units.edit',$unit->id) }}" title="edit"
+                                                    <a href="{{ route('states.edit',$state->id) }}" title="edit"
                                                         class="btn btn-sm btn-primary mr-1">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
@@ -64,7 +64,8 @@
                                                         class="btn btn-sm btn-danger">
                                                         <i class="fa fa-trash"></i>
                                                     </a> --}}
-                                                    <form method="POST" action="{{ route('units.delete', $unit->id) }}">
+                                                    <form method="POST"
+                                                        action="{{ route('states.delete', $state->id) }}">
                                                         @csrf
                                                         <input name="_method" type="hidden" value="DELETE">
                                                         <button type="submit"
@@ -81,8 +82,8 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <th>Numero Package</th>
-                                            <th>Name</th>
+                                            <th>Pays</th>
+                                            <th>Ville</th>
                                             <th>Actions</th>
                                         </tr>
                                     </tfoot>

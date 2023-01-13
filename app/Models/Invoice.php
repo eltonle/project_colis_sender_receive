@@ -18,4 +18,24 @@ class Invoice extends Model
     {
         return $this->hasMany(InvoiceDetail::class,'invoice_id','id');
     }
+
+
+    public function country()
+    {
+       return $this->belongsTo(Country::class,'country_id','id');
+    }
+    public function state()
+    {
+       return $this->belongsTo(State::class,'state_id','id');
+    }
+
+
+    public function countryr()
+    {
+       return $this->belongsTo(Country::class,'countryr_id','id');
+    }
+    public function stater()
+    {
+       return $this->belongsTo(State::class,'stater_id','id');
+    }
 }

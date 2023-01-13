@@ -51,9 +51,9 @@
                             <div class="card">
                                 <div class="card-header">
                                     <h3> Ajouter une expedition
-                                        <a href="{{ route('invoices.index') }}"
+                                        <a href="{{ route('invoices.pending.list') }}"
                                             class="btn btn-success float-right btn-sm">
-                                            <i class="fa fa-plus-circle"></i> Listes Facture
+                                            <i class="fa fa-list"></i> Listes Facture
                                         </a>
                                     </h3>
                                 </div><!-- /.card-header -->
@@ -63,8 +63,9 @@
                                         <div class="form-group col-md-2">
                                             <label> FACTURE No:</label>
                                             <input type="text" name="invoice_no" value="{{ $invoice_no }}"
-                                                id="invoice_no" class="form-control form-control-sm font-bold" readonly
-                                                style="background-color:#2c3e50; color: white">
+                                                id="invoice_no"
+                                                class="form-control form-control-sm font-bold bg-success" readonly
+                                                style="">
                                         </div>
                                         <div class="form-group col-md-6">
                                         </div>
@@ -188,6 +189,92 @@
 
                                             </div>
 
+                                            {{-- country sender and receive --}}
+                                            <div class="row mt-5">
+                                                {{-- send --}}
+                                                <div class="col-md-6">
+                                                    <div class="card card-gray">
+                                                        <div class="card-header">
+
+                                                            <h3 class="card-title">
+                                                                <i class="fas fa-globe-africa text-dark"></i>
+                                                                Expedition
+                                                            </h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <div class="form-group">
+                                                                <label>Pays d'expedition</label>
+                                                                <div class="input-group">
+                                                                    <select
+                                                                        class="form-control select2 select2-danger form-control-sm"
+                                                                        data-dropdown-css-class="select2-gray"
+                                                                        id="country_id" name="country_id">
+                                                                        <option value="">Selectionner un pays</option>
+                                                                        @foreach ($countries as $country)
+                                                                        <option value="{{ $country->id }}">{{
+                                                                            $country->name }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>Ville d'expedition</label>
+                                                                <div class="input-group">
+                                                                    <select name="state_id"
+                                                                        class="form-control select2 select2-danger form-control-sm"
+                                                                        data-dropdown-css-class="select2-gray"
+                                                                        id="state_id">
+                                                                        <option value="">Selectionner un pays</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {{-- receive --}}
+                                                <div class="col-md-6">
+                                                    <div class="card card-gray">
+                                                        <div class="card-header">
+                                                            <h3 class="card-title">
+
+                                                                <i class="fas fa-globe-africa text-dark"></i>
+                                                                Destination
+                                                            </h3>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <div class="form-group">
+                                                                <label>Pays destination</label>
+
+                                                                <div class="input-group">
+                                                                    <select
+                                                                        class="form-control select2 select2-danger form-control-sm"
+                                                                        data-dropdown-css-class="select2-gray"
+                                                                        id="countryr_id" name="countryr_id">
+                                                                        <option value="">Selectionner un pays</option>
+                                                                        @foreach ($countries as $country)
+                                                                        <option value="{{ $country->id }}">{{
+                                                                            $country->name }}</option>
+                                                                        @endforeach
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>Ville destination</label>
+
+                                                                <div class="input-group">
+                                                                    <select
+                                                                        class="form-control select2 select2-danger form-control-sm"
+                                                                        data-dropdown-css-class="select2-gray"
+                                                                        id="stater_id" name="stater_id">
+                                                                        <option value="">Selectionner un pays</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
 
                                             {{-- package --}}
                                             <div class="card-header">
@@ -323,7 +410,7 @@
                                                                             <input
                                                                                 class="form-control text-right bg-danger"
                                                                                 type="text" id="grand_total"
-                                                                                name="total_amount" value="$ 0.00"
+                                                                                name="total_amount" value="0.00  fcfa"
                                                                                 readonly>
                                                                         </td>
                                                                     </tr>
@@ -642,7 +729,44 @@
    
 </script>
 
-
+<script type="text/javascript">
+    $(function(){
+    $(document).on('change','#country_id', function() {
+        var country_id = $(this).val();
+        $.ajax({
+            url:"{{ route('get-states') }}",
+            type:"GET",
+            data:{country_id:country_id},
+            success:function(data){
+                var html = '<option value="">Selectionner une ville</option>';
+                $.each(data,function(key,v) {
+                    html +='<option value="'+v.id+'">'+v.name+'</option>';
+                });
+                $('#state_id').html(html);
+            }
+        });
+    });
+  });
+</script>
+<script type="text/javascript">
+    $(function(){
+    $(document).on('change','#countryr_id', function() {
+        var countryr_id = $(this).val();
+        $.ajax({
+            url:"{{ route('get-states-receive') }}",
+            type:"GET",
+            data:{countryr_id:countryr_id},
+            success:function(data){
+                var html = '<option value="">Selectionner une ville</option>';
+                $.each(data,function(key,v) {
+                    html +='<option value="'+v.id+'">'+v.name+'</option>';
+                });
+                $('#stater_id').html(html);
+            }
+        });
+    });
+  });
+</script>
 <!-- Page specific script -->
 <script type="text/javascript">
     $(document).ready(function(){
@@ -661,6 +785,18 @@
                 required:true,
             },
             receive_id: {
+                required:true,
+            },
+            country_id: {
+                required:true,
+            },
+            state_id: {
+                required:true,
+            },
+            countryr_id: {
+                required:true,
+            },
+            stater_id: {
                 required:true,
             },
         },

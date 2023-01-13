@@ -7,12 +7,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h3 class="m-0 font-weight-bold">Control conteneur</h3>
+                    <h3 class="m-0 font-weight-bold">Control pays</h3>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">conteneur</li>
+                        <li class="breadcrumb-item active">pays</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -29,30 +29,27 @@
                     {{-- custom tabs --}}
                     <div class="card">
                         <div class="card-header">
-                            <h3> Creer un conteneur
-                                <a href="{{ route('units.index') }}" class="btn btn-success float-right btn-sm">
-                                    <i class="fa fa-list"></i> Listes des conteneurs
+                            <h3> Edit pays
+                                <a href="#" class="btn btn-success float-right btn-sm">
+                                    <i class="fa fa-list"></i> Listes des pays
                                 </a>
                             </h3>
                         </div><!-- /.card-header -->
                         <div class="card-body">
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <form action="{{ route('units.store') }}" method="POST" id="myForm"
+                                <form action="{{ route('countries.update',$edit->id) }}" method="POST" id="myForm"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <label for="name">Nom Package</label>
-                                            <input type="text" id="name" name="name" class="form-control">
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="numero_id">Numero(Identifiant) Package</label>
-                                            <input type="text" id="numero_id" name="numero_id" class="form-control">
+                                            <label for="name">Nom pays</label>
+                                            <input type="text" id="name" name="name" value="{{ $edit->name }}"
+                                                class="form-control">
                                         </div>
 
                                         <div class="form-group col-md-6" style="padding-top: 30px">
-                                            <input type="submit" value="Enregistrer les informations"
+                                            <input type="submit" value="Enregistrer les Modifications"
                                                 class="btn btn-primary">
                                         </div>
                                     </div>
@@ -81,7 +78,7 @@
             name: {
                 required:true,
                 rangelength :[3,30]
-            }
+            },
         },
             messages: {
 

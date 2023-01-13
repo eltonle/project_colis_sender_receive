@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h3 class="m-0 font-weight-bold">Manage Facture</h3>
+                    <h3 class="m-0 font-weight-bold">Control Facture</h3>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -33,59 +33,81 @@
                             <h3> FACTURE № #{{ $invoice->invoice_no }} du {{ date('d-M-Y',strtotime($invoice->date)) }}
                                 <a href="{{ route('invoices.pending.list') }}"
                                     class="btn btn-success float-right btn-sm">
-                                    <i class="fa fa-list"></i> Liste facture en attente
+                                    <i class="fa fa-list"></i> Liste des factures
                                 </a>
                             </h3>
                         </div><!-- /.card-header -->
-                        <div class="card-body">
-                            @php
-                            $payment = App\Models\Payement::where('invoice_id',$invoice->id)->first();
-                            @endphp
-                            <table width="100%">
-                                <tbody>
-                                    <tr>
-                                        <td width="15%">
-                                            <p><span class="text-primary font-bold">INFOS EXPEDITEUR:</span></p>
-                                        </td>
-                                        <td width="10%">
-                                            <p><strong>Nom:</strong> {{ $payment['customer']['nom'] }}</p>
-                                        </td>
-                                        <td width="15%">
-                                            <p><strong>Prenom:</strong> {{ $payment['customer']['prenom'] }}</p>
-                                        </td>
-                                        <td width="15%">
-                                            <p><strong>Email:</strong> {{ $payment['customer']['email'] }}</p>
-                                        </td>
-                                        <td width="15%">
-                                            <p><strong>Address:</strong> {{ $payment['customer']['address'] }}</p>
-                                        </td>
-                                        <td width="15%">
-                                            <p><strong>Phone:</strong> {{ $payment['customer']['phone'] }}</p>
-                                        </td>
-                                    </tr>
 
-                                    <tr>
-                                        <td width="15%">
-                                            <p><span class="text-primary font-bold">INFOS RECEPTEUR:</span></p>
-                                        </td>
-                                        <td width="10%">
-                                            <p><strong>Nom:</strong> {{ $payment['receive']['nomr'] }}</p>
-                                        </td>
-                                        <td width="15%">
-                                            <p><strong>Prenom:</strong> {{ $payment['receive']['prenomr'] }}</p>
-                                        </td>
-                                        <td width="15%">
-                                            <p><strong>Email:</strong> {{ $payment['receive']['emailr'] }}</p>
-                                        </td>
-                                        <td width="15%">
-                                            <p><strong>Address:</strong> {{ $payment['receive']['addressr'] }}</p>
-                                        </td>
-                                        <td width="15%">
-                                            <p><strong>Phone:</strong> {{ $payment['receive']['phoner'] }}</p>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+
+
+                        <div class="invoice p-3 mb-3">
+                            <!-- title row -->
+                            <div class="row">
+                                <div class="col-12">
+                                    @php
+                                    $payment = App\Models\Payement::where('invoice_id',$invoice->id)->first();
+                                    @endphp
+                                    <h4>
+                                        <i class="fas fa-globe"></i> Express, Colis.
+                                        <small class="float-right">Date: {{ date('d-M-Y',strtotime($invoice->date))
+                                            }}</small>
+                                    </h4>
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                            <!-- info row -->
+                            <div class="row invoice-info">
+                                <div class="col-sm-4 invoice-col">
+                                    <span class="text-lg  font-weight-bold">Expedition</span>
+                                    <address>
+                                        <strong style="font-size: 18px">{{ $payment['customer']['nom'] }}, {{
+                                            $payment['customer']['prenom']
+                                            }}.</strong><br>
+                                        Address: {{ $payment['customer']['address'] }}<br>
+                                        <b>{{ $payment['invoice']['country']['name'] }}</b>, <b>{{
+                                            $payment['invoice']['state']['name'] }}</b><br>
+                                        Phone: {{ $payment['customer']['phone'] }}<br>
+                                        Email: {{ $payment['customer']['email'] }}
+                                    </address>
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-4 invoice-col">
+                                    <span class="text-lg  font-weight-bold">Destination</span>
+                                    <address>
+                                        <strong style="font-size: 18px">{{ $payment['receive']['nom'] }}, {{
+                                            $payment['receive']['prenom']
+                                            }}.</strong><br>
+                                        Address: {{ $payment['receive']['address'] }}<br>
+                                        <b>{{ $payment['invoice']['countryr']['name'] }}</b>, <b>{{
+                                            $payment['invoice']['stater']['name'] }}</b><br>
+                                        Phone: {{ $payment['receive']['phone'] }}<br>
+                                        Email: {{ $payment['receive']['email'] }}
+                                    </address>
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-4 invoice-col">
+                                    <b style="font-size: 17px">Facture №:<strong class="text-primary">#{{
+                                            $payment['invoice']['invoice_no'] }}</strong> </b><br>
+                                    <br>
+                                    <b>Bordereau №: {{ $payment['invoice']['invoice_zip'] }}</b><br>
+                                    <br>
+                                    {{-- <b>Order ID:</b> 4F3S8J<br> --}}
+                                    <b>Montant Paye:</b> {{
+                                    number_format($payment->paid_amount,0,' ',',') }} fcfa<br>
+                                    <b>Montant Du:</b> {{
+                                    number_format($payment->due_amount,0,' ',',') }} fcfa
+                                </div>
+                                <!-- /.col -->
+                            </div>
+
+                        </div>
+
+
+
+
+
+
+                        <div class="card-body">
                             <form action="{{ route('invoices.approval.store', $invoice->id) }}" method="post">
                                 @csrf
 
@@ -119,9 +141,9 @@
                                             <td>{{ $details->longueur }}</td>
                                             <td>{{ $details->largeur }}</td>
                                             <td>{{ $details->hauteur}}</td>
-                                            <td>{{ $details->unit_price }}</td>
+                                            <td>{{ number_format($details->unit_price,0,' ',',')}}</td>
                                             <td>{{ $details->qty }}</td>
-                                            <td>{{ $details->item_total }}</td>
+                                            <td>{{ number_format($details->item_total,0,' ',',')}} fcfa</td>
                                             @php
                                             $total_sum += $details->item_total
                                             @endphp
@@ -129,23 +151,31 @@
                                         @endforeach
                                         <tr>
                                             <td colspan="8" class="text-right"><span>Sub Total</span> </td>
-                                            <td class="text-center"> <span>{{ $total_sum }}</span></td>
+                                            <td class="text-center"> <span class="font-weight-bold">{{
+                                                    number_format($total_sum,0,' ',',') }}</span>
+                                                fcfa</td>
                                         </tr>
                                         <tr>
                                             <td colspan="8" class="text-right"><span>Discount</span> </td>
-                                            <td class="text-center"> <span>{{ $payment->discount_amount }}</span></td>
+                                            <td class="text-center"> <span class="font-weight-bold">{{
+                                                    number_format($payment->discount_amount,0,' ',',') }}</span> fcfa
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td colspan="8" class="text-right"><span>Montant Paye</span> </td>
-                                            <td class="text-center"> <span>{{ $payment->paid_amount }}</span></td>
+                                            <td class="text-center"> <span class="font-weight-bold">{{
+                                                    number_format($payment->paid_amount,0,' ',',') }}</span> fcfa</td>
                                         </tr>
                                         <tr>
                                             <td colspan="8" class="text-right"><span>Montant due</span> </td>
-                                            <td class="text-center"> <span>{{ $payment->due_amount }}</span></td>
+                                            <td class="text-center"> <span class="font-weight-bold">{{
+                                                    number_format($payment->due_amount,0,' ',',') }}</span> fcfa</td>
                                         </tr>
                                         <tr>
                                             <td colspan="8" class="text-right"><strong>Grand total</strong> </td>
-                                            <td class="text-center"> <strong>{{ $payment->total_amount }}</strong></td>
+                                            <td class="text-center"> <strong>{{ number_format($payment->total_amount,0,'
+                                                    ',',')}}</strong> fcfa
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>

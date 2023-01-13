@@ -18,6 +18,10 @@ return new class extends Migration
             $table->string('invoice_no');
             $table->string('invoice_zip');
             $table->integer('unit_id');
+            $table->integer('country_id');
+            $table->integer('state_id');
+            $table->integer('countryr_id');
+            $table->integer('stater_id');
             $table->string('status_livraison');
             $table->date('date');
             $table->longText('description')->nullable();

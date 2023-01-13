@@ -7,10 +7,12 @@ use App\Http\Controllers\Backend\UnitController;
 use App\Http\Controllers\Backend\ClientController;
 use App\Http\Controllers\Backend\ArticleController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\CountryController;
 use App\Http\Controllers\Backend\CustomerController;
 use App\Http\Controllers\Backend\DropdownController;
 use App\Http\Controllers\Backend\InvoiceController;
 use App\Http\Controllers\Backend\ReceiveController;
+use App\Http\Controllers\Backend\StateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +40,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('api/fetch-cities',[DropdownController::class,'fetchCity'])->name('cities.index');
     Route::post('api/fetch-states_r',[DropdownController::class,'fetchStates_r'])->name('states.index_r');
     Route::post('api/fetch-cities_r',[DropdownController::class,'fetchCity_r'])->name('cities.index_r');
+
+    // route ajax country
+    Route::get('/get-states',[DropdownController::class,'getStates'])->name('get-states');
+    Route::get('/get-states-receive',[DropdownController::class,'getStatesReceive'])->name('get-states-receive');
+
 
     Route::prefix('clients')->group(function(){
         Route::get('/Listes_clients',[ClientController::class,'index'])->name('clients.index');
@@ -104,6 +111,24 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/rapport/quotidien/pdf',[InvoiceController::class,'dailyReportPdf'])->name('invoices.daily.report.pdf');
         
         
+    });
+    Route::prefix('countries')->group(function(){
+        Route::get('/Listes_des_pays',[CountryController::class,'index'])->name('countries.index');
+        Route::get('/ajouter_pays',[CountryController::class,'create'])->name('countries.create');
+        Route::post('/store_country',[CountryController::class,'store'])->name('countries.store');
+        Route::get('/edit_country/{id}',[CountryController::class,'edit'])->name('countries.edit');
+        Route::post('/update_country/{id}',[CountryController::class,'update'])->name('countries.update');
+        Route::delete('/delete_country/{id}',[CountryController::class,'delete'])->name('countries.delete');
+
+    });
+    Route::prefix('states')->group(function(){
+        Route::get('/Listes_des_viles',[StateController::class,'index'])->name('states.index');
+        Route::get('/ajouter_ville',[StateController::class,'create'])->name('states.create');
+        Route::post('/store_state',[StateController::class,'store'])->name('states.store');
+        Route::get('/edit_state/{id}',[StateController::class,'edit'])->name('states.edit');
+        Route::post('/update_state/{id}',[StateController::class,'update'])->name('states.update');
+        Route::delete('/delete_state/{id}',[StateController::class,'delete'])->name('states.delete');
+
     });
     Route::prefix('categories')->group(function(){
         Route::get('/Listes-categories',[CategoryController::class,'index'])->name('categories.index');

@@ -10,6 +10,7 @@ use App\Models\Payement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Country;
 use App\Models\InvoiceDetail;
 use App\Models\PayementDetail;
 use Illuminate\Support\Facades\Auth;
@@ -24,6 +25,7 @@ class InvoiceController extends Controller
     }
     public function create()
     {
+        $data['countries'] = Country::all();
         $data['units'] = Unit::all();
         $data['customers'] = Customer::all(); 
         $data['receives'] = Receive::all();
@@ -59,6 +61,10 @@ class InvoiceController extends Controller
                $invoice->invoice_no = $request->invoice_no;
                $invoice->invoice_zip = $invoiceZip;
                $invoice ->unit_id = $request->unit_id;
+               $invoice ->country_id = $request->country_id;
+               $invoice ->state_id = $request->state_id;
+               $invoice ->countryr_id = $request->countryr_id;
+               $invoice ->stater_id = $request->stater_id;
                $invoice ->status_livraison = $request->status_livraison;
                $invoice->date = date('Y-m-d',strtotime($request->date));
                $invoice->description = $request->description ;
@@ -96,12 +102,19 @@ class InvoiceController extends Controller
                     }
                     if ($request->receive_id == '0') {
                         
-                        $receive = new Receive();
-                        $receive -> nomr = $request->nomr;
-                        $receive -> prenomr = $request->prenomr;
-                        $receive -> emailr = $request->emailr;
-                        $receive -> addressr = $request->addressr;
-                        $receive -> phoner = $request->phoner;
+                        // $receive = new Receive();
+                        // $receive -> nomr = $request->nomr;
+                        // $receive -> prenomr = $request->prenomr;
+                        // $receive -> emailr = $request->emailr;
+                        // $receive -> addressr = $request->addressr;
+                        // $receive -> phoner = $request->phoner;
+                        // $receive->save();
+                        $receive = new Customer();
+                        $receive -> nom = $request->nomr;
+                        $receive -> prenom = $request->prenomr;
+                        $receive -> email = $request->emailr;
+                        $receive -> address = $request->addressr;
+                        $receive -> phone = $request->phoner;
                         $receive->save();
                         $receive_id = $receive->id;
                     }else {

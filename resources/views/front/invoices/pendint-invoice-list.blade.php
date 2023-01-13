@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h3 class="m-0 font-weight-bold">Manage Facture</h3>
+                    <h3 class="m-0 font-weight-bold">Control Facture</h3>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -32,7 +32,7 @@
                         <div class="card-header">
                             <h3> liste des factures
                                 <a href="{{ route('invoices.create') }}" class="btn btn-success float-right ">
-                                    <i class="fa fa-plus-circle"></i> Enregistrer une expedition
+                                    <i class="fa fa-plus-circle"></i> ENREGISTRER UNE TRANSACTION
                                 </a>
                             </h3>
                         </div><!-- /.card-header -->
@@ -48,6 +48,7 @@
                                             <th>Montant </th>
                                             <th>Status colis</th>
                                             <th>Status</th>
+                                            <th>Status facture</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -67,7 +68,8 @@
                                                 $invoice['payement']['customer']['address'] }})
                                             </td>
                                             <td>{{ date('d-M-Y',strtotime($invoice->date)) }}</td>
-                                            <td>{{ $invoice['payement']['paid_amount'] }}</td>
+                                            <td>{{ number_format($invoice['payement']['paid_amount'],0,' ',',')}} fcfa
+                                            </td>
                                             <td><span class="badge badge-info">{{$invoice->status_livraison }}</span>
                                             </td>
                                             <td>
@@ -81,6 +83,22 @@
                                                     approuver</span>
                                                 @endif
                                             </td>
+                                            <td>
+                                                @if ($invoice['payement']['paid_status'] == 'partial_paid')
+                                                <span class="badge"
+                                                    style="background: #43BD00;color:white; padding: 3px;">
+                                                    partiel paid</span>
+                                                @elseif ($invoice['payement']['paid_status'] == 'full_due')
+                                                <span class="badge"
+                                                    style="background: #c23616; color:white; padding: 3px;">
+                                                    Non payer</span>
+                                                @elseif ($invoice['payement']['paid_status']=='full_paid')
+                                                <span class="badge"
+                                                    style="background: #36BEA6; color:white; padding: 3px;">
+                                                    Cash_payment</span>
+                                                @endif
+                                            </td>
+
                                             <td>
                                                 @if ($invoice->status=='0')
                                                 <div style="display: flex; align-items: center">
@@ -137,6 +155,7 @@
                                             <th>Montant </th>
                                             <th>Status colis</th>
                                             <th>Status</th>
+                                            <th>Status facture</th>
                                             <th>Actions</th>
                                         </tr>
                                     </tfoot>

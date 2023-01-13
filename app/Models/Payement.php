@@ -24,8 +24,12 @@ class Payement extends Model
     }
     public function receive()
     {
-       return $this->belongsTo(Receive::class,'receive_id','id');
+       return $this->belongsTo(Customer::class,'receive_id','id');
     }
+   //  public function receive()
+   //  {
+   //     return $this->belongsTo(Receive::class,'receive_id','id');
+   //  }
     public function invoice()
     {
        return $this->belongsTo(Invoice::class,'invoice_id','id');

@@ -24,7 +24,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h3 class="m-0 font-weight-bold">Manage Facture</h3>
+                    <h3 class="m-0 font-weight-bold">Control Facture</h3>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -48,7 +48,8 @@
                         <div class="card">
                             <div class="card-header">
                                 <h3> Ajouter une expedition
-                                    <a href="{{ route('invoices.index') }}" class="btn btn-success float-right btn-sm">
+                                    <a href="{{ route('invoices.pending.list') }}"
+                                        class="btn btn-success float-right btn-sm">
                                         <i class="fa fa-plus-circle"></i> Listes Facture
                                     </a>
                                 </h3>

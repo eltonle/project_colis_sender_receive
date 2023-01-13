@@ -34,7 +34,7 @@
                 <tbody>
                     <tr>
                         <td width="45%"></td>
-                        <td width=""><strong>RAPPORT PAYEMENT CLIENT </strong></td>
+                        <td width=""><strong>RAPPORT FACTURE PAYEMENT CLIENT </strong></td>
                         <td width="15%"></td>
                     </tr>
                 </tbody>
@@ -69,7 +69,7 @@
                         </td>
                         <td>{{ date('d-m-Y',strtotime($payment['invoice']['date'])) }}</td>
                         <td>{{ $payment->paid_status}}</td>
-                        <td>{{ $payment->paid_amount}}</td>
+                        <td>{{ number_format($payment->paid_amount,0,' ',',')}} fcfa</td>
                         @php
                         $total_paid += $payment ->paid_amount;
                         @endphp
@@ -77,7 +77,7 @@
                     @endforeach
                     <tr>
                         <td colspan="4" style="text-align: right; font-weight: bold">Grand Total</td>
-                        <td>{{ $total_paid }}</td>
+                        <td>{{ number_format($total_paid ,0,' ',',')}} fcfa</td>
                     </tr>
                 </tbody>
             </table>
