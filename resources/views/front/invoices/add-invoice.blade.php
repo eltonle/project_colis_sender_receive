@@ -149,8 +149,8 @@
                                                     <option value="">Selectionner un client</option>
                                                     @foreach ($receives as $receive)
                                                     <option value="{{ $receive->id }}">
-                                                        {{ $receive->nomr }}-({{ $receive->emailr }} - {{
-                                                        $receive->phoner }} - {{ $receive->addressr }})
+                                                        {{ $receive->nom }}-({{ $receive->email }} - {{
+                                                        $receive->phone }} - {{ $receive->address }})
                                                     </option>
                                                     @endforeach
                                                     <option value="0"> Ajouter un nouveau recepteur</option>
@@ -428,10 +428,10 @@
                                                     <select name="paid_status"
                                                         class="form-control select2 select2-danger form-control-sm"
                                                         data-dropdown-css-class="select2-danger" id="paid_status">
-                                                        <option value="">Select_Payement_Status</option>
-                                                        <option value="full_paid">Full Paid</option>
-                                                        <option value="full_due">Full Due</option>
-                                                        <option value="partial_paid">Partil Paid</option>
+                                                        <option value="">Selectionner le status de Payement</option>
+                                                        <option value="full_paid">Cash payement</option>
+                                                        <option value="full_due">Non payer</option>
+                                                        <option value="partial_paid">partiel Payement</option>
                                                     </select>
                                                     <input type="text" name="paid_amount"
                                                         class="form-control form-control-sm paid_amount"
@@ -466,6 +466,8 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
+                                                    <label for="package_id" style="font-weight:bold ">
+                                                        Description</label>
                                                     <textarea name="description" class="form-control col-md-12"
                                                         placeholder="Entrer une description">
                                                   </textarea>

@@ -80,7 +80,7 @@
                                                 @elseif ($invoice->status == '1')
                                                 <span class="badge"
                                                     style="background: #0c1561; color:white; padding: 3px;">
-                                                    approuver</span>
+                                                    valider</span>
                                                 @endif
                                             </td>
                                             <td>

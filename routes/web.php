@@ -46,18 +46,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/get-states-receive',[DropdownController::class,'getStatesReceive'])->name('get-states-receive');
 
 
-    Route::prefix('clients')->group(function(){
-        Route::get('/Listes_clients',[ClientController::class,'index'])->name('clients.index');
-        Route::get('/add_client',[ClientController::class,'create'])->name('clients.create');
-        Route::post('/store_client',[ClientController::class,'store'])->name('clients.store');
-        Route::get('/show_client/{id}',[ClientController::class,'show'])->name('clients.show');
-        Route::get('/edit_client/{id}',[ClientController::class,'edit'])->name('clients.edit');
-        Route::post('/update_client/{id}',[ClientController::class,'update'])->name('clients.update');
-        Route::delete('/delete_client/{id}',[ClientController::class,'delete'])->name('clients.delete');
-        Route::get('/print/list',[ClientController::class,'printList'])->name('clients.printList');
-        Route::get('/print/client/{id}',[ClientController::class,'printIn'])->name('clients.print');
-
-    });
+    
     Route::prefix('units')->group(function(){
         Route::get('/Listes-units',[UnitController::class,'index'])->name('units.index');
         Route::get('/add_unit',[UnitController::class,'create'])->name('units.create');
@@ -89,14 +78,7 @@ Route::group(['middleware' => 'auth'], function () {
        
     });
 
-    Route::prefix('receives')->group(function(){
-        Route::get('/Listes-des-recepteurs',[ReceiveController::class,'index'])->name('receives.index');
-        Route::get('/ajouter-un-recepteur',[ReceiveController::class,'create'])->name('receives.create');
-        Route::post('/store-recepteur',[ReceiveController::class,'store'])->name('receives.store');
-        Route::get('/edit-recepteur/{id}',[ReceiveController::class,'edit'])->name('receives.edit');
-        Route::post('/update_recepteur/{id}',[ReceiveController::class,'update'])->name('receives.update');
-        Route::delete('/delete_recepteur/{id}',[ReceiveController::class,'delete'])->name('receives.delete');
-    });
+  
     Route::prefix('invoices')->group(function(){
         Route::get('/voir_facture',[InvoiceController::class,'index'])->name('invoices.index');
         Route::get('/add_facture',[InvoiceController::class,'create'])->name('invoices.create');
@@ -130,23 +112,4 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('/delete_state/{id}',[StateController::class,'delete'])->name('states.delete');
 
     });
-    Route::prefix('categories')->group(function(){
-        Route::get('/Listes-categories',[CategoryController::class,'index'])->name('categories.index');
-        Route::get('/add_category',[CategoryController::class,'create'])->name('categories.create');
-        Route::post('/store_category',[CategorytController::class,'store'])->name('categories.store');
-        Route::get('/edit_category/{id}',[CategoryController::class,'edit'])->name('categories.edit');
-        Route::post('/update_category/{id}',[CategoryController::class,'update'])->name('categories.update');
-        Route::delete('/delete_category/{id}',[CategoryController::class,'delete'])->name('categories.delete');
-
-    });
-    Route::prefix('articles')->group(function(){
-        Route::get('/Listes-articles',[ArticleController::class,'index'])->name('articles.index');
-        Route::get('/add_article',[ArticleController::class,'create'])->name('articles.create');
-        Route::post('/store_article',[ArticletController::class,'store'])->name('articles.store');
-        Route::get('/edit_article/{id}',[ArticleController::class,'edit'])->name('articles.edit');
-        Route::post('/update_article/{id}',[ArticleController::class,'update'])->name('articles.update');
-        Route::delete('/delete_article/{id}',[ArticleController::class,'delete'])->name('articles.delete');
-
-    });
-
 }) ;

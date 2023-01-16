@@ -28,7 +28,7 @@ class InvoiceController extends Controller
         $data['countries'] = Country::all();
         $data['units'] = Unit::all();
         $data['customers'] = Customer::all(); 
-        $data['receives'] = Receive::all();
+        $data['receives'] = Customer::all(); 
         $data['date'] = date('Y-m-d');
         $invoice_data = Invoice::orderBy('id','desc')->first();
         
