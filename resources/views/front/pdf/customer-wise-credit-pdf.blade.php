@@ -33,8 +33,8 @@
             <table>
                 <tbody>
                     <tr>
-                        <td width="45%"></td>
-                        <td width=""><strong>RAPPORT FACTURE CREDIT CLIENT </strong></td>
+                        <td width="38%"></td>
+                        <td width=""><strong>RAPPORT CREDIT DU CLIENT </strong></td>
                         <td width="15%"></td>
                     </tr>
                 </tbody>
@@ -45,11 +45,11 @@
             <table border="1" width="100%">
                 <thead>
                     <tr>
-                        <th>No facture</th>
+                        <th>Récépissé </th>
                         <th>Nom du Client</th>
                         <th>Date</th>
-                        <th>Status Paid</th>
-                        <th>Montant du</th>
+                        <th>Status Paiement</th>
+                        <th style="color: red">Montant DÛ</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -58,14 +58,13 @@
                     @endphp
                     @foreach ($allData as $key => $payment)
                     <tr>
-                        <td> <span class="" style="background: #ddd; font-weight: 900">Facture № #{{
+                        <td> <span class="" style="background: #ddd; font-weight: 900">Récépissé № #{{
                                 $payment['invoice']['invoice_no']
                                 }}</span>
                         </td>
                         <td>
                             {{ $payment['customer']['nom'] }}-
-                            ( {{ $payment['customer']['phone'] }},{{
-                            $payment['customer']['address'] }})
+                            ( {{ $payment['customer']['phone'] }})
                         </td>
                         <td>{{ date('d-m-Y',strtotime($payment['invoice']['date'])) }}</td>
                         <td>{{ $payment->paid_status}}</td>

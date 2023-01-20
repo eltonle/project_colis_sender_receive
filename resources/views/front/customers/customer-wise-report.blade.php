@@ -24,11 +24,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h3 class="m-0 font-weight-bold">Manage Clients Rapport</h3>
+                    <h3 class="m-0 font-weight-bold">Rapport Clients </h3>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Tableau de Bord</a></li>
                         <li class="breadcrumb-item active">Clients</li>
                     </ol>
                 </div><!-- /.col -->
@@ -51,10 +51,11 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-12 text-center">
-                                    <label for="cc"><strong>Client Credit Report</strong></label>
+                                    <label for="cc"><strong> Rapport Client Credit</strong></label>
                                     <input type="checkbox" name="customer_wise_credit" id="cc"
-                                        value="customer_wise_credit" class="search_value">&nbsp;&nbsp;
-                                    <label for="cp"><strong>Client Payement report</strong></label>
+                                        value="customer_wise_credit"
+                                        class="search_value">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <label for="cp"><strong> Rapport Client Paiement </strong></label>
                                     <input type="checkbox" name="customer_wise_paid" id="cp" value="customer_wise_paid"
                                         class="search_value">
                                 </div>
@@ -64,11 +65,11 @@
                                     id="customerCreditForm">
                                     <div class="form-row">
                                         <div class="col-sm-8">
-                                            <label>Nom Client Credit</label>
+                                            <label>Nom de L'Expedition Credit</label>
                                             <select name="customer_id"
                                                 class="form-control select2 select2-danger form-control-sm"
                                                 data-dropdown-css-class="select2-cyan" id="">
-                                                <option value="">selectionner client</option>
+                                                <option value="">Selectionner un Expediteur</option>
                                                 @foreach ($customers as $customer)
                                                 <option value="{{ $customer->id }}">{{ $customer->nom }}-({{
                                                     $customer->phone
@@ -78,7 +79,7 @@
                                             </select>
                                         </div>
                                         <div class="col-sm-4" style="padding-top: 32px">
-                                            <button type="submit" class="btn btn-primary btn-sm">Search</button>
+                                            <button type="submit" class="btn btn-primary btn-sm">Rechercher</button>
                                         </div>
                                     </div>
                                 </form>
@@ -89,11 +90,11 @@
                                     id="customerPaidForm">
                                     <div class="form-row">
                                         <div class="col-sm-8">
-                                            <label>Nom Client Payement</label>
+                                            <label>Nom de d'Expediteur Paiement</label>
                                             <select name="customer_id"
                                                 class="form-control select2 select2-danger form-control-sm"
                                                 data-dropdown-css-class="select2-cyan" id="status_livraison">
-                                                <option value="">selectionner client</option>
+                                                <option value="">Selectionner un Expediteur</option>
                                                 @foreach ($customers as $customer)
                                                 <option value="{{ $customer->id }}">{{ $customer->nom }}-({{
                                                     $customer->phone }}-{{ $customer->address }}-{{ $customer->email
@@ -102,7 +103,7 @@
                                             </select>
                                         </div>
                                         <div class="col-sm-4" style="padding-top: 32px">
-                                            <button type="submit" class="btn btn-primary btn-sm">Search</button>
+                                            <button type="submit" class="btn btn-primary btn-sm">Rechercher</button>
                                         </div>
                                     </div>
                                 </form>

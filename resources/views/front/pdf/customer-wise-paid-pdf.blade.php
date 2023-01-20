@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Rapport Client Payement PDF</title>
+    <title>Rapport Client Paiement PDF</title>
 </head>
 
 <body>
@@ -33,8 +33,8 @@
             <table>
                 <tbody>
                     <tr>
-                        <td width="45%"></td>
-                        <td width=""><strong>RAPPORT FACTURE PAYEMENT CLIENT </strong></td>
+                        <td width="35%"></td>
+                        <td width=""><strong>RAPPORT PAIEMENT DU CLIENT </strong></td>
                         <td width="15%"></td>
                     </tr>
                 </tbody>
@@ -45,11 +45,11 @@
             <table border="1" width="100%">
                 <thead>
                     <tr>
-                        <th>No facture</th>
+                        <th>Récépissé №</th>
                         <th>Nom du Client</th>
                         <th>Date</th>
-                        <th>Status Paid</th>
-                        <th>Montant payement</th>
+                        <th>Status paiement</th>
+                        <th style="color:green;">Montant payer</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -58,18 +58,17 @@
                     @endphp
                     @foreach ($allData as $key => $payment)
                     <tr>
-                        <td> <span class="" style="background: #ddd; font-weight: 900">Facture № #{{
+                        <td> <span class="" style="background: #ddd; font-weight: 900">Récépissé № #{{
                                 $payment['invoice']['invoice_no']
                                 }}</span>
                         </td>
                         <td>
                             {{ $payment['customer']['nom'] }}-
-                            ( {{ $payment['customer']['phone'] }},{{
-                            $payment['customer']['address'] }})
+                            ( {{ $payment['customer']['phone'] }})
                         </td>
                         <td>{{ date('d-m-Y',strtotime($payment['invoice']['date'])) }}</td>
                         <td>{{ $payment->paid_status}}</td>
-                        <td>{{ number_format($payment->paid_amount ,0,' ',',')}} fcfa</td>
+                        <td>{{ number_format($payment->paid_amount ,0,' ',',')}}Fcfa</td>
                         @php
                         $total_paid += $payment ->paid_amount;
                         @endphp
@@ -77,7 +76,7 @@
                     @endforeach
                     <tr>
                         <td colspan="4" style="text-align: right; font-weight: bold">Grand Total</td>
-                        <td>{{ number_format($total_paid ,0,' ',',') }} fcfa</td>
+                        <td>{{ number_format($total_paid ,0,' ',',') }}Fcfa</td>
                     </tr>
                 </tbody>
             </table>

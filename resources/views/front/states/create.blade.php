@@ -7,12 +7,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h3 class="m-0 font-weight-bold">Control ville</h3>
+                    <h3 class="m-0 font-weight-bold">Gestions des Villes</h3>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">ville</li>
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Tableau de Bord</a></li>
+                        <li class="breadcrumb-item active">Villes</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -29,9 +29,9 @@
                     {{-- custom tabs --}}
                     <div class="card">
                         <div class="card-header">
-                            <h3> Creer ville
+                            <h3>Ajouter une Ville
                                 <a href="{{ route('states.index') }}" class="btn btn-success float-right btn-sm">
-                                    <i class="fa fa-list"></i> Listes des villes
+                                    <i class="fa fa-list"></i> LISTES DES VILLES
                                 </a>
                             </h3>
                         </div><!-- /.card-header -->
@@ -45,16 +45,16 @@
                                         <div class="form-group col-md-6">
                                             <label for="country_id">Pays associe</label>
                                             <select class="form-control select2 select2-danger" id="country_id"
-                                                data-dropdown-css-class="select2-blue" style="width: 100%;"
+                                                data-dropdown-css-class="select2-gray" style="width: 100%;"
                                                 name="country_id">
-                                                <option value="">Selectione un pays</option>
+                                                <option value="">Selectionner un pays</option>
                                                 @foreach ($countries as $country )
                                                 <option value="{{ $country->id }}">{{ $country->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label for="name">Nom ville</label>
+                                            <label for="name">Nom de la Ville</label>
                                             <input type="text" id="name" name="name"
                                                 class="form-control form-control-sm">
                                         </div>

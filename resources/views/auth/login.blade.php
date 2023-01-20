@@ -57,9 +57,8 @@
                     <div class="row align-items-center justify-content-center">
                         <div class="col-md-7">
                             <h3>Login to <strong>Express colis</strong></h3>
-                            <p class="mb-2" style="font-size: 14px; color:black">Please sign-in to your account and
-                                start the
-                                adventure.</p>
+                            <p class="mb-2" style="font-size: 14px; color:black">Veuillez vous connecter à votre compte
+                                et commencer l'aventure.</p>
                             <form method="POST" action="{{ route('login') }}">
                                 @csrf
                                 <div class="form-group first">
@@ -75,7 +74,7 @@
                                 </div>
 
                                 <div class="form-group last mb-3">
-                                    <label for="password">Password</label>
+                                    <label for="password">Mot De Pass</label>
                                     <input type="password" name="password"
                                         class="form-control @error('email') is-invalid @enderror"
                                         placeholder="Your Password" id="password">
@@ -87,20 +86,22 @@
                                 </div>
 
                                 <div class="d-flex mb-4 align-items-center">
-                                    <label class="control control--checkbox mb-0"><span class="caption">Remember
-                                            me</span>
+                                    <label class="control control--checkbox mb-0"><span class="caption">Se souvenir de
+                                            moi
+                                        </span>
                                         <input type="checkbox" name="remenber" {{ old('remember') ? 'checked' : '' }} />
                                         <div class="control__indicator"></div>
                                     </label>
-                                    <span class="ml-auto"><a href="#" class="forgot-pass">Forgot Password</a></span>
+                                    <span class="ml-auto"><a href="#" class="forgot-pass">Mot de passe oublié</a></span>
                                 </div>
 
                                 <input type="submit" value="Log In" class="btn btn-block btn-danger">
 
                             </form>
                             <div class="foo">
-                                <p class="text">You already have an account? <a href="{{ route('register') }}">Login
-                                        here</a> </p>
+                                <p class="text">Avez vous déjà un compte? <a
+                                        href="{{ route('register') }}">S'enregistrer
+                                        Ici</a> </p>
                             </div>
                         </div>
                     </div>

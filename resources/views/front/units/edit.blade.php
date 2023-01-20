@@ -7,12 +7,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h3 class="m-0 font-weight-bold">Manage Packages</h3>
+                    <h3 class="m-0 font-weight-bold">Gestions de Conteneurs</h3>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">package</li>
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Tableau de Bord</a></li>
+                        <li class="breadcrumb-item active">Conteneurs</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -29,9 +29,9 @@
                     {{-- custom tabs --}}
                     <div class="card">
                         <div class="card-header">
-                            <h3> Units Edit
-                                <a href="#" class="btn btn-success float-right btn-sm">
-                                    <i class="fa fa-list"></i> Packages Lists
+                            <h3> Editer un Conteneur
+                                <a href="{{ route('units.index') }}" class="btn btn-success float-right btn-sm">
+                                    <i class="fa fa-list"></i> LISTES DES CONTENEURS
                                 </a>
                             </h3>
                         </div><!-- /.card-header -->
@@ -43,17 +43,17 @@
                                     @csrf
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <label for="name">Package Name</label>
+                                            <label for="name"> Nom du Conteneur</label>
                                             <input type="text" id="name" name="name" value="{{ $edit->name }}"
                                                 class="form-control">
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label for="numero_id">Numero(Identifiant) Package</label>
+                                            <label for="numero_id">Numero ou Identifiant du Conteneur </label>
                                             <input type="text" id="numero_id" name="numero_id"
                                                 value="{{ $edit->numero_id }}" class="form-control">
                                         </div>
 
-                                        <div class="form-group col-md-6" style="padding-top: 30px">
+                                        <div class="form-group col-md-6">
                                             <input type="submit" value="Enregistrer les Modifications"
                                                 class="btn btn-primary">
                                         </div>

@@ -25,11 +25,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h3 class="m-0 font-weight-bold">Manage Clients</h3>
+                    <h3 class="m-0 font-weight-bold">Gestions des Clients</h3>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Tableau de Bord</a></li>
                         <li class="breadcrumb-item active">Clients</li>
                     </ol>
                 </div><!-- /.col -->
@@ -47,7 +47,7 @@
                     {{-- custom tabs --}}
                     <div class="card">
                         <div class="card-header">
-                            <h3> Edit un client
+                            <h3> Editer Client
                                 <a href="{{ route('customers.index') }}" class="btn btn-info float-right btn-sm">
                                     <i class="fa fa-list"></i> LISTES DES CLIENTS
                                 </a>

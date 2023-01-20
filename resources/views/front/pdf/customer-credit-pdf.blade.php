@@ -45,11 +45,11 @@
             <table border="1" width="100%">
                 <thead>
                     <tr>
-                        <th>No facture</th>
+                        <th> Récépissé </th>
                         <th>Nom du Client</th>
                         <th>Date</th>
-                        <th>Status Paid</th>
-                        <th>Montant du</th>
+                        <th>Status Paiement</th>
+                        <th>Montant DÛ</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -58,7 +58,7 @@
                     @endphp
                     @foreach ($allData as $key => $payment)
                     <tr>
-                        <td> <span class="" style="background: #ddd; font-weight: 900">Facture № #{{
+                        <td> <span class="" style="background: #ddd; font-weight: 900">Récépissé № #{{
                                 $payment['invoice']['invoice_no']
                                 }}</span>
                         </td>
@@ -69,7 +69,7 @@
                         </td>
                         <td>{{ date('d-m-Y',strtotime($payment['invoice']['date'])) }}</td>
                         <td>{{ $payment->paid_status}}</td>
-                        <td>{{ number_format($payment->due_amount,0,' ',',')}} fcfa</td>
+                        <td>{{ number_format($payment->due_amount,0,' ',',')}} Fcfa</td>
                         @php
                         $total_due += $payment ->due_amount;
                         @endphp
@@ -77,7 +77,7 @@
                     @endforeach
                     <tr>
                         <td colspan="4" style="text-align: right; font-weight: bold">Grand Total</td>
-                        <td>{{ number_format($total_due,0,' ',',') }} fcfa</td>
+                        <td>{{ number_format($total_due,0,' ',',') }} Fcfa</td>
                     </tr>
                 </tbody>
             </table>

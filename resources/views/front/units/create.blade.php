@@ -7,12 +7,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h3 class="m-0 font-weight-bold">Control conteneur</h3>
+                    <h3 class="m-0 font-weight-bold">Gestions des Conteneurs</h3>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">conteneur</li>
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Tableau de Bord</a></li>
+                        <li class="breadcrumb-item active">Conteneurs</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -29,9 +29,9 @@
                     {{-- custom tabs --}}
                     <div class="card">
                         <div class="card-header">
-                            <h3> Creer un conteneur
+                            <h3> Ajouter un Conteneur
                                 <a href="{{ route('units.index') }}" class="btn btn-success float-right btn-sm">
-                                    <i class="fa fa-list"></i> Listes des conteneurs
+                                    <i class="fa fa-list"></i> LISTES DES CONTENEURS
                                 </a>
                             </h3>
                         </div><!-- /.card-header -->
@@ -43,16 +43,16 @@
                                     @csrf
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <label for="name">Nom Package</label>
+                                            <label for="name">Nom du Conteneur</label>
                                             <input type="text" id="name" name="name" class="form-control">
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label for="numero_id">Numero(Identifiant) Package</label>
+                                            <label for="numero_id">Numero ou Identifiant du Conteneur</label>
                                             <input type="text" id="numero_id" name="numero_id" class="form-control">
                                         </div>
 
-                                        <div class="form-group col-md-6" style="padding-top: 30px">
-                                            <input type="submit" value="Enregistrer les informations"
+                                        <div class="form-group col-md-6">
+                                            <input type="submit" value="Enregistrer les Informations"
                                                 class="btn btn-primary">
                                         </div>
                                     </div>
@@ -81,7 +81,11 @@
             name: {
                 required:true,
                 rangelength :[3,30]
-            }
+            },
+            numero_id: {
+                required:true,
+                rangelength :[3,30]
+            },
         },
             messages: {
 

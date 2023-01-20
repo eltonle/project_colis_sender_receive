@@ -8,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h3 class="m-0 font-weight-bold">Control Facture</h3>
+                    <h3 class="m-0 font-weight-bold">Gestions des Expeditions</h3>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Facture</li>
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Tableau de Bord</a></li>
+                        <li class="breadcrumb-item active">Expedition</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -30,9 +30,9 @@
                     {{-- custom tabs --}}
                     <div class="card">
                         <div class="card-header">
-                            <h3> liste des factures
+                            <h3> LISTES DES EXPEDITIONS
                                 <a href="{{ route('invoices.create') }}" class="btn btn-success float-right ">
-                                    <i class="fa fa-plus-circle"></i> ENREGISTRER UNE TRANSACTION
+                                    <i class="fa fa-plus-circle"></i> ENREGISTRER UNE EXPEDITION
                                 </a>
                             </h3>
                         </div><!-- /.card-header -->
@@ -42,13 +42,14 @@
                                 <table id="example1" class="table table-bordered table-striped table-hover">
                                     <thead>
                                         <tr>
-                                            <th>No facture</th>
-                                            <th>Nom du Client</th>
+                                            <th>Récépissé</th>
+                                            <th>Expediteur</th>
+                                            <th> Destinataire</th>
                                             <th>Date</th>
-                                            <th>Montant </th>
-                                            <th>Status colis</th>
+                                            <th>Montant Paye </th>
+                                            <th>Status Colis</th>
                                             <th>Status</th>
-                                            <th>Status facture</th>
+                                            <th>Status Paiement</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -56,7 +57,7 @@
                                         @foreach ($allData as $key => $invoice)
                                         <tr>
                                             <td> <span class=""
-                                                    style="background: #303952;color:white; font-weight: 500; padding: 3px;">Facture
+                                                    style="color:#2962FF;font-weight: 900; padding: 2px;">Récép
                                                     №
                                                     #{{
                                                     $invoice->invoice_no
@@ -64,14 +65,36 @@
                                             </td>
                                             <td>
                                                 {{ $invoice['payement']['customer']['nom'] }}-
-                                                ( {{ $invoice['payement']['customer']['phone'] }},{{
-                                                $invoice['payement']['customer']['address'] }})
+                                                ( {{ $invoice['payement']['customer']['phone'] }})
+                                            </td>
+                                            <td>
+                                                {{ $invoice['payement']['receive']['nom'] }}-
+                                                ( {{ $invoice['payement']['receive']['phone'] }})
                                             </td>
                                             <td>{{ date('d-M-Y',strtotime($invoice->date)) }}</td>
-                                            <td>{{ number_format($invoice['payement']['paid_amount'],0,' ',',')}} fcfa
+                                            <td>{{ number_format($invoice['payement']['paid_amount'],0,' ',',')}}Fcfa
                                             </td>
-                                            <td><span class="badge badge-info">{{$invoice->status_livraison }}</span>
+                                            {{-- <td><span class="badge badge-info">{{$invoice->status_livraison
+                                                    }}</span>
+                                            </td> --}}
+
+                                            <td>
+                                                @if ($invoice->status_livraison == 'en embarcation')
+                                                <span class="badge"
+                                                    style="background: #f82302;color:white; padding: 3px;"> en
+                                                    embarcation</span>
+                                                @elseif ($invoice->status_livraison == "en cours d'expedition")
+                                                <span class="badge"
+                                                    style="background: #0c1561; color:white; padding: 3px;">
+                                                    en expedition</span>
+                                                @elseif ($invoice->status_livraison == 'livree')
+                                                <span class="badge"
+                                                    style="background: #0c1561; color:white; padding: 3px;">
+                                                    livree</span>
+                                                @endif
                                             </td>
+
+
                                             <td>
                                                 @if ($invoice->status == '0')
                                                 <span class="badge"
@@ -87,7 +110,7 @@
                                                 @if ($invoice['payement']['paid_status'] == 'partial_paid')
                                                 <span class="badge"
                                                     style="background: #43BD00;color:white; padding: 3px;">
-                                                    partiel paid</span>
+                                                    partiel</span>
                                                 @elseif ($invoice['payement']['paid_status'] == 'full_due')
                                                 <span class="badge"
                                                     style="background: #c23616; color:white; padding: 3px;">
@@ -95,7 +118,7 @@
                                                 @elseif ($invoice['payement']['paid_status']=='full_paid')
                                                 <span class="badge"
                                                     style="background: #36BEA6; color:white; padding: 3px;">
-                                                    Cash_payment</span>
+                                                    payer</span>
                                                 @endif
                                             </td>
 
@@ -149,13 +172,14 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <th>No facture</th>
-                                            <th>Nom du Client</th>
+                                            <th>Récépissé</th>
+                                            <th>Expediteur</th>
+                                            <th> Destinataire</th>
                                             <th>Date</th>
-                                            <th>Montant </th>
-                                            <th>Status colis</th>
+                                            <th>Montant Paye </th>
+                                            <th>Status Colis</th>
                                             <th>Status</th>
-                                            <th>Status facture</th>
+                                            <th>Status Paiement</th>
                                             <th>Actions</th>
                                         </tr>
                                     </tfoot>

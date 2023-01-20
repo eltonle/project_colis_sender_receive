@@ -8,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h3 class="m-0 font-weight-bold">Control Credit Clients</h3>
+                    <h3 class="m-0 font-weight-bold">Gestions Credit Clients</h3>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">clients</li>
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Tableau de Bord</a></li>
+                        <li class="breadcrumb-item active">Clients</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -30,9 +30,9 @@
                     {{-- custom tabs --}}
                     <div class="card">
                         <div class="card-header">
-                            <h3> Modifier facture les status
+                            <h3> Modifier Récépissé de Paiement
                                 <a href="{{ route('customers.credit') }}" class="btn btn-success float-right btn-sm">
-                                    <i class="fa fa-list"></i> Liste credit client
+                                    <i class="fa fa-list"></i> LISTE CREDITS CLIENTS
                                 </a>
                             </h3>
                         </div><!-- /.card-header -->
@@ -59,7 +59,7 @@
                                 <table style="border: 1px solid #333;" width="100%">
                                     <thead>
                                         <tr>
-                                            <th colspan="2">INFORMATION FACTURE</th>
+                                            <th colspan="2">INFORMATION D'EXPEDITION</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -68,10 +68,6 @@
                                     <div class="col-md-12">
                                         <table width="100%">
                                             <tr>
-                                                {{-- @php
-                                                $payment =
-                                                App\Models\Payement::where('invoice_id',$invoice->id)->first();
-                                                @endphp --}}
                                                 <td width="40%">
                                                     <strong>
                                                         <div class="col-sm-12 ">
@@ -107,7 +103,7 @@
                                                 <td width="40%">
                                                     <strong>
                                                         <div class="">
-                                                            <b style="font-size: 17px">Facture N0:<strong
+                                                            <b style="font-size: 17px">Récépissé №:<strong
                                                                     class="text-primary">#{{
                                                                     $payment['invoice']['invoice_no'] }}</strong>
                                                             </b><br>
@@ -165,9 +161,9 @@
                                                         <th>Longueur</th>
                                                         <th>Largeur</th>
                                                         <th>Hauteur</th>
-                                                        <th>Prix unite</th>
+                                                        <th>Prix Unite</th>
                                                         <th>Qty</th>
-                                                        <th>Total prix</th>
+                                                        <th>Total Prix</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -240,14 +236,14 @@
                                             </table>
                                             <div class="row mt-5">
                                                 <div class="form-group col-md-4">
-                                                    <label for="" style="font-weight:bold ">Status payment <i
+                                                    <label for="" style="font-weight:bold ">Status Paiement <i
                                                             class="fas fa-donate text-danger"></i></label>
                                                     <select name="paid_status"
                                                         class="form-control select2 select2-danger form-control-sm"
-                                                        data-dropdown-css-class="select2-danger" id="paid_status">
-                                                        <option value="">Select_Payement_Status</option>
-                                                        <option value="full_paid">Full Paid</option>
-                                                        <option value="partial_paid">Partial Paid</option>
+                                                        data-dropdown-css-class="select2-gray" id="paid_status">
+                                                        <option value="">Selectionner le status de Paiement</option>
+                                                        <option value="full_paid">Entièrement Paye</option>
+                                                        <option value="partial_paid"> Partiellement Paye</option>
                                                     </select>
                                                     <input type="text" name="paid_amount"
                                                         class="form-control form-control-sm paid_amount"
@@ -255,12 +251,26 @@
                                                         style="display:none; margin-top:5px;">
                                                 </div>
                                                 <div class="form-group col-md-4">
+                                                    <label for="" style="font-weight:bold ">Status Livraison <i
+                                                            class="fas fa-dolly-flatbed text-danger"></i></label>
+                                                    <select name="status_livraison"
+                                                        class="form-control select2 select2-danger form-control-sm"
+                                                        data-dropdown-css-class="select2-gray" id="status_livraison">
+                                                        <option value="">Selectionner le Status de Livraison</option>
+                                                        <option value="en embarcation">En Embarcation
+                                                        </option>
+                                                        <option value="en cours d'expedition">En Cours d'Expedition
+                                                        </option>
+                                                        <option value="livre">Livrée</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group col-md-4">
                                                     <label>Date</label>
                                                     <input type="date" name="date" id="date" class="form-control">
                                                 </div>
-                                                <div class="form-group col-md-3" style="margin-top: 30px">
-                                                    <button type="submit" class="btn btn-success ">valider
-                                                        l'encaissement</button>
+                                                <div class="form-group col-md-3">
+                                                    <button type="submit" class="btn btn-success ">Valider
+                                                        le Changement</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -305,6 +315,9 @@
     $('#myForm').validate({
         rules:{
             paid_status: {
+                required:true,
+            },
+            status_livraison: {
                 required:true,
             },
             date: {

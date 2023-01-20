@@ -4,7 +4,7 @@
         style="display:flex; justify-content: center; align-items: center; text-decoration: none; color: white; font-weight: bold">
         {{-- <img src="{{ asset('admin/dist/img/tof.png') }}" alt="AdminLTE Logo"
             class="brand-image img-circle elevation-3" style="opacity: .8"> --}}
-        <span class="brand-text font-weight-bold">Express colis</span>
+        <span class="brand-text font-weight-bold">Express Colis</span>
     </a>
 
     <!-- Sidebar -->
@@ -44,7 +44,7 @@
                     <a href="{{ route('home') }}" class="nav-link {{ request()->is('home') ? 'active' : '' }}">
                         <i class="nav-icon fa fa-home"></i>
                         <p>
-                            Dashboard
+                            Tableau De Bord
                             {{-- <i class="right fas fa-angle-left"></i> --}}
                         </p>
                     </a>
@@ -76,21 +76,21 @@
                             <a href="{{ route('customers.index') }}"
                                 class="nav-link {{ request()->routeIs('customers.index') || request()->routeIs('customers.create') || request()->routeIs('customers.store') || request()->routeIs('customers.delete')? 'active' : '' }}">
                                 <i class="far fas fa-long-arrow-alt-right"></i>
-                                <p>Listes des clients</p>
+                                <p>Listes des Clients</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('customers.credit') }}"
                                 class="nav-link {{ request()->routeIs('customers.credit')|| request()->routeIs('customers.edit.invoice')? 'active' : '' }}">
                                 <i class="far fas fa-long-arrow-alt-right"></i>
-                                <p>Voir credit Client</p>
+                                <p>Voir Credit Client</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('customers.paid') }}"
                                 class="nav-link {{ request()->routeIs('customers.paid')? 'active' : '' }}">
                                 <i class="far fas fa-long-arrow-alt-right"></i>
-                                <p> Voir payement Client</p>
+                                <p> Voir Payement Client</p>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -125,7 +125,7 @@
                     <a href="#" class="nav-link {{ request()->is('invoices*') ? 'active' : '' }}">
                         <i class="nav-icon 	fas fa-folder"></i>
                         <p>
-                            Gérer la facture
+                            Gestion des Expeditions
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
@@ -140,9 +140,16 @@
 
                         <li class="nav-item">
                             <a href="{{ route('invoices.pending.list') }}"
-                                class="nav-link {{ request()->routeIs('invoices.pending.list')|| request()->routeIs('invoices.create') || request()->routeIs('invoices.store') ? 'active' : '' }}">
+                                class="nav-link {{ request()->routeIs('invoices.pending.list')|| request()->routeIs('invoices.store') ? 'active' : '' }}">
                                 <i class="far fas fa-long-arrow-alt-right"></i>
-                                <p>Voir les factures</p>
+                                <p>Voir les Expeditions</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('invoices.create') }}"
+                                class="nav-link {{request()->routeIs('invoices.create') || request()->routeIs('invoices.store') ? 'active' : '' }}">
+                                <i class="far fas fa-long-arrow-alt-right"></i>
+                                <p>Ajouter une Expedition</p>
                             </a>
                         </li>
                         {{-- <li class="nav-item">
@@ -156,7 +163,7 @@
                             <a href="{{ route('invoices.daily.report') }}"
                                 class="nav-link {{ request()->routeIs('invoices.daily.report') ? 'active' : '' }}">
                                 <i class="far fas fa-long-arrow-alt-right"></i>
-                                <p>facture rapport journalier</p>
+                                <p>Rapport Expedition </p>
                             </a>
                         </li>
                     </ul>
@@ -191,15 +198,23 @@
                     <a href="#" class="nav-link {{ request()->is('units*') ? 'active' : '' }}">
                         <i class="nav-icon 	fas fa-folder"></i>
                         <p>
-                            Emballages
+                            Gestion des Conteneurs
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('units.index') }}" class="nav-link active">
+                            <a href="{{ route('units.index') }}"
+                                class="nav-link {{ request()->routeIs('units.index')||request()->routeIs('units.edit')||request()->routeIs('units.delete') ? 'active' : '' }}">
                                 <i class="far fas fa-long-arrow-alt-right"></i>
-                                <p>Listes des emballages</p>
+                                <p>Listes des Conteneurs</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('units.create') }}"
+                                class="nav-link {{ request()->routeIs('units.create') ? 'active' : '' }}">
+                                <i class="far fas fa-long-arrow-alt-right"></i>
+                                <p>Ajouter un Conteneur</p>
                             </a>
                         </li>
                     </ul>
@@ -209,82 +224,39 @@
                         class="nav-link {{ request()->is('countries*')|| request()->is('states*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-map-marker-alt"></i>
                         <p>
-                            Locations
+                            Pays & Villes
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{ route('countries.index') }}"
-                                class="nav-link {{ request()->routeIs('countries.index')||request()->routeIs('countries.create')||request()->routeIs('countries.store')||request()->routeIs('countries.update')||request()->routeIs('countries.delete') ? 'active' : '' }}">
+                                class="nav-link {{ request()->routeIs('countries.index')||request()->routeIs('countries.store')||request()->routeIs('countries.update')||request()->routeIs('countries.delete') ? 'active' : '' }}">
                                 <i class="far fas fa-long-arrow-alt-right"></i>
-                                <p>Pays</p>
+                                <p>Listes des Pays</p>
+                            </a>
+                            <a href="{{ route('countries.create') }}"
+                                class="nav-link {{request()->routeIs('countries.create') ? 'active' : '' }}">
+                                <i class="far fas fa-long-arrow-alt-right"></i>
+                                <p>Ajouter un Pays</p>
                             </a>
                         </li>
                     </ul>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{ route('states.index') }}"
-                                class="nav-link {{ request()->routeIs('states.index')||request()->routeIs('states.create')||request()->routeIs('states.store')||request()->routeIs('states.update')||request()->routeIs('states.delete') ? 'active' : '' }}">
+                                class="nav-link {{ request()->routeIs('states.index')||request()->routeIs('states.store')||request()->routeIs('states.update')||request()->routeIs('states.delete') ? 'active' : '' }}">
                                 <i class="far fas fa-long-arrow-alt-right"></i>
-                                <p>Villes</p>
+                                <p>Listes des Villes</p>
+                            </a>
+                            <a href="{{ route('states.create') }}"
+                                class="nav-link {{request()->routeIs('states.create') ? 'active' : '' }}">
+                                <i class="far fas fa-long-arrow-alt-right"></i>
+                                <p>Ajouter une Ville</p>
                             </a>
                         </li>
                     </ul>
                 </li>
-                {{-- <li class="nav-item {{ request()->is('categories*') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link ">
-                        <i class="nav-icon 	fas fa-folder"></i>
-                        <p>
-                            Categories
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('categories.index') }}" class="nav-link active">
-                                <i class="far fas fa-long-arrow-alt-right"></i>
-                                <p>Voir les categories</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li> --}}
-                {{-- <li class="nav-item {{ request()->is('articles*') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link ">
-                        <i class="nav-icon 	fas fa-folder"></i>
-                        <p>
-                            Articles
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('articles.index') }}" class="nav-link active">
-                                <i class="far fas fa-long-arrow-alt-right"></i>
-                                <p>Voir les articles</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li> --}}
-
-
-                {{-- <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
-                        <p>
-                            Simple Link
-                            <span class="right badge badge-danger">New</span>
-                        </p>
-                    </a>
-                </li> --}}
-                {{-- <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fa fa-power-off"></i>
-                        <p>
-                            Logout
-                        </p>
-                    </a>
-                </li> --}}
 
                 <li class="nav-item ">
                     <a href="#" class="nav-link ">

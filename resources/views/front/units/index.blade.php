@@ -8,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h3 class="m-0 font-weight-bold">Manage Units</h3>
+                    <h3 class="m-0 font-weight-bold"> Gestions des Conteneurs</h3>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Clients</li>
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Tableau de Bord</a></li>
+                        <li class="breadcrumb-item active">Conteneurs</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -30,9 +30,9 @@
                     {{-- custom tabs --}}
                     <div class="card">
                         <div class="card-header">
-                            <h3> Units Lists
+                            <h3> Lists des Conteneurs
                                 <a href="{{ route('units.create') }}" class="btn btn-success float-right btn-sm">
-                                    <i class="fa fa-plus-circle"></i> Ajouter un conteneur
+                                    <i class="fa fa-plus-circle"></i> AJOUTER UN CONTENEUR
                                 </a>
                             </h3>
                         </div><!-- /.card-header -->
@@ -42,8 +42,8 @@
                                 <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th>Numero Package</th>
-                                            <th>Name Package</th>
+                                            <th>Numero ou Identifiant du Conteneur</th>
+                                            <th>Nom du Conteneur</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -81,8 +81,8 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <th>Numero Package</th>
-                                            <th>Name</th>
+                                            <th>Numero ou Identifiant du Conteneur</th>
+                                            <th>Nom du Conteneur</th>
                                             <th>Actions</th>
                                         </tr>
                                     </tfoot>
@@ -125,8 +125,8 @@
          var name = $(this).data("name");
          event.preventDefault();
          swal({
-             title: `Are you sure?`,
-             text: "If you delete this, it will be gone forever.",
+            title: `Êtes-vous sûr?`,
+             text: "Si vous le supprimez, il disparaîtra pour toujours.",
              icon: "warning",
              buttons: true,
              dangerMode: true,

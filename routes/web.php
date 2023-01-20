@@ -36,7 +36,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/chart/payementgraph', [App\Http\Controllers\HomeController::class, 'chartjs'])->name('charts');
 
     // Route::get('dropdown',[DropdownController::class,'index'])->name('countries.index');
-    Route::post('api/fetch-states',[DropdownController::class,'fetchStates'])->name('states.index');
+    Route::post('api/fetch-states',[DropdownController::class,'fetchStates'])->name('');
     Route::post('api/fetch-cities',[DropdownController::class,'fetchCity'])->name('cities.index');
     Route::post('api/fetch-states_r',[DropdownController::class,'fetchStates_r'])->name('states.index_r');
     Route::post('api/fetch-cities_r',[DropdownController::class,'fetchCity_r'])->name('cities.index_r');
@@ -80,10 +80,10 @@ Route::group(['middleware' => 'auth'], function () {
 
   
     Route::prefix('invoices')->group(function(){
-        Route::get('/voir_facture',[InvoiceController::class,'index'])->name('invoices.index');
-        Route::get('/add_facture',[InvoiceController::class,'create'])->name('invoices.create');
+        // Route::get('/voir_les_expeditions',[InvoiceController::class,'index'])->name('invoices.index');
+        Route::get('/ajouter_une_expedition',[InvoiceController::class,'create'])->name('invoices.create');
         Route::post('/store_facture',[InvoiceController::class,'store'])->name('invoices.store');
-        Route::get('/en_attente',[InvoiceController::class,'pendingList'])->name('invoices.pending.list');
+        Route::get('/voir_les_expeditions',[InvoiceController::class,'pendingList'])->name('invoices.pending.list');
         Route::get('/approve/{id}',[InvoiceController::class,'approve'])->name('invoices.approve');
         Route::delete('/delete/{id}',[InvoiceController::class,'delete'])->name('invoices.delete');
         Route::post('/approve/store/{id}',[InvoiceController::class,'approvalStore'])->name('invoices.approval.store');

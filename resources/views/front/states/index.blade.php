@@ -8,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h3 class="m-0 font-weight-bold">Control villes</h3>
+                    <h3 class="m-0 font-weight-bold">Gestion des Villes</h3>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">countries</li>
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Tableau de Bord</a></li>
+                        <li class="breadcrumb-item active">Villes</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -30,9 +30,9 @@
                     {{-- custom tabs --}}
                     <div class="card">
                         <div class="card-header">
-                            <h3> Listes des villes
+                            <h3> Listes des Villes
                                 <a href="{{ route('states.create') }}" class="btn btn-success float-right btn-sm">
-                                    <i class="fa fa-plus-circle"></i> Ajouter ville
+                                    <i class="fa fa-plus-circle"></i> AJOUTER UNE VILLE
                                 </a>
                             </h3>
                         </div><!-- /.card-header -->
@@ -43,7 +43,7 @@
                                     <thead>
                                         <tr>
                                             <th>Pays</th>
-                                            <th>Ville</th>
+                                            <th>Villes</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -83,7 +83,7 @@
                                     <tfoot>
                                         <tr>
                                             <th>Pays</th>
-                                            <th>Ville</th>
+                                            <th>Villes</th>
                                             <th>Actions</th>
                                         </tr>
                                     </tfoot>
@@ -126,8 +126,8 @@
          var name = $(this).data("name");
          event.preventDefault();
          swal({
-             title: `Are you sure?`,
-             text: "If you delete this, it will be gone forever.",
+             title: `Êtes-vous sûr?`,
+             text: "Si vous le supprimez, il disparaîtra pour toujours.",
              icon: "warning",
              buttons: true,
              dangerMode: true,

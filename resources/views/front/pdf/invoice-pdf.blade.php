@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Facture PDF</title>
+    <title>Reçu PDF</title>
 </head>
 
 <body>
@@ -30,7 +30,7 @@
         <table style="border: 1px solid #333;" width="100%">
             <thead>
                 <tr>
-                    <th colspan="2">FACTURE</th>
+                    <th colspan="2"><span style="font-size: 23px">Reçu d'Expedition</span></th>
                 </tr>
             </thead>
         </table>
@@ -50,7 +50,8 @@
                                         <strong>{{ $payment['customer']['nom'] }}, {{ $payment['customer']['prenom']
                                             }}.</strong><br>
                                         {{ $payment['customer']['address'] }}<br>
-                                        San Francisco, CA 94107<br>
+                                        <b>{{ $payment['invoice']['country']['name'] }}</b>, <b>{{
+                                            $payment['invoice']['state']['name'] }}</b><br>
                                         Phone: {{ $payment['customer']['phone'] }}<br>
                                         Email: {{ $payment['customer']['email'] }}
                                     </address>
@@ -65,7 +66,8 @@
                                         <strong>{{ $payment['receive']['nom'] }}, {{ $payment['receive']['prenom']
                                             }}.</strong><br>
                                         {{ $payment['receive']['address'] }}<br>
-                                        San Lorenipsum, CA 94107<br>
+                                        <b>{{ $payment['invoice']['countryr']['name'] }}</b>, <b>{{
+                                            $payment['invoice']['stater']['name'] }}</b><br>
                                         Phone: {{ $payment['receive']['phone'] }}<br>
                                         Email: {{ $payment['receive']['email'] }}
                                     </address>
@@ -75,7 +77,7 @@
                         <td width="20%">
                             <strong>
                                 <div class="col-sm-4">
-                                    <b style="font-size: 17px">Facture N0:<strong class="text-primary">#{{
+                                    <b style="font-size: 17px">Récépissé №:<strong class="text-primary">#{{
                                             $invoice->invoice_no }}</strong> </b><br>
                                     <br>
                                     <b style="font-size: 13px;">Bordereau №:</b> #{{ $invoice->invoice_zip }}<br>
@@ -83,9 +85,9 @@
                                     {{-- <b>Order ID:</b> 4F3S8J<br> --}}
                                     <b>Montant Du :</b> <b class="" style="color: red">{{
                                         number_format($payment->due_amount,0,' ',',')}}
-                                    </b>fcfa<br>
+                                    </b>FCFA<br>
                                     <b>Montant Paye :</b> <b style="color: blue">{{
-                                        number_format($payment->paid_amount,0,' ',',')}}</b> fcfa
+                                        number_format($payment->paid_amount,0,' ',',')}}</b> FCFA
                                 </div>
                             </strong>
                         </td>
@@ -121,7 +123,7 @@
                             <th>Longueur</th>
                             <th>Largeur</th>
                             <th>Hauteur</th>
-                            <th>Prix unite</th>
+                            <th>Prix unit</th>
                             <th>Qty</th>
                             <th>Total prix</th>
                         </tr>
@@ -152,27 +154,27 @@
                         <tr>
                             <td colspan="8" style="text-align: right"><strong>Sub Total</strong>
                             </td>
-                            <td class="text-center"> <span>{{ number_format($total_sum,0,' ',',')}}</span></td>
+                            <td class="text-center"> <span>{{ number_format($total_sum,0,' ',',')}}</span>Fcfa</td>
                         </tr>
                         <tr>
                             <td colspan="8" style="text-align: right"><span>Discount</span> </td>
                             <td class="text-center"> <span>{{ number_format($payment->discount_amount,0,' ',',')
-                                    }}</span></td>
+                                    }}</span>Fcfa</td>
                         </tr>
                         <tr>
                             <td colspan="8" style="text-align: right"><span>Montant Paye</span> </td>
                             <td class="text-center"> <span style="background-color: #0be881">{{
-                                    number_format($payment->paid_amount,0,' ',',')}}</span></td>
+                                    number_format($payment->paid_amount,0,' ',',')}}</span>Fcfa</td>
                         </tr>
                         <tr>
                             <td colspan="8" style="text-align: right"><span>Montant due</span> </td>
                             <td class="text-center"> <span style="background-color: #ff5e57">{{
-                                    number_format($payment->due_amount,0,' ',',')}}</span></td>
+                                    number_format($payment->due_amount,0,' ',',')}}</span>Fcfa</td>
                         </tr>
                         <tr>
                             <td colspan="8" style="text-align: right"><strong>Grand total</strong> </td>
                             <td class="text-center"> <strong>{{ number_format($payment->total_amount,0,'
-                                    ',',')}}</strong></td>
+                                    ',',')}}</strong>Fcfa</td>
                         </tr>
                     </tbody>
                 </table>

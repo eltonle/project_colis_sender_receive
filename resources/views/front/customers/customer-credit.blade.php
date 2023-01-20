@@ -8,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h3 class="m-0 font-weight-bold">Manage Clients</h3>
+                    <h3 class="m-0 font-weight-bold">Gestions des Clients</h3>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">clients</li>
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Tableau de Bord</a></li>
+                        <li class="breadcrumb-item active">Clients</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -30,10 +30,10 @@
                     {{-- custom tabs --}}
                     <div class="card">
                         <div class="card-header">
-                            <h3> Listes de credit des clients
+                            <h3> Listes de Credit des Clients
                                 <a href="{{ route('customers.credit.pdf') }}" target="_blank"
                                     class="btn btn-success float-right btn-sm">
-                                    <i class="fa fa-download"></i> Telecharger PDF
+                                    <i class="fa fa-download"></i> TELECHARGER LA LISTE PDF
                                 </a>
                             </h3>
                         </div><!-- /.card-header -->
@@ -43,11 +43,10 @@
                                 <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th>No facture </th>
-                                            <th>Nom du client</th>
+                                            <th>Récépissé</th>
+                                            <th>Nom du Client</th>
                                             <th>Date</th>
-                                            <th>Code tranfert</th>
-                                            <th>Montant du</th>
+                                            <th>Montant DÛ</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -57,21 +56,23 @@
                                         @endphp
                                         @foreach ($allData as $key => $payment)
                                         <tr>
-                                            <td>Facture №# {{ $payment['invoice']['invoice_no'] }}</td>
+                                            <td>Récépissé №# {{ $payment['invoice']['invoice_no'] }}</td>
                                             <td>{{ $payment['customer']['nom']}}-({{ $payment['customer']['prenom']
                                                 }}-{{ $payment['customer']['phone'] }}-{{ $payment['customer']['email']
                                                 }})
                                             </td>
                                             <td>{{ date('d-m-Y',strtotime($payment['invoice']['date'])) }}</td>
-                                            <td>Zip_code № {{ $payment['invoice']['invoice_zip'] }}</td>
-                                            <td>{{ $payment->due_amount }}</td>
+                                            <td><span class="badge badge-danger">{{ number_format($payment->due_amount
+                                                    ,0,' ',',')}} Fcfa</span>
+                                            </td>
                                             <td>
                                                 <a href="{{ route('invoices.details.pdf',$payment->invoice_id) }}"
                                                     target="_blank" title="details" class="btn btn-sm btn-success mr-1">
                                                     <i class="fa fa-eye"></i>
                                                 </a>
                                                 <a href="{{ route('customers.edit.invoice',$payment->invoice_id) }}"
-                                                    target="_blank" title="edit" class="btn btn-sm btn-primary mr-1">
+                                                    target="_blank" title="modifier paiement et status du colis"
+                                                    class="btn btn-sm btn-primary mr-1">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
                                             </td>
@@ -83,11 +84,10 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <th>No facture </th>
-                                            <th>Nom du client</th>
+                                            <th>Récépissé</th>
+                                            <th>Nom du Client</th>
                                             <th>Date</th>
-                                            <th>Code tranfert</th>
-                                            <th>Montant du</th>
+                                            <th>Montant DÛ</th>
                                             <th>Actions</th>
                                         </tr>
                                     </tfoot>
@@ -95,9 +95,10 @@
                                 <table class="table table-bordered table-hover">
                                     <tbody>
                                         <tr>
-                                            <td colspan="4" style="text-align: right; font-weight: bold;">Grand Total
+                                            <td colspan="4" style="text-align: right; font-weight: bold;">
+                                                <span class="text-danger">Grand Total DÛ</span>
                                             </td>
-                                            <td><strong>{{ $total_due }} fcfa</strong></td>
+                                            <td><strong>{{ number_format($total_due ,0,' ',',')}} Fcfa</strong></td>
                                         </tr>
                                     </tbody>
                                 </table>

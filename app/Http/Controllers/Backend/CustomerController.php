@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
+use App\Models\Invoice;
 use App\Models\Payement;
 use App\Models\PayementDetail;
 use Illuminate\Http\Request;
@@ -87,8 +88,12 @@ class CustomerController extends Controller
     {
         // dd($request->all());
         if ($request->new_paid_amount<$request->amount) {
-            return redirect()->back()->with('error','Sorry! montant extreme');
+            return redirect()->back()->with('error','Sorry! montant extreme!!!');
         }else {
+
+            $invoice = Invoice::find($invoice_id);
+            $invoice ->status_livraison = $request->status_livraison;
+            $invoice->save();
             $payment = Payement::where('invoice_id', $invoice_id)->first();
             $payment_details = new PayementDetail();
             $payment->paid_status = $request->paid_status;
@@ -106,6 +111,7 @@ class CustomerController extends Controller
             $payment_details->date = date('Y-m-d',strtotime($request->date));
             // $payment_details->created_by = Auth::user()->id;
             $payment_details->save();
+
 
             return redirect()->route('customers.credit')->with('success','facture mis a jour');
         }

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Invoice;
 use Carbon\Carbon;
 use App\Models\Payement;
+use App\Models\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -26,7 +28,51 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $todayDate = Carbon::now()->format('d-m-Y');
+        $thisMonth = Carbon::now()->format('m');
+        $thisYear  = Carbon::now()->format('Y');
+       
+        //count
+        $data['thisDayPaidCount'] = Payement::whereDate('created_at',$todayDate)->count();
+        $data['thisMonthPaidCount'] = Payement::whereMonth('created_at',$thisMonth)->count();
+        $data['thisYearPaidCount'] = Payement::whereYear('created_at',$thisYear)->count();
+
+        // Remise
+        $data['thisDayDiscountSum'] = Payement::whereDate('created_at',$todayDate)->sum('discount_amount');
+        $data['thisMonthDiscountSum'] = Payement::whereMonth('created_at',$thisMonth)->sum('discount_amount');
+        $data['thisYearDiscountSum'] = Payement::whereYear('created_at',$thisYear)->sum('discount_amount');
+        // Paid
+        $data['thisDayPaidSum'] = Payement::whereDate('created_at',$todayDate)->sum('paid_amount');
+        $data['thisMonthPaidSum'] = Payement::whereMonth('created_at',$thisMonth)->sum('paid_amount');
+        $data['thisYearPaidSum'] = Payement::whereYear('created_at',$thisYear)->sum('paid_amount');
+
+        // Due_paid
+        $data['thisDayDuSum'] = Payement::whereDate('created_at',$todayDate)->sum('due_amount');
+        $data['thisMonthDuSum'] = Payement::whereMonth('created_at',$thisMonth)->sum('due_amount');
+        $data['thisYearDuSum'] = Payement::whereYear('created_at',$thisYear)->sum('due_amount');
+
+        // Total_paid
+        $data['thisDayTotalSum'] = Payement::whereDate('created_at',$todayDate)->sum('total_amount');
+        $data['thisMonthTotalSum'] = Payement::whereMonth('created_at',$thisMonth)->sum('total_amount');
+        $data['thisYearTotalSum'] = Payement::whereYear('created_at',$thisYear)->sum('total_amount');
+        
+        // nombre d'expedition de l'annee
+        $data['expeditionCountThisYear'] = Invoice::whereYear('created_at',$thisYear)->count();
+
+        // nombre de livraison du mois
+        $data['livraisonCountThisMonth'] = Invoice::whereMonth('created_at',$thisMonth)->where('status_livraison','=','livré')->count();
+
+        /// nombre de livraison de l'annee
+        $data['livraisonCountThisYear'] = Invoice::whereYear('created_at',$thisYear)->where('status_livraison','=','livré')->count();
+
+        /// nombre de conteneur
+        $data['nbrConteneur'] = Unit::whereYear('created_at',$thisYear)->count();
+
+
+        // $data['sumPaidThisMonth']=Payement::sum('paid_amount');
+
+        // dd($data);
+        return view('home',$data);
     }
 
     public function chartjs(Request $request)

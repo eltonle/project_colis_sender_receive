@@ -24,12 +24,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h3 class="m-0 font-weight-bold">Manage Facture</h3>
+                    <h3 class="m-0 font-weight-bold"> Gestions des Expeditions</h3>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Facture</li>
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Tableau de Bord</a></li>
+                        <li class="breadcrumb-item active">Expedition</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -50,10 +50,10 @@
                             {{-- custom tabs --}}
                             <div class="card">
                                 <div class="card-header">
-                                    <h3> Ajouter une expedition
+                                    <h3> Ajouter une Expedition
                                         <a href="{{ route('invoices.pending.list') }}"
                                             class="btn btn-success float-right btn-sm">
-                                            <i class="fa fa-list"></i> Listes Facture
+                                            <i class="fa fa-list"></i> LISTES DES EXPEDITIONS
                                         </a>
                                     </h3>
                                 </div><!-- /.card-header -->
@@ -61,7 +61,7 @@
                                     <!-- /.card-header -->
                                     <div class="form-row">
                                         <div class="form-group col-md-2">
-                                            <label> FACTURE No:</label>
+                                            <label> Récépissé No:</label>
                                             <input type="text" name="invoice_no" value="{{ $invoice_no }}"
                                                 id="invoice_no"
                                                 class="form-control form-control-sm font-bold bg-success" readonly
@@ -86,7 +86,7 @@
                                             <div class="card-header">
                                                 <h3><i class="fas fa-user-friends" style="color: #2c3e50"></i>
                                                     Information
-                                                    sur l'expedition:
+                                                    sur l'Expediteur:
                                                 </h3>
                                             </div>
                                             <!-- expediteur -->
@@ -94,7 +94,7 @@
                                                 <label>NOM DE L'EXPEDITEUR</label>
                                                 <select name="customer_id" id="customer_id"
                                                     class="form-control select2 select2-danger form-control-sm"
-                                                    data-dropdown-css-class="select2-danger">
+                                                    data-dropdown-css-class="select2-gray">
                                                     <option value="">Selectionner un client</option>
                                                     @foreach ($customers as $customer)
                                                     <option value="{{ $customer->id }}">
@@ -102,29 +102,29 @@
                                                         $customer->phone }} - {{ $customer->address }})
                                                     </option>
                                                     @endforeach
-                                                    <option value="0"> Ajouter un nouveau client</option>
+                                                    <option value="0"> Ajouter un Nouveau Expediteur</option>
                                                 </select>
                                             </div>
 
                                             <div class="form-row col-md-12 new_customer" style="display: none;">
                                                 <div class="form-group col-md-4">
                                                     <input type="text" name="nom" class="form-control form-control-sm"
-                                                        placeholder="Nom du client">
+                                                        placeholder="Nom du Client">
                                                 </div>
                                                 <div class="form-group col-md-4">
                                                     <input type="text" name="prenom"
                                                         class="form-control form-control-sm"
-                                                        placeholder="prenom du client">
+                                                        placeholder="Prenom du Client">
                                                 </div>
                                                 <div class="form-group col-md-4">
                                                     <input type="email" name="email"
                                                         class="form-control form-control-sm"
-                                                        placeholder="email du client">
+                                                        placeholder="Email du Client">
                                                 </div>
                                                 <div class="form-group col-md-4">
                                                     <input type="text" name="address"
                                                         class="form-control form-control-sm"
-                                                        placeholder="Address du client">
+                                                        placeholder="Address du Client">
                                                 </div>
                                                 <div class="form-group col-md-4">
                                                     <input type="tel" id="phone" name="phone"
@@ -138,22 +138,22 @@
                                             <div class="card-header">
                                                 <h3><i class="fas fa-user-friends" style="color: #2c3e50"></i>
                                                     Information
-                                                    sur la destinarion:
+                                                    sur le Destinataire:
                                                 </h3>
                                             </div>
                                             <div class="form-group col-md-12" style="margin-top: 20px">
                                                 <label>NOM DU DESTINATAIRE</label>
                                                 <select name="receive_id" id="receive_id"
                                                     class="form-control select2 select2-danger form-control-sm"
-                                                    data-dropdown-css-class="select2-danger">
-                                                    <option value="">Selectionner un client</option>
+                                                    data-dropdown-css-class="select2-gray">
+                                                    <option value="">Selectionner un Destinataire</option>
                                                     @foreach ($receives as $receive)
                                                     <option value="{{ $receive->id }}">
                                                         {{ $receive->nom }}-({{ $receive->email }} - {{
                                                         $receive->phone }} - {{ $receive->address }})
                                                     </option>
                                                     @endforeach
-                                                    <option value="0"> Ajouter un nouveau recepteur</option>
+                                                    <option value="0"> Ajouter un Nouveau Destinataire</option>
                                                 </select>
                                             </div>
 
@@ -203,13 +203,13 @@
                                                         </div>
                                                         <div class="card-body">
                                                             <div class="form-group">
-                                                                <label>Pays d'expedition</label>
+                                                                <label>Pays d'Expedition</label>
                                                                 <div class="input-group">
                                                                     <select
                                                                         class="form-control select2 select2-danger form-control-sm"
                                                                         data-dropdown-css-class="select2-gray"
                                                                         id="country_id" name="country_id">
-                                                                        <option value="">Selectionner un pays</option>
+                                                                        <option value="">Selectionner un Pays</option>
                                                                         @foreach ($countries as $country)
                                                                         <option value="{{ $country->id }}">{{
                                                                             $country->name }}</option>
@@ -218,13 +218,13 @@
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label>Ville d'expedition</label>
+                                                                <label>Ville d'Expedition</label>
                                                                 <div class="input-group">
                                                                     <select name="state_id"
                                                                         class="form-control select2 select2-danger form-control-sm"
                                                                         data-dropdown-css-class="select2-gray"
                                                                         id="state_id">
-                                                                        <option value="">Selectionner un pays</option>
+                                                                        <option value="">Selectionner une Ville</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -243,14 +243,14 @@
                                                         </div>
                                                         <div class="card-body">
                                                             <div class="form-group">
-                                                                <label>Pays destination</label>
+                                                                <label>Pays Destination</label>
 
                                                                 <div class="input-group">
                                                                     <select
                                                                         class="form-control select2 select2-danger form-control-sm"
                                                                         data-dropdown-css-class="select2-gray"
                                                                         id="countryr_id" name="countryr_id">
-                                                                        <option value="">Selectionner un pays</option>
+                                                                        <option value="">Selectionner un Pays</option>
                                                                         @foreach ($countries as $country)
                                                                         <option value="{{ $country->id }}">{{
                                                                             $country->name }}</option>
@@ -260,14 +260,14 @@
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label>Ville destination</label>
+                                                                <label>Ville Destination</label>
 
                                                                 <div class="input-group">
                                                                     <select
                                                                         class="form-control select2 select2-danger form-control-sm"
                                                                         data-dropdown-css-class="select2-gray"
                                                                         id="stater_id" name="stater_id">
-                                                                        <option value="">Selectionner un pays</option>
+                                                                        <option value="">Selectionner une Ville</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -279,14 +279,14 @@
                                             {{-- package --}}
                                             <div class="card-header">
                                                 <h3><i class="	fas fa-file-alt" style="color: #2c3e50"></i> Information
-                                                    sur le package
+                                                    sur le Colis
                                                     :
 
 
                                                     <a href="javascript:void(0)"
                                                         class="btn btn-success float-right btn-md pt-2" id="addBtn"
                                                         title="Add"><i class="fa fa-plus">
-                                                            add</i></a>
+                                                            Ajouter</i></a>
                                                 </h3>
                                             </div><!-- /.card-header -->
 
@@ -423,15 +423,15 @@
                                             </div>
                                             <div class="card-body row">
                                                 <div class="form-group col-md-4">
-                                                    <label for="" style="font-weight:bold ">Status payment <i
+                                                    <label for="" style="font-weight:bold ">Status Paiement <i
                                                             class="fas fa-donate text-danger"></i></label>
                                                     <select name="paid_status"
                                                         class="form-control select2 select2-danger form-control-sm"
                                                         data-dropdown-css-class="select2-danger" id="paid_status">
-                                                        <option value="">Selectionner le status de Payement</option>
-                                                        <option value="full_paid">Cash payement</option>
+                                                        <option value="">Selectionner le status de Paiement</option>
+                                                        <option value="full_paid">entièrement paye</option>
                                                         <option value="full_due">Non payer</option>
-                                                        <option value="partial_paid">partiel Payement</option>
+                                                        <option value="partial_paid"> Partiellement Paye</option>
                                                     </select>
                                                     <input type="text" name="paid_amount"
                                                         class="form-control form-control-sm paid_amount"
@@ -439,24 +439,25 @@
                                                         style="display:none; margin-top:5px;">
                                                 </div>
                                                 <div class="form-group col-md-4">
-                                                    <label for="" style="font-weight:bold ">Status livraison</label>
+                                                    <label for="" style="font-weight:bold ">Status Livraison <i
+                                                            class="fas fa-dolly-flatbed text-danger"></i></label>
                                                     <select name="status_livraison"
                                                         class="form-control select2 select2-danger form-control-sm"
                                                         data-dropdown-css-class="select2-danger" id="status_livraison">
-                                                        <option value="">Select_Status_livraison</option>
-                                                        <option value="en embarcation">En embarcation</option>
-                                                        <option value="en cours d'expedition">En cours d'expedition
+                                                        <option value="">Selectionner le Status de Livraison</option>
+                                                        <option value="en embarcation">En Embarcation</option>
+                                                        <option value="en cours d'expedition">En cours d'Expedition
                                                         </option>
                                                         <option value="livre">Livree</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group col-md-4">
-                                                    <label for="package_id" style="font-weight:bold ">Package
-                                                        type</label>
+                                                    <label for="package_id" style="font-weight:bold ">Type Conteneur
+                                                        <i class="fas fa-truck text-danger"></i></label>
                                                     <select name="unit_id"
                                                         class="form-control select2 select2-danger form-control-sm"
                                                         data-dropdown-css-class="select2-danger" id="package_id">
-                                                        <option value="">Select_Status_livraison</option>
+                                                        <option value="">Selectionner un Conteneur</option>
                                                         @foreach ($units as $unit )
                                                         <option value="{{ $unit->id }}">{{ $unit->name }}-({{
                                                             $unit->numero_id
@@ -468,15 +469,15 @@
                                                 <div class="form-group">
                                                     <label for="package_id" style="font-weight:bold ">
                                                         Description</label>
-                                                    <textarea name="description" class="form-control col-md-12"
-                                                        placeholder="Entrer une description">
+                                                    <textarea name="description" class="form-control col-md-12">
                                                   </textarea>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-row">
                                             <div class="form-group col-md-4">
-                                                <button type="submit" class="btn btn-dark w-100"> enregistrer </button>
+                                                <button type="submit" class="btn btn-dark w-100"> Enregistrer les
+                                                    Informations </button>
                                             </div>
 
                                             <div class="col-5"></div>

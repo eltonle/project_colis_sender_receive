@@ -24,12 +24,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h3 class="m-0 font-weight-bold">Control Facture</h3>
+                    <h3 class="m-0 font-weight-bold">Rapport d'Expediton Journalier</h3>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Facture</li>
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Tableau de Bord</a></li>
+                        <li class="breadcrumb-item active">Rapport Expedition</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -47,10 +47,10 @@
                         {{-- custom tabs --}}
                         <div class="card">
                             <div class="card-header">
-                                <h3> Ajouter une expedition
+                                <h3>
                                     <a href="{{ route('invoices.pending.list') }}"
                                         class="btn btn-success float-right btn-sm">
-                                        <i class="fa fa-plus-circle"></i> Listes Facture
+                                        <i class="fa fa-list"></i> Listes des Expeditions
                                     </a>
                                 </h3>
                             </div><!-- /.card-header -->
@@ -61,17 +61,17 @@
 
                                     <div class="form-row">
                                         <div class="form-group col-md-4">
-                                            <label>Date debut</label>
+                                            <label>Date Debut</label>
                                             <input type="date" name="start_date" id="start_date"
                                                 class="form-control datepicker " placeholder="YYY-MM-DD">
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label>Date fin</label>
+                                            <label>Date Fin</label>
                                             <input type="date" name="end_date" id="end_date"
                                                 class="form-control datepicker " placeholder="YYY-MM-DD">
                                         </div>
                                         <div class="form-group col-md-1" style="padding-top: 32px">
-                                            <button type="submit" class="btn btn-success">rechercher</button>
+                                            <button type="submit" class="btn btn-success">Rechercher</button>
                                         </div>
                                     </div>
                                 </form>

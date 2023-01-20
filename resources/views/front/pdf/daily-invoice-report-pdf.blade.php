@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Rapport quotidien PDF</title>
+    <title>Rapport Quotidien PDF</title>
 </head>
 
 <body>
@@ -45,11 +45,11 @@
             <table border="1" width="100%">
                 <thead>
                     <tr>
-                        <th>No facture</th>
+                        <th>Récépissé</th>
                         <th>Nom du Client</th>
                         <th>Date</th>
-                        <th>Status Paid</th>
-                        <th>Montant</th>
+                        <th>Status Paiement</th>
+                        <th>Montant paye</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -58,26 +58,25 @@
                     @endphp
                     @foreach ($allData as $key => $invoice)
                     <tr>
-                        <td> <span class="" style="background: #ddd; font-weight: 900">Facture № #{{
+                        <td> <span class="" style="background: #ddd; font-weight: 900">Récépissé № #{{
                                 $invoice->invoice_no
                                 }}</span>
                         </td>
                         <td>
                             {{ $invoice['payement']['customer']['nom'] }}-
-                            ( {{ $invoice['payement']['customer']['phone'] }},{{
-                            $invoice['payement']['customer']['address'] }})
+                            ( {{ $invoice['payement']['customer']['phone'] }})
                         </td>
                         <td>{{ date('d-m-Y',strtotime($invoice->date)) }}</td>
                         <td>{{ $invoice['payement']['paid_status'] }}</td>
-                        <td>{{ number_format($invoice['payement']['paid_amount'] ,0,' ',',') }} fcfa</td>
+                        <td>{{ number_format($invoice['payement']['paid_amount'] ,0,' ',',') }}Fcfa</td>
                         @php
-                        $total_sum += $invoice['payement']['total_amount']
+                        $total_sum += $invoice['payement']['paid_amount']
                         @endphp
                     </tr>
                     @endforeach
                     <tr>
                         <td colspan="4" style="text-align: right">Grand Total</td>
-                        <td>{{ number_format( $total_sum,0,' ',',')}} fcfa</td>
+                        <td>{{ number_format( $total_sum,0,' ',',')}}Fcfa</td>
                     </tr>
                 </tbody>
             </table>

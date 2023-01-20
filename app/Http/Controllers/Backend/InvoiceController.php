@@ -18,11 +18,11 @@ use PDF;
 
 class InvoiceController extends Controller
 {
-    public function index()
-    {
-        $allData = Invoice::orderBy('date','desc')->orderBy('id','desc')->where('status', '1')->get();
-        return view('front.invoices.view',compact('allData'));
-    }
+    // public function index()
+    // {
+    //     $allData = Invoice::orderBy('date','desc')->orderBy('id','desc')->where('status', '1')->get();
+    //     return view('front.invoices.view',compact('allData'));
+    // }
     public function create()
     {
         $data['countries'] = Country::all();

@@ -56,14 +56,13 @@
                     <div class="row align-items-center justify-content-center">
                         <div class="col-md-12">
                             <h3>Register to <strong>Express colis</strong></h3>
-                            <p class="mb-2" style="font-size: 14px; color:black">Please create an account and
-                                start the
-                                adventure.</p>
+                            <p class="mb-2" style="font-size: 14px; color:black">Veuillez créer un compte et commencer
+                                l'aventure.</p>
                             <form method="POST" action="{{ route('register') }}">
                                 @csrf
                                 <div class="row">
                                     <div class="form-group first col-md-6">
-                                        <label for="lastname" style="font-style: italic">Last name <span
+                                        <label for="lastname" style="font-style: italic">Nom <span
                                                 style="color:red;">*</span></label>
                                         <input type="text" name="lastname"
                                             class="form-control @error('lastname') is-invalid @enderror" placeholder=""
@@ -75,7 +74,7 @@
                                         @enderror
                                     </div>
                                     <div class="form-group first col-md-6">
-                                        <label for="firstname" style="font-style: italic">First name <span
+                                        <label for="firstname" style="font-style: italic">Prenom <span
                                                 style="color:red;">*</span></label>
                                         <input type="text" name="firstname"
                                             class="form-control @error('firstname') is-invalid @enderror" placeholder=""
@@ -101,7 +100,7 @@
                                         @enderror
                                     </div>
                                     <div class="form-group first col-md-6">
-                                        <label for="phone" style="font-style: italic">Phone number <span
+                                        <label for="phone" style="font-style: italic">Numero Telephone <span
                                                 style="color:red;">*</span> </label>
                                         <input type="tel" name="phone"
                                             class="form-control @error('phone') is-invalid @enderror" placeholder=""
@@ -115,7 +114,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="form-group first col-md-6">
-                                        <label for="password" style="font-style: italic">Password<span
+                                        <label for="password" style="font-style: italic">Mot De Pass<span
                                                 style="color:red;">*</span></label>
                                         <input type="password" name="password"
                                             class="form-control @error('password') is-invalid @enderror " placeholder=""
@@ -127,63 +126,22 @@
                                         @enderror
                                     </div>
                                     <div class="form-group first col-md-6">
-                                        <label for="password-confirm" style="font-style: italic">password comfirmation
+                                        <label for="password-confirm" style="font-style: italic">confirmation du mot de
+                                            passe
                                             <span style="color:red;">*</span></label>
                                         <input type="password" name="password_confirmation" class="form-control"
                                             placeholder="" id="password-confirm" value="{{ old('email') }}">
 
                                     </div>
                                 </div>
-                                {{-- <div class="form-group first col-md-5">
-                                    <label for="email">Email</label>
-                                    <input type="text" name="email"
-                                        class="form-control @error('email') is-invalid @enderror"
-                                        placeholder="email@gmail.com" id="email" value="{{ old('email') }}">
-                                    @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group first col-md-5">
-                                    <label for="email">Email</label>
-                                    <input type="text" name="email"
-                                        class="form-control @error('email') is-invalid @enderror"
-                                        placeholder="email@gmail.com" id="email" value="{{ old('email') }}">
-                                    @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
 
-                                <div class="form-group last mb-3">
-                                    <label for="password">Password</label>
-                                    <input type="password" name="password"
-                                        class="form-control @error('email') is-invalid @enderror"
-                                        placeholder="Your Password" id="password">
-                                    @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
 
-                                <div class="d-flex mb-4 align-items-center">
-                                    <label class="control control--checkbox mb-0"><span class="caption">Remember
-                                            me</span>
-                                        <input type="checkbox" name="remenber" {{ old('remember') ? 'checked' : '' }} />
-                                        <div class="control__indicator"></div>
-                                    </label>
-                                    <span class="ml-auto"><a href="#" class="forgot-pass">Forgot Password</a></span>
-                                </div> --}}
-
-                                <input type="submit" value="registration" class="btn btn-block btn-danger">
+                                <input type="submit" value="S'enregistrer" class="btn btn-block btn-danger">
 
                             </form>
                             <div class="foo">
-                                <p class="text">You already have an account? <a href="{{ route('login') }}">Login
-                                        here</a> </p>
+                                <p class="text">
+                                    Avez vous déjà un compte? <a href="{{ route('login') }}">Connectez vous Ici</a> </p>
                             </div>
                         </div>
                     </div>

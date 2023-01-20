@@ -7,19 +7,19 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h4 class="m-0 font-weight-bold">Dashboard</h4>
+                    <h4 class="m-0 font-weight-bold">Tableau de Bord</h4>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">dashboard</li>
+                        <li class="breadcrumb-item"><a href="#">Tableau de Bord</a></li>
+                        {{-- <li class="breadcrumb-item active">dashboard</li> --}}
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
-
+    <hr>
     <!-- Main content -->
     <div class="content">
         <div class="container-fluid">
@@ -28,9 +28,9 @@
                     <!-- small box -->
                     <div class="small-box bg-info">
                         <div class="inner">
-                            <h3>150</h3>
+                            <h4>{{ $expeditionCountThisYear }}</h4>
 
-                            <p>New Orders</p>
+                            <p>Expeditions de l'Année</p>
                         </div>
                     </div>
                 </div>
@@ -39,9 +39,9 @@
                     <!-- small box -->
                     <div class="small-box bg-success">
                         <div class="inner">
-                            <h3>53<sup style="font-size: 20px">%</sup></h3>
+                            <h4>{{ $livraisonCountThisYear }}</h4>
 
-                            <p>Bounce Rate</p>
+                            <p>Livraisons de l'Année</p>
                         </div>
                     </div>
                 </div>
@@ -50,9 +50,9 @@
                     <!-- small box -->
                     <div class="small-box bg-warning">
                         <div class="inner">
-                            <h3>44</h3>
+                            <h4>{{ $livraisonCountThisMonth }}</h4>
 
-                            <p>User Registrations</p>
+                            <p>Livraisons du Mois</p>
                         </div>
                     </div>
                 </div>
@@ -61,26 +61,188 @@
                     <!-- small box -->
                     <div class="small-box bg-danger">
                         <div class="inner">
-                            <h3>65</h3>
+                            <h4>{{ $nbrConteneur }}</h4>
 
-                            <p>Unique Visitors</p>
+                            <p>Nombre de Conteneurs </p>
                         </div>
                     </div>
                 </div>
                 <!-- ./col -->
+                <hr>
             </div>
-            <!-- /.row -->
-            <div class="row" style="margin-top: ">
+            <div class="card dark-mode">
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-sm-3 col-6">
+                            <div class="description-block border-right">
+                                {{-- <span class="description-percentage text-success">
+                                    <i class="fas fa-caret-up"></i>
+                                    17%</span> --}}
+                                <h5 class="description-header">{{ number_format( $thisYearDuSum,0,'
+                                    ',',') }} Fcfa</h5> <br>
+                                <span class="description-text">TOTAL DÛ DE L'ANNEE</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-3 col-6">
+                            <div class="description-block border-right">
+                                {{-- <span class="description-percentage text-warning"><i class="fas fa-caret-left"></i>
+                                    0%</span> --}}
+                                <h5 class="description-header">{{ number_format( $thisYearPaidSum,0,'
+                                    ',',') }} Fcfa</h5> <br>
+                                <span class="description-text">TOTAL PAIEMENT DE L'ANNEE</span>
+                            </div>
+                            <!-- /.description-block -->Û
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-3 col-6">
+                            <div class="description-block border-right">
+                                {{-- <span class="description-percentage text-success"><i class="fas fa-caret-up"></i>
+                                    20%</span> --}}
+                                <h5 class="description-header">{{ number_format( $thisYearDiscountSum,0,'
+                                    ',',') }} Fcfa</h5> <br>
+                                <span class="description-text">TOTAL REMISE DE L'ANNEE</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-3 col-6">
+                            <div class="description-block">
+                                {{-- <span class="description-percentage text-danger"><i class="fas fa-caret-down"></i>
+                                    18%</span> --}}
+                                <h5 class="description-header">{{ number_format( $thisYearTotalSum,0,'
+                                    ',',') }} Fcfa</h5> <br>
+                                <span class="description-text">GRAND TOTAL DE L'ANNEE</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <hr>
+            <div class="card">
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-sm-3 col-6">
+                            <div class="description-block border-right">
+                                {{-- <span class="description-percentage text-success">
+                                    <i class="fas fa-caret-up"></i>
+                                    17%</span> --}}
+                                <h5 class="description-header">{{ number_format( $thisMonthDuSum,0,'
+                                    ',',')}} fcfa</h5><br>
+                                <span class="description-text">TOTAL DÛ DU MOIS</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-3 col-6">
+                            <div class="description-block border-right">
+                                {{-- <span class="description-percentage text-warning"><i class="fas fa-caret-left"></i>
+                                    0%</span> --}}
+                                <h5 class="description-header">{{ number_format( $thisMonthPaidSum,0,'
+                                    ',',') }} fcfa</h5><br>
+                                <span class="description-text">TOTAL PAIEMENT DU MOIS</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-3 col-6">
+                            <div class="description-block border-right">
+                                {{-- <span class="description-percentage text-success"><i class="fas fa-caret-up"></i>
+                                    20%</span> --}}
+                                <h5 class="description-header">{{ number_format( $thisMonthDiscountSum,0,'
+                                    ',',') }} fcfa</h5><br>
+                                <span class="description-text">TOTAL DE REMISE DU MOIS</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-3 col-6">
+                            <div class="description-block">
+                                {{-- <span class="description-percentage text-danger"><i class="fas fa-caret-down"></i>
+                                    18%</span> --}}
+                                <h5 class="description-header">{{ number_format( $thisMonthTotalSum,0,'
+                                    ',',') }} fcfa</h5><br>
+                                <span class="description-text">GRAND TOTAL DU MOIS </span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <hr>
+
+
+            <div class="card dark-mode">
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-sm-3 col-6">
+                            <div class="description-block border-right">
+                                {{-- <span class="description-percentage text-success">
+                                    <i class="fas fa-caret-up"></i>
+                                    17%</span> --}}
+                                <h5 class="description-header">{{ number_format( $thisDayDuSum,0,'
+                                    ',',')}} Fcfa</h5><br>
+                                <span class="description-text">TOTAL DÛ DE LA JOURNEE</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-3 col-6">
+                            <div class="description-block border-right">
+                                {{-- <span class="description-percentage text-warning"><i class="fas fa-caret-left"></i>
+                                    0%</span> --}}
+                                <h5 class="description-header">{{ number_format( $thisDayPaidSum,0,'
+                                    ',',') }} Fcfa</h5><br>
+                                <span class="description-text">TOTAL PAIEMENT DE LA JOURNEE</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-3 col-6">
+                            <div class="description-block border-right">
+                                {{-- <span class="description-percentage text-success"><i class="fas fa-caret-up"></i>
+                                    20%</span> --}}
+                                <h5 class="description-header">{{ number_format( $thisDayDiscountSum,0,'
+                                    ',',') }} Fcfa</h5><br>
+                                <span class="description-text">TOTAL DE REMISE DE LA JOURNEE</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-3 col-6">
+                            <div class="description-block">
+                                {{-- <span class="description-percentage text-danger"><i class="fas fa-caret-down"></i>
+                                    18%</span> --}}
+                                <h5 class="description-header">{{ number_format( $thisDayTotalSum,0,'
+                                    ',',') }} Fcfa</h5><br>
+                                <span class="description-text">GRAND TOTAL DE LA JOURNEE </span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <hr>
+            <div class="row" style="margin-top: 30px;">
                 <div>
                     <div>
                         <div class="btn-group" role="group" aria-label="basic exemple">
-                            <button type="button" data-group="day" class="btn btn-sm btn-light">Day</button>
-                            <button type="button" data-group="week" class="btn btn-sm btn-light">Week</button>
-                            <button type="button" data-group="month" class="btn btn-sm btn-light">Month</button>
-                            <button type="button" data-group="year" class="btn btn-sm btn-light">Year</button>
+                            <button type="button" data-group="day" class="btn btn-sm btn-dark">Jour</button>
+                            <button type="button" data-group="week" class="btn btn-sm btn-dark">La semaine</button>
+                            <button type="button" data-group="month" class="btn btn-sm btn-dark">
+                                Mois</button>
+                            <button type="button" data-group="year" class="btn btn-sm btn-dark">Année</button>
                         </div>
                     </div>
-                    <canvas id="myChart" width="600" height="200"></canvas>
+                    <canvas id="myChart" w="100%" h="50%"></canvas>
                 </div>
             </div>
         </div><!-- /.container-fluid -->
