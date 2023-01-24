@@ -232,7 +232,7 @@
             </div>
             <hr>
             <div class="row" style="margin-top: 30px;">
-                <div>
+                <div class="col-md-12">
                     <div>
                         <div class="btn-group" role="group" aria-label="basic exemple">
                             <button type="button" data-group="day" class="btn btn-sm btn-dark">Jour</button>
@@ -245,6 +245,44 @@
                     <canvas id="myChart" w="100%" h="50%"></canvas>
                 </div>
             </div>
+
+            <!-- /.modal -->
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-lg">
+                Launch Large Modal
+            </button>
+            <div class="modal fade" id="modal-lg">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Large Modal</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>One fine body&hellip;</p>
+                            <div class="card-header">
+                                <h3> Modifier Récépissé de Paiement
+                                    <a href="{{ route('customers.credit') }}"
+                                        class="btn btn-success float-right btn-sm">
+                                        <i class="fa fa-list"></i> LISTE CREDITS CLIENTS
+                                    </a>
+                                </h3>
+                            </div><!-- /.card-header -->
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+
+
+
         </div><!-- /.container-fluid -->
     </div>
     <!-- /.content -->

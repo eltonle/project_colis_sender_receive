@@ -74,9 +74,16 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{ route('customers.index') }}"
-                                class="nav-link {{ request()->routeIs('customers.index') || request()->routeIs('customers.create') || request()->routeIs('customers.store') || request()->routeIs('customers.delete')? 'active' : '' }}">
+                                class="nav-link {{ request()->routeIs('customers.index') || request()->routeIs('customers.store') || request()->routeIs('customers.delete')? 'active' : '' }}">
                                 <i class="far fas fa-long-arrow-alt-right"></i>
                                 <p>Listes des Clients</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('customers.index') }}"
+                                class="nav-link {{  request()->routeIs('customers.create') ? 'active' : '' }}">
+                                <i class="far fas fa-long-arrow-alt-right"></i>
+                                <p>Ajouter un Client </p>
                             </a>
                         </li>
                         <li class="nav-item">

@@ -31,7 +31,8 @@
                     <div class="card">
                         <div class="card-header">
                             <h3> Lists des Conteneurs
-                                <a href="{{ route('units.create') }}" class="btn btn-success float-right btn-sm">
+                                <a href="{{ route('units.create') }}" class="btn  float-right btn-sm"
+                                    style="background: #563DEA;color: #fff">
                                     <i class="fa fa-plus-circle"></i> AJOUTER UN CONTENEUR
                                 </a>
                             </h3>

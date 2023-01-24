@@ -51,8 +51,8 @@
                             <div class="card">
                                 <div class="card-header">
                                     <h3> Ajouter une Expedition
-                                        <a href="{{ route('invoices.pending.list') }}"
-                                            class="btn btn-success float-right btn-sm">
+                                        <a href="{{ route('invoices.pending.list') }}" class="btn float-right btn-sm"
+                                            style="background: #563DEA;color: #fff">
                                             <i class="fa fa-list"></i> LISTES DES EXPEDITIONS
                                         </a>
                                     </h3>
@@ -63,9 +63,8 @@
                                         <div class="form-group col-md-2">
                                             <label> Récépissé No:</label>
                                             <input type="text" name="invoice_no" value="{{ $invoice_no }}"
-                                                id="invoice_no"
-                                                class="form-control form-control-sm font-bold bg-success" readonly
-                                                style="">
+                                                id="invoice_no" class="form-control form-control-sm font-bold" readonly
+                                                style="background: #2962FF;color: #fff">
                                         </div>
                                         <div class="form-group col-md-6">
                                         </div>
@@ -73,7 +72,8 @@
                                         <div class="form-group col-md-4">
                                             <label>Date</label>
                                             <input type="date" name="date" id="date" value="{{ $date }}"
-                                                class="form-control datepicker form-control-sm" placeholder="YYY-MM-DD">
+                                                class="form-control datepicker form-control-sm" placeholder="YYY-MM-DD"
+                                                readonly>
                                         </div>
                                     </div>
                                     <!-- /.card-body -->
@@ -283,9 +283,9 @@
                                                     :
 
 
-                                                    <a href="javascript:void(0)"
-                                                        class="btn btn-success float-right btn-md pt-2" id="addBtn"
-                                                        title="Add"><i class="fa fa-plus">
+                                                    <a href="javascript:void(0)" class="btn float-right btn-md pt-2"
+                                                        id="addBtn" title="Ajouter"
+                                                        style="background: #2962FF;color: #fff"><i class="fa fa-plus">
                                                             Ajouter</i></a>
                                                 </h3>
                                             </div><!-- /.card-header -->

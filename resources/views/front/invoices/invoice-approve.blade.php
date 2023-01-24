@@ -180,7 +180,7 @@
                                     </tbody>
                                 </table>
 
-                                <button type="submit" class="btn btn-success">Valider la facture</button>
+                                <button type="submit" class="btn btn-success">Valider les Données</button>
                             </form>
                         </div>
                     </div>

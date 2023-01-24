@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Controllers\Controller;
-use App\Models\Customer;
-use App\Models\Invoice;
-use App\Models\Payement;
-use App\Models\PayementDetail;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use PDF;
+use App\Models\Invoice;
+use App\Models\Customer;
+use App\Models\Payement;
+use Illuminate\Http\Request;
+use App\Models\PayementDetail;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
 
 class CustomerController extends Controller
 {
@@ -84,16 +85,16 @@ class CustomerController extends Controller
         $payment = Payement::where('invoice_id', $invoice_id)->first();
         return view('front.customers.edit-invoice',compact('payment'));
     }
-    public function updateInvoice(Request $request,$invoice_id)
+    public function updateInvoice(Request $request)
     {
-        // dd($request->all());
-        if ($request->new_paid_amount<$request->amount) {
+        
+        if ($request->new_paid_amount < $request->paid_amount) {
             return redirect()->back()->with('error','Sorry! montant extreme!!!');
-        }else {
-
-            $invoice = Invoice::find($invoice_id);
-            $invoice ->status_livraison = $request->status_livraison;
-            $invoice->save();
+        }else { 
+            $invoice_id = Invoice::find($request->invoice_id)->id;
+            // dd($invoice_id);
+            // $invoice ->status_livraison = $request->status_livraison;
+            // $invoice->save();
             $payment = Payement::where('invoice_id', $invoice_id)->first();
             $payment_details = new PayementDetail();
             $payment->paid_status = $request->paid_status;
@@ -113,7 +114,7 @@ class CustomerController extends Controller
             $payment_details->save();
 
 
-            return redirect()->route('customers.credit')->with('success','facture mis a jour');
+            return redirect()->route('invoices.pending.list')->with('success','Paiement Ajouter');
         }
     }
 
@@ -126,6 +127,13 @@ class CustomerController extends Controller
     }
 
 
+    public function paidCustomerModal($invoice_id)
+    {
+        // $allData = Payement::where('paid_status','!=', 'full_due')->get();
+        // return view('front.customers.customer-paid',compact('allData'));
+        $paid = PayementDetail::where('invoice_id', $invoice_id)->get();
+          return Response::json($paid);
+    }
     public function paidCustomer()
     {
         $allData = Payement::where('paid_status','!=', 'full_due')->get();

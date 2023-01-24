@@ -155,6 +155,17 @@ class InvoiceController extends Controller
          return redirect()->route('invoices.pending.list')->with('succes', 'enregistrer avec success');
     }
 
+    public function updateStatus(Request $request)
+    {
+    //   dd($request->all());
+      $invoice = Invoice::find($request->invoice_id);
+            // dd($invoice_id);
+            $invoice ->status_livraison = $request->status_livraison;
+            $invoice->save();
+            
+         return redirect()->route('invoices.pending.list')->with('succes', 'Status modifier avec  success');
+    }
+
     public function pendingList()
     {
         $allData = Invoice::orderBy('date','desc')->orderBy('id','desc')->get();
@@ -203,7 +214,7 @@ class InvoiceController extends Controller
         return view('front.invoices.daily-invoice-report');
     }
 
-    public function dailyReportPdf(Request $request)
+    public function dailyReportPdf(Request $request) 
     {
         $data['date'] = date('d-M-Y');
         $sdate = date('Y-m-d',strtotime($request->start_date));

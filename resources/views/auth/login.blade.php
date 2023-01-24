@@ -74,7 +74,7 @@
                                 </div>
 
                                 <div class="form-group last mb-3">
-                                    <label for="password">Mot De Pass</label>
+                                    <label for="password">Mot de Pass</label>
                                     <input type="password" name="password"
                                         class="form-control @error('email') is-invalid @enderror"
                                         placeholder="Your Password" id="password">

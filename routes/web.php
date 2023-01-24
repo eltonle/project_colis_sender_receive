@@ -67,10 +67,13 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/credit/client',[CustomerController::class,'creditCustomer'])->name('customers.credit');
         Route::get('/credit/client/pdf',[CustomerController::class,'creditCustomerPdf'])->name('customers.credit.pdf');
         Route::get('/facture/edit/{invoice_id}',[CustomerController::class,'editInvoice'])->name('customers.edit.invoice');
-        Route::post('facturer/update/{invoice_id}',[CustomerController::class,'updateInvoice'])->name('customers.update.invoice');
+        // Route::post('facturer/update/{invoice_id}',[CustomerController::class,'updateInvoice'])->name('customers.update.invoice');
+        Route::post('facturer/update',[CustomerController::class,'updateInvoice'])->name('customers.update.invoice');
         Route::get('facturer/details/pdf/{invoice_id}',[CustomerController::class,'invoiceDetailsPdf'])->name('invoices.details.pdf');
        
         Route::get('/payement/client',[CustomerController::class,'paidCustomer'])->name('customers.paid');
+        // Show modal
+        Route::get('/showpayement/client/{invoice_id}',[CustomerController::class,'paidCustomerModal'])->name('customers.paid_modal');
         Route::get('/payement/client/pdf',[CustomerController::class,'paidCustomerPdf'])->name('customers.paid.pdf');
         Route::get('/rapport/client/',[CustomerController::class,'customerWiseReport'])->name('customers.wise.report');
         Route::get('/rapport/client/credit/rapport',[CustomerController::class,'customerWiseCredit'])->name('customers.wise.credit.report');
@@ -80,7 +83,7 @@ Route::group(['middleware' => 'auth'], function () {
 
   
     Route::prefix('invoices')->group(function(){
-        // Route::get('/voir_les_expeditions',[InvoiceController::class,'index'])->name('invoices.index');
+        Route::post('/modifier_status',[InvoiceController::class,'updateStatus'])->name('invoices.updateStatus');
         Route::get('/ajouter_une_expedition',[InvoiceController::class,'create'])->name('invoices.create');
         Route::post('/store_facture',[InvoiceController::class,'store'])->name('invoices.store');
         Route::get('/voir_les_expeditions',[InvoiceController::class,'pendingList'])->name('invoices.pending.list');

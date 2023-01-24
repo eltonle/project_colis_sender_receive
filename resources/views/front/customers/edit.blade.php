@@ -48,7 +48,8 @@
                     <div class="card">
                         <div class="card-header">
                             <h3> Editer Client
-                                <a href="{{ route('customers.index') }}" class="btn btn-info float-right btn-sm">
+                                <a href="{{ route('customers.index') }}" class="btn float-right btn-sm"
+                                    style="background: #563DEA;color: #fff">
                                     <i class="fa fa-list"></i> LISTES DES CLIENTS
                                 </a>
                             </h3>
@@ -93,7 +94,8 @@
                                             <span id="error-msg" class="hide error1"></span>
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <input type="submit" value="ENREGISTRER" class="btn btn-info">
+                                            <input type="submit" value="ENREGISTRER" class="btn"
+                                                style="background: #563DEA;color: #fff">
                                         </div>
                                     </div>
 
