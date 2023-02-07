@@ -4,6 +4,10 @@
 <script src="{{ asset('admin/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
 <!-- Bootstrap 4 -->
 <script src="{{ asset('admin/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<!-- SweetAlert2 -->
+<script src="{{ asset('admin/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+<!-- Toastr -->
+<script src="{{ asset('admin/plugins/toastr/toastr.min.js') }}"></script>
 <!-- date-range-picker -->
 <script src="{{ asset('admin/plugins/daterangepicker/daterangepicker.js') }}"></script>
 <script src="{{ asset('admin/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js') }}"></script>
@@ -42,6 +46,6 @@
 <!-- link validation jquery -->
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <!-- link toast notification -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script> --}}
 {{-- link sweet alert --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>

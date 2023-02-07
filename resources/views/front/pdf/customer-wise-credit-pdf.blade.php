@@ -42,7 +42,7 @@
         </div>
 
         <div>
-            <table border="1" width="100%">
+            <table border="1" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th>Récépissé </th>

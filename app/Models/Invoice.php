@@ -20,6 +20,10 @@ class Invoice extends Model
     }
 
 
+    public function unit()
+    {
+       return $this->belongsTo(Country::class,'unit_id','id');
+    }
     public function country()
     {
        return $this->belongsTo(Country::class,'country_id','id');

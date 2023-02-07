@@ -112,7 +112,7 @@
         <br>
         <div class="">
             <div class="card-body">
-                <table border="1" width='100%' style="margin-bottom: 10px">
+                <table border="1" width='100%' style="margin-bottom: 10px" cellspacing="0">
                     <thead>
                         <tr class="text-center">
                             <th class="text-center" style="background:#ddd; padding:1px;">#ID</th>

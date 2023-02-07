@@ -80,26 +80,26 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('customers.index') }}"
+                            <a href="{{ route('customers.create') }}"
                                 class="nav-link {{  request()->routeIs('customers.create') ? 'active' : '' }}">
                                 <i class="far fas fa-long-arrow-alt-right"></i>
                                 <p>Ajouter un Client </p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a href="{{ route('customers.credit') }}"
                                 class="nav-link {{ request()->routeIs('customers.credit')|| request()->routeIs('customers.edit.invoice')? 'active' : '' }}">
                                 <i class="far fas fa-long-arrow-alt-right"></i>
                                 <p>Voir Credit Client</p>
                             </a>
-                        </li>
-                        <li class="nav-item">
+                        </li> --}}
+                        {{-- <li class="nav-item">
                             <a href="{{ route('customers.paid') }}"
                                 class="nav-link {{ request()->routeIs('customers.paid')? 'active' : '' }}">
                                 <i class="far fas fa-long-arrow-alt-right"></i>
                                 <p> Voir Payement Client</p>
                             </a>
-                        </li>
+                        </li> --}}
                         <li class="nav-item">
                             <a href="{{ route('customers.wise.report') }}"
                                 class="nav-link {{ request()->routeIs('customers.wise.report')? 'active' : '' }}">
@@ -175,31 +175,32 @@
                         </li>
                     </ul>
                 </li>
-                {{-- <li class="nav-item {{ request()->is('clients*') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link ">
+
+                <li class="nav-item {{ request()->is('finances*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->is('finances*') ? 'active' : '' }}">
                         <i class="nav-icon 	fas fa-folder"></i>
                         <p>
-                            Enregistrer un client
+                            Gestion des Finances
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('clients.index') }}"
-                                class="nav-link {{  Request::routeIs('clients.index')|| Request::routeIs('clients.create')|| Request::routeIs('clients.edit')|| Request::routeIs('clients.show') ? 'active' : '' }}">
+                            <a href="{{ route('finances.credit') }}"
+                                class="nav-link {{ request()->routeIs('finances.credit')|| request()->routeIs('customers.edit.invoice')? 'active' : '' }}">
                                 <i class="far fas fa-long-arrow-alt-right"></i>
-                                <p>Voir les transactions</p>
+                                <p>Voir Credit Client</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('clients.printList') }}"
-                                class="nav-link {{  Request::routeIs('clients.printList') ? 'active' : '' }}">
+                            <a href="{{ route('finances.paid') }}"
+                                class="nav-link {{ request()->routeIs('finances.paid')? 'active' : '' }}">
                                 <i class="far fas fa-long-arrow-alt-right"></i>
-                                <p>Imprimer facture</p>
+                                <p> Voir Payement Client</p>
                             </a>
                         </li>
                     </ul>
-                </li> --}}
+                </li>
 
                 <li class="nav-item {{ request()->is('units*') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ request()->is('units*') ? 'active' : '' }}">

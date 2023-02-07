@@ -64,14 +64,14 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/edit_client/{id}',[CustomerController::class,'edit'])->name('customers.edit');
         Route::post('/update_client/{id}',[CustomerController::class,'update'])->name('customers.update');
         Route::delete('/delete_client/{id}',[CustomerController::class,'delete'])->name('customers.delete');
-        Route::get('/credit/client',[CustomerController::class,'creditCustomer'])->name('customers.credit');
+        // Route::get('/credit/client',[CustomerController::class,'creditCustomer'])->name('customers.credit');
         Route::get('/credit/client/pdf',[CustomerController::class,'creditCustomerPdf'])->name('customers.credit.pdf');
         Route::get('/facture/edit/{invoice_id}',[CustomerController::class,'editInvoice'])->name('customers.edit.invoice');
         // Route::post('facturer/update/{invoice_id}',[CustomerController::class,'updateInvoice'])->name('customers.update.invoice');
         Route::post('facturer/update',[CustomerController::class,'updateInvoice'])->name('customers.update.invoice');
         Route::get('facturer/details/pdf/{invoice_id}',[CustomerController::class,'invoiceDetailsPdf'])->name('invoices.details.pdf');
        
-        Route::get('/payement/client',[CustomerController::class,'paidCustomer'])->name('customers.paid');
+        // Route::get('/payement/client',[CustomerController::class,'paidCustomer'])->name('customers.paid');
         // Show modal
         Route::get('/showpayement/client/{invoice_id}',[CustomerController::class,'paidCustomerModal'])->name('customers.paid_modal');
         Route::get('/payement/client/pdf',[CustomerController::class,'paidCustomerPdf'])->name('customers.paid.pdf');
@@ -80,18 +80,46 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/rapport/client/payement/rapport',[CustomerController::class,'customerWisePaid'])->name('customers.wise.paid.report');
        
     });
+    Route::prefix('finances')->group(function(){
+       
+        Route::get('/credit/client',[CustomerController::class,'creditCustomer'])->name('finances.credit');
+         Route::get('/payement/client',[CustomerController::class,'paidCustomer'])->name('finances.paid');
+        // Route::get('/credit/client/pdf',[CustomerController::class,'creditCustomerPdf'])->name('customers.credit.pdf');
+        // Route::get('/facture/edit/{invoice_id}',[CustomerController::class,'editInvoice'])->name('customers.edit.invoice');
+        // Route::post('facturer/update/{invoice_id}',[CustomerController::class,'updateInvoice'])->name('customers.update.invoice');
+        // Route::post('facturer/update',[CustomerController::class,'updateInvoice'])->name('customers.update.invoice');
+        // Route::get('facturer/details/pdf/{invoice_id}',[CustomerController::class,'invoiceDetailsPdf'])->name('invoices.details.pdf');
+       
+        // Route::get('/payement/client',[CustomerController::class,'paidCustomer'])->name('customers.paid');
+        // Show modal
+        // Route::get('/showpayement/client/{invoice_id}',[CustomerController::class,'paidCustomerModal'])->name('customers.paid_modal');
+        // Route::get('/payement/client/pdf',[CustomerController::class,'paidCustomerPdf'])->name('customers.paid.pdf');
+        // Route::get('/rapport/client/',[CustomerController::class,'customerWiseReport'])->name('customers.wise.report');
+        // Route::get('/rapport/client/credit/rapport',[CustomerController::class,'customerWiseCredit'])->name('customers.wise.credit.report');
+        // Route::get('/rapport/client/payement/rapport',[CustomerController::class,'customerWisePaid'])->name('customers.wise.paid.report');
+       
+    });
 
   
     Route::prefix('invoices')->group(function(){
-        Route::post('/modifier_status',[InvoiceController::class,'updateStatus'])->name('invoices.updateStatus');
+        Route::put('/modifier_status/{id}',[InvoiceController::class,'updateStatus'])->name('invoices.updateStatus');
         Route::get('/ajouter_une_expedition',[InvoiceController::class,'create'])->name('invoices.create');
         Route::post('/store_facture',[InvoiceController::class,'store'])->name('invoices.store');
+
+        Route::post('/update_facture/{id}',[InvoiceController::class,'storeUpdate'])->name('invoices.storeUpdate');
+        Route::post('/update_facture1/{id}',[InvoiceController::class,'storeUpdate1'])->name('invoices.storeUpdate1');
+
         Route::get('/voir_les_expeditions',[InvoiceController::class,'pendingList'])->name('invoices.pending.list');
         Route::get('/approve/{id}',[InvoiceController::class,'approve'])->name('invoices.approve');
+        
+        Route::get('/edit_invoice/{id}',[InvoiceController::class,'edit_invoice'])->name('invoices.edit_invoice');
+        Route::post('/update_invoice',[InvoiceController::class,'update_invoice'])->name('invoices.update_invoice');
+
         Route::delete('/delete/{id}',[InvoiceController::class,'delete'])->name('invoices.delete');
         Route::post('/approve/store/{id}',[InvoiceController::class,'approvalStore'])->name('invoices.approval.store');
         Route::get('/print/facture',[InvoiceController::class,'printInvoiceList'])->name('invoices.print.list');
         Route::get('/print/{id}',[InvoiceController::class,'printInvoice'])->name('invoices.print');
+        Route::get('/print__etiquette/{id}',[InvoiceController::class,'printInvoiceEtiquette'])->name('invoices.etiquette');
         Route::get('/rapport/quotidien',[InvoiceController::class,'dailyReport'])->name('invoices.daily.report');
         Route::get('/rapport/quotidien/pdf',[InvoiceController::class,'dailyReportPdf'])->name('invoices.daily.report.pdf');
         

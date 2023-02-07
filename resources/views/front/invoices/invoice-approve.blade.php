@@ -90,11 +90,13 @@
                                             $payment['invoice']['invoice_no'] }}</strong> </b><br>
                                     <br>
                                     <b>Bordereau №: {{ $payment['invoice']['invoice_zip'] }}</b><br>
-                                    <br>
+
                                     {{-- <b>Order ID:</b> 4F3S8J<br> --}}
-                                    <b>Montant Paye:</b> {{
+                                    <b class="text-dark font-weight-bold">Montant Expedition:</b> {{
+                                    number_format($payment->total_amount,0,' ',',') }} Fcfa<br>
+                                    <b class="text-green">Montant Paye:</b> {{
                                     number_format($payment->paid_amount,0,' ',',') }} Fcfa<br>
-                                    <b>Montant Du:</b> {{
+                                    <b class="text-danger">Montant Du:</b> {{
                                     number_format($payment->due_amount,0,' ',',') }} Fcfa
                                 </div>
                                 <!-- /.col -->
@@ -108,8 +110,8 @@
 
 
                         <div class="card-body">
-                            <form action="{{ route('invoices.approval.store', $invoice->id) }}" method="post">
-                                @csrf
+                            {{-- <form action="{{ route('invoices.approval.store', $invoice->id) }}" method="post">
+                                @csrf --}}
 
                                 <table class="table-bordered table" width='100%' style="margin-bottom: 10px">
                                     <thead>
@@ -180,8 +182,9 @@
                                     </tbody>
                                 </table>
 
-                                <button type="submit" class="btn btn-success">Valider les Données</button>
-                            </form>
+                                {{-- <button type="submit" class="btn btn-success">Valider les Données</button> --}}
+                                {{--
+                            </form> --}}
                         </div>
                     </div>
                 </section>

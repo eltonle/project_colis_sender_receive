@@ -31,7 +31,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h3> Modifier Récépissé de Paiement
-                                <a href="{{ route('customers.credit') }}" class="btn btn-success float-right btn-sm">
+                                <a href="{{ route('finances.credit') }}" class="btn btn-success float-right btn-sm">
                                     <i class="fa fa-list"></i> LISTE CREDITS CLIENTS
                                 </a>
                             </h3>

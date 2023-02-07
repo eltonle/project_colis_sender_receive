@@ -16,49 +16,69 @@
 
 <body>
     <div class="">
-        <div class="row">
+        <hr>
+        <div style="margin-top: -10px">
             <div class="">
-                <table width="100%" cellspacing="0">
+                <table width="100%">
                     <tr>
                         <td width="20%" align="center">
-                            <h4 class="" style="font-size: 28px;background: #ddd; text-align: center">
+                            <h4 class="" style="font-size:25px;text-align: center; background:#ddd;">
                                 Express<br> Colis
                             </h4>
                         </td>
                         <td width="40%" align="center">
-                            <strong style="font-size: 16px">Mat:008976785R768 </strong><br>
-                            <span style="font-size: 16px">Phone: (+237) 698-767-655</span><br>
-                            <span style="font-size: 16px">Email: john.doe@example.com</span><br>
-                            <span style="font-size: 16px">Lieu: 2023 E Bp-site CMR-Douala</span><br>
+                            <strong style="font-size: 15px">Mat:008976785R768 </strong><br>
+                            <span style="font-size: 15px">Phone: (+237) 698-767-655</span><br>
+                            <span style="font-size: 15px">Email: john.doe@example.com</span><br>
+                            <span style="font-size: 15px">Lieu: 2023 E Bp-site CMR-Douala</span><br>
 
                         </td>
-                        <td width="40%" style="font-weight: bold; text-align: center">
-                            {{-- {!! DNS1D::getBarcodeSVG($invoice->invoice_zip, "c39", 1, 80, 'black') !!} --}}
-                            <img src="data:image/png;base64,{{DNS1D::getBarcodePNG($invoice->invoice_zip, 'C39+')}}"
-                                width="50%" height="100px" />
-                            <span>CMR{{ $invoice->invoice_zip }}</span>
-                        </td>
+                        {{-- <td width="40%" style="font-weight: bold;">
+                            {!! DNS1D::getBarcodeSVG($invoice->invoice_zip, "c39", 1, 80, 'black') !!}
+                        </td> --}}
                         {{-- <td width="10%">
                             <h4 class="" style="font-size: 26px">Date:{{ date('d-M-Y',strtotime($invoice->date)) }}</h4>
                         </td> --}}
                     </tr>
                 </table>
+                <table width="100%" style="text-align: center">
+                    <tr>
+                        <td width="30%"></td>
+                        <td style="font-weight: bold; text-align: center">
+                            {{-- {!! DNS1D::getBarcodeSVG($invoice->invoice_zip, "C39", 1, 80, 'black') !!} <br> --}}
+                            <img src="data:image/png;base64,{{DNS1D::getBarcodePNG($invoice->invoice_zip, 'C39+')}}"
+                                alt="barcode" width="50%" height="100px" style="color: black" />
+                            <span>CMR{{ $invoice->invoice_zip }}</span>
+                        </td>
+                        <td width="30%"></td>
+                    </tr>
+                </table>
                 <br><br>
-                <table width="100%" style="font-size: 17px">
+                <table width="100%" style="text-align: center; margin-top: -47px;">
+                    <tr>
+                        <td width="30%"></td>
+                        <td style="font-weight: bold; ">
+                            <h2>##{{ $invoice->invoice_zip }}</h2>
+                        </td>
+                        <td width="30%"></td>
+                    </tr>
+                </table>
+                <br><br>
+                <table width="100%" style="font-size: 14px; margin-top: -35px;" cellspacing="0">
                     <tbody>
                         <tr>
                             <td>
-                                <strong>Bordereau de</strong><br> <br>
-                                <strong>MARIA BELEN</strong> Douala-Cameroun|ange rapheal<br>
+                                <strong>Référence :</strong><br> <br>
+                                <strong>MARIA BELEN</strong><br>
+                                Address: Douala-Cameroun|ange rapheal<br>
                                 Phone: (555) 539-1037<br>
-                                Email: john.doe@example.com
                             </td>
                             <td align="right">
                                 <table style="border-collapse: collapse">
                                     <tbody>
                                         <tr>
                                             <td align="left"
-                                                style="border:1px solid black; background: #34495e;color:#fff">
+                                                style="border:1px solid black; background: #222f3e; font-weight: bold; color:#fff">
                                                 Récépissé
                                             </td>
                                             <td style="border: 1px solid black" style="border: 1px solid black"
@@ -66,24 +86,11 @@
                                         </tr>
                                         <tr>
                                             <td align="left"
-                                                style="border:1px solid black; background: #34495e;color:#fff">
+                                                style="border:1px solid black; background: #222f3e; font-weight: bold; color:#fff">
                                                 Date</td>
                                             <td style="border: 1px solid black" align="right">22-jan-2023</td>
                                         </tr>
-                                        <tr>
-                                            <td align="left"
-                                                style="border:1px solid black; background: #34495e;color:#fff">
-                                                Montant paye
-                                            </td>
-                                            <td style="border: 1px solid black" align="right">12,000,000,00 Fcfa</td>
-                                        </tr>
-                                        <tr>
-                                            <td align="left"
-                                                style="border:1px solid black; background: #34495e;color:#fff">
-                                                Montant du
-                                            </td>
-                                            <td style="border: 1px solid black" align="right">2,000,000,00 Fcfa</td>
-                                        </tr>
+
                                     </tbody>
 
                                 </table>
@@ -91,6 +98,31 @@
                         </tr>
                     </tbody>
                 </table>
+                <br><br>
+                <table width="100%" style="font-size: 17px; margin-top: -35px;">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <img src="data:image/png;base64,{{DNS2D::getBarcodePNG($invoice->invoice_zip,'QRCODE')}}"
+                                    alt="barcode" width="100px" height="120px" />
+                            </td>
+                            <td align="right">
+                                <table style="border-collapse: collapse">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <h3>CAMEROUN - TCHAD</h3>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <hr>
             </div>
         </div>
         <br>
@@ -175,7 +207,7 @@
             </thead>
         </table> --}}
         <br>
-        <div class="">
+        {{-- <div class="">
             <div class="card-body">
                 @php
                 $payment = App\Models\Payement::where('invoice_id',$invoice->id)->first();
@@ -278,11 +310,11 @@
                 <span style="font-weight: bold">Imprimer le: </span> <i>{{ $date->format('j F, Y, H:i:s') }}</i>
 
             </div>
-        </div>
+        </div> --}}
 
     </div>
 
-    <div>
+    {{-- <div>
         <hr style="margin-bottom: 0px;">
         <table width="100%">
             <tbody>
@@ -299,7 +331,7 @@
                 </tr>
             </tbody>
         </table>
-    </div>
+    </div> --}}
 
 
 

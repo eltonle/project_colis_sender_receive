@@ -15,27 +15,6 @@
         color: red;
     }
 </style>
-<style>
-    .btn,
-    /* .NoPrint {
-        display: none;
-    } */
-
-    .form-control {
-        border: 0px;
-    }
-
-    .input-group-text {
-        border: 0px;
-        color: black font-weight: bold;
-        background-color: white;
-        width: 100px;
-    }
-
-    table {
-        border: 1px solid black;
-    }
-</style>
 @endsection
 @section('content')
 <!-- Content Wrapper. Contains page content -->
@@ -63,7 +42,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="">
-                    <form action="{{ route('invoices.store') }}" method="post" enctype="multipart/form-data"
+                    <form action="{{ route('invoices.update_invoice') }}" method="post" enctype="multipart/form-data"
                         id="myForm">
                         @csrf
                         {{-- left col --}}
@@ -71,7 +50,7 @@
                             {{-- custom tabs --}}
                             <div class="card">
                                 <div class="card-header">
-                                    <h3> Ajouter une Expedition
+                                    <h3> Editer une Expedition
                                         <a href="{{ route('invoices.pending.list') }}" class="btn float-right btn-sm"
                                             style="background: #563DEA;color: #fff">
                                             <i class="fa fa-list"></i> LISTES DES EXPEDITIONS
@@ -83,8 +62,12 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-2">
                                             <label> Récépissé No:</label>
-                                            <input type="text" name="invoice_no" value="{{ $invoice_no }}"
-                                                id="invoice_no" class="form-control form-control-sm font-bold" readonly
+                                            <input type="hidden" name="invoice_no" value="{{ $invoice->invoice_no }}">
+                                            <input type="hidden" name="id" value="{{ $invoice->id }}">
+                                            <input type="hidden" name="invoiceZip" value="{{ $invoice->invoice_zip }}">
+                                            <input type="hidden" name="date" value="{{ $invoice->date }}">
+                                            <input type="text" name="invoice_no" value="{{ $invoice->invoice_no }}"
+                                                id="invoice_no" class="form-control form-control-sm font-bold" disabled
                                                 style="background: #2962FF;color: #fff">
                                         </div>
                                         <div class="form-group col-md-6">
@@ -92,9 +75,9 @@
 
                                         <div class="form-group col-md-4">
                                             <label>Date</label>
-                                            <input type="date" name="date" id="date" value="{{ $date }}"
+                                            <input type="date" name="date" id="date" value="{{ $invoice->date }}"
                                                 class="form-control datepicker form-control-sm" placeholder="YYY-MM-DD"
-                                                readonly>
+                                                disabled>
                                         </div>
                                     </div>
                                     <!-- /.card-body -->
@@ -114,11 +97,14 @@
                                             <div class="form-group col-md-12" style="margin-top: 20px">
                                                 <label>NOM DE L'EXPEDITEUR</label>
                                                 <select name="customer_id" id="customer_id"
-                                                    class="form-control select2 select2-danger form-control-sm"
+                                                    class="form-control select2 select2-danger "
                                                     data-dropdown-css-class="select2-gray">
                                                     <option value="">Selectionner un client</option>
                                                     @foreach ($customers as $customer)
-                                                    <option value="{{ $customer->id }}">
+                                                    <option value="{{ $customer->id }}" {{
+                                                        $invoice['payement']['customer']['id']==$customer->id
+                                                        ?
+                                                        'selected' : '' }}>
                                                         {{ $customer->nom }}-({{ $customer->email }} - {{
                                                         $customer->phone }} - {{ $customer->address }})
                                                     </option>
@@ -165,11 +151,14 @@
                                             <div class="form-group col-md-12" style="margin-top: 20px">
                                                 <label>NOM DU DESTINATAIRE</label>
                                                 <select name="receive_id" id="receive_id"
-                                                    class="form-control select2 select2-danger form-control-sm"
+                                                    class="form-control select2 select2-danger "
                                                     data-dropdown-css-class="select2-gray">
                                                     <option value="">Selectionner un Destinataire</option>
                                                     @foreach ($receives as $receive)
-                                                    <option value="{{ $receive->id }}">
+                                                    <option value="{{ $receive->id }}" {{
+                                                        $invoice['payement']['receive']['id']==$receive->id
+                                                        ?
+                                                        'selected' : '' }}>
                                                         {{ $receive->nom }}-({{ $receive->email }} - {{
                                                         $receive->phone }} - {{ $receive->address }})
                                                     </option>
@@ -226,13 +215,15 @@
                                                             <div class="form-group">
                                                                 <label>Pays d'Expedition</label>
                                                                 <div class="input-group">
-                                                                    <select
-                                                                        class="form-control select2 select2-danger form-control-sm"
+                                                                    <select class="form-control select2 select2-danger"
                                                                         data-dropdown-css-class="select2-gray"
                                                                         id="country_id" name="country_id">
                                                                         <option value="">Selectionner un Pays</option>
                                                                         @foreach ($countries as $country)
-                                                                        <option value="{{ $country->id }}">{{
+                                                                        <option value="{{ $country->id }}" {{
+                                                                            $invoice['country']['id']==$country->id
+                                                                            ?
+                                                                            'selected' : '' }}>{{
                                                                             $country->name }}</option>
                                                                         @endforeach
                                                                     </select>
@@ -242,10 +233,12 @@
                                                                 <label>Ville d'Expedition</label>
                                                                 <div class="input-group">
                                                                     <select name="state_id"
-                                                                        class="form-control select2 select2-danger form-control-sm"
+                                                                        class="form-control select2 select2-danger"
                                                                         data-dropdown-css-class="select2-gray"
                                                                         id="state_id">
-                                                                        <option value="">Selectionner une Ville</option>
+                                                                        <option value="{{  $invoice['state']['id']  }}">
+                                                                            {{ $invoice['state']['name'] }}
+                                                                        </option>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -267,13 +260,15 @@
                                                                 <label>Pays Destination</label>
 
                                                                 <div class="input-group">
-                                                                    <select
-                                                                        class="form-control select2 select2-danger form-control-sm"
+                                                                    <select class="form-control select2 select2-danger"
                                                                         data-dropdown-css-class="select2-gray"
                                                                         id="countryr_id" name="countryr_id">
                                                                         <option value="">Selectionner un Pays</option>
                                                                         @foreach ($countries as $country)
-                                                                        <option value="{{ $country->id }}">{{
+                                                                        <option value="{{ $country->id }}" {{
+                                                                            $invoice['countryr']['id']==$country->id
+                                                                            ?
+                                                                            'selected' : '' }}>{{
                                                                             $country->name }}</option>
                                                                         @endforeach
                                                                         </option>
@@ -284,11 +279,12 @@
                                                                 <label>Ville Destination</label>
 
                                                                 <div class="input-group">
-                                                                    <select
-                                                                        class="form-control select2 select2-danger form-control-sm"
+                                                                    <select class="form-control select2 select2-danger"
                                                                         data-dropdown-css-class="select2-gray"
                                                                         id="stater_id" name="stater_id">
-                                                                        <option value="">Selectionner une Ville</option>
+                                                                        <option value="{{ $invoice['stater']['id'] }}">
+                                                                            {{ $invoice['stater']['name']
+                                                                            }}</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -304,276 +300,250 @@
                                                     :
 
 
-                                                    {{-- <a href="javascript:void(0)"
-                                                        class="btn float-right btn-md pt-2" id="addBtn" title="Ajouter"
+                                                    <a href="javascript:void(0)" class="btn float-right btn-md pt-2"
+                                                        id="addBtn" title="Ajouter"
                                                         style="background: #2962FF;color: #fff"><i class="fa fa-plus">
-                                                            Ajouter</i></a> --}}
+                                                            Ajouter</i></a>
                                                 </h3>
                                             </div><!-- /.card-header -->
 
                                             <div class="card-body">
                                                 <!-- /.card-header -->
-                                                {{-- <div class="col-md-12 col-sm-12">
-                                                    <div class="">
-                                                        <table class="table table-hover table-white" id="tableEstimate">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th class="col-sm-2">Marque & Model</th>
-                                                                    <th class="col-sm-1">Nº de châssis</th>
-                                                                    <th style="width:80px;">Longueur</th>
-                                                                    <th style="width:80px;">Largeur</th>
-                                                                    <th style="width:80px;">Hauteur</th>
-                                                                    <th style="width:100px;">Prix Unitaire</th>
-                                                                    <th style="width:80px;">Qty</th>
-                                                                    <th>Total</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td>
-                                                                        <input type="text" class="form-control"
-                                                                            style="min-width: 130px;" id="model_marque"
-                                                                            name="model_marque[]">
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type="text" class="form-control"
-                                                                            style="min-width: 100px;" id="chassis"
-                                                                            name="chassis[]">
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type="text" class="form-control "
-                                                                            style="width: 70px;" id="length"
-                                                                            name="longueur[]">
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type="number" class="form-control "
-                                                                            style="width: 70px;" id="width"
-                                                                            name="largeur[]">
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type="number" class="form-control "
-                                                                            style="width: 80px;" id="height"
-                                                                            name="hauteur[]" value="">
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type="number"
-                                                                            class="form-control unit_price"
-                                                                            style="width: 120px;" id="unit_price"
-                                                                            name="unit_price[]">
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type="number"
-                                                                            class="form-control total qty"
-                                                                            style="width: 100px;" id="qty" name="qty[]">
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type="text"
-                                                                            class="form-control item_total" readonly
-                                                                            style="width: 100px;" id="item_total"
-                                                                            name="item_total[]" value="0">
-                                                                    </td>
+                                                <div class="card-body">
+                                                    <div class="col-md-12 col-sm-12">
+                                                        <div class="">
+                                                            <table class="table table-hover table-white"
+                                                                id="tableEstimate">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th class="col-md-2">Marque & Model
+                                                                        </th>
+                                                                        <th class="col-md-2">Nº de châssis
+                                                                        </th>
+                                                                        <th style="width:80px;">Longueur</th>
+                                                                        <th style="width:80px;">Largeur</th>
+                                                                        <th style="width:80px;">Hauteur</th>
+                                                                        <th style="width:100px;">Prix Unitaire</th>
+                                                                        <th style="width:80px;">Qty</th>
+                                                                        <th>Total</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @php
+                                                                    $total_sum = '0';
+                                                                    @endphp
+                                                                    @foreach ($invoicesJoin as $key=> $item)
 
-                                                                </tr>
+                                                                    <tr>
+                                                                        <input type="hidden" name="invoice_details[]"
+                                                                            value="{{ $item->id }}">
+                                                                        <td>
 
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                    <div class="table-responsive">
-                                                        <table class="table table-hover table-white"
-                                                            id="tableSommation">
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td class="text-right">Sub_total</td>
-                                                                    <td
-                                                                        style="text-align: right; padding-right: 30px; width:210px;">
-                                                                        <input type="text"
-                                                                            class="form-control text-right"
-                                                                            id="sub_total" name="sub_total" value="0">
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td colspan="5" class="text-right">Tax</td>
-                                                                    <td
-                                                                        style="text-align: right; padding-right: 30px; width:210px;">
-                                                                        <input type="text"
-                                                                            class="form-control text-right bg-gradient-gray"
-                                                                            id="tax_1" name="tax_1" value="0" readonly>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td colspan="5" class="text-right">
-                                                                        Discount %
-                                                                    </td>
-                                                                    <td
-                                                                        style="text-align: right; padding-right: 30px; width:210px;">
-                                                                        <input type="text"
-                                                                            class="form-control text-right discount"
-                                                                            id="discount" name="discount_amount"
-                                                                            value="10"
-                                                                            style="background-color: #55efc4">
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td colspan="5" style="text-align: right; ">
-                                                                        Grand Total
-                                                                    </td>
-                                                                    <td
-                                                                        style="text-align: right; padding-right: 30px; width:210px;">
-                                                                        <input class="form-control text-right bg-danger"
-                                                                            type="text" id="grand_total"
-                                                                            name="total_amount" value="0.00  fcfa"
-                                                                            readonly>
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div> --}}
-                                                <!-- /.card-body -->
+                                                                            <input type="text" class="form-control"
+                                                                                style="min-width: 130px;"
+                                                                                id="model_marque" name="model_marque[]"
+                                                                                value="{{ $item->model_marque }}">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control"
+                                                                                style="min-width: 160px;" id="chassis"
+                                                                                name="chassis[]"
+                                                                                value="{{ $item->chassis }}">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control "
+                                                                                style="width: 50px;" id="length"
+                                                                                name="longueur[]"
+                                                                                value="{{ $item->longueur }}">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control "
+                                                                                style="width: 50px;" id="width"
+                                                                                name="largeur[]"
+                                                                                value="{{ $item->largeur }}">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control "
+                                                                                style="width: 50px;" id="height"
+                                                                                name="hauteur[]"
+                                                                                value="{{ $item->hauteur }}">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number"
+                                                                                class="form-control unit_price"
+                                                                                style="width: 100px;" id="unit_price"
+                                                                                name="unit_price[]"
+                                                                                value="{{ $item->unit_price }}">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number"
+                                                                                class="form-control total qty"
+                                                                                style="width: 50px;" id="qty"
+                                                                                name="qty[]" value="{{ $item->qty }}">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text"
+                                                                                class="form-control item_total" readonly
+                                                                                style="width: 100px;" id="item_total"
+                                                                                name="item_total[]"
+                                                                                value="{{ $item->item_total }}">
+                                                                        </td>
 
-                                                <table class="table table-hover table-bordered" id="tableEstimate">
-                                                    <thead class="table-secondary">
-                                                        <tr>
-                                                            <th scope="col" class="text-center">Marque&Model</th>
-                                                            <th scope="col" class="text-center">Nº châssis</th>
-                                                            <th scope="col" class="text-center">Longueur</th>
-                                                            <th scope="col" class="text-center">Largeur</th>
-                                                            <th scope="col" class="text-center">Hauteur</th>
-                                                            <th scope="col" class="text-center">Prix U.</th>
-                                                            <th scope="col" class="text-center">Qty</th>
-                                                            <th scope="col" class="text-center">Total</th>
-                                                            <th scope="col" class="NoPrint text-right">
-                                                                <button type="button" class="btn btn-sm"
-                                                                    style="background: #563DEA; color: #fff"
-                                                                    onclick="BtnAdd()"><i
-                                                                        class="fa fa-plus"></i></button>
-
-                                                            </th>
-
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody id="TBody">
-                                                        <tr id="TRow">
-                                                            <td><input name="model_marque[]" type="text"
-                                                                    class="form-control"></td>
-                                                            <td><input name="chassis[]" type="text"
-                                                                    class="form-control"></td>
-                                                            <td><input name="longueur[]" style="width: 80px"
-                                                                    type="number" class="form-control"></td>
-                                                            <td><input name="largeur[]" style="width: 80px"
-                                                                    type="number" class="form-control"></td>
-                                                            <td><input name="hauteur[]" style="width: 80px"
-                                                                    type="number" class="form-control"></td>
-                                                            <td><input type="number" class="form-control text-end"
-                                                                    name="unit_price[]" onchange="Calc(this);"></td>
-                                                            <td><input type="number" style="width: 50px"
-                                                                    class="form-control text-end" name="qty[]"
-                                                                    onchange="Calc(this);"></td>
-                                                            <td><input type="number" class="form-control text-end"
-                                                                    name="item_total[]" value="0" readonly></td>
-                                                            {{-- <td class="NoPrint"><button type="button"
-                                                                    class="btn btn-sm btn-danger" style=""
-                                                                    onclick="BtnDel(this)"><i
-                                                                        class="fa fa-trash"></i></button></td> --}}
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-
-                                                <div class="row mt-3">
-                                                    <div class="col-7">
-                                                    </div>
-                                                    <div class="col-5">
-                                                        <div class="input-group mb-3">
-                                                            <span class="input-group-text">Total</span>
-                                                            <input type="text" class="form-control text-end" id="FTotal"
-                                                                name="FTotal" disabled="">
+                                                                        <td><a href="javascript:void(0)"
+                                                                                class="btn btn-danger btn-sm remove"
+                                                                                title="Remove"><i
+                                                                                    class="fas fa-trash"></i></a></td>
+                                                                    </tr>
+                                                                    @php
+                                                                    $total_sum += $item->item_total
+                                                                    @endphp
+                                                                    @endforeach
+                                                                </tbody>
+                                                            </table>
                                                         </div>
-                                                        <div class="input-group mb-3">
-                                                            <span class="input-group-text">TAX</span>
-                                                            <input type="text" class="form-control text-end" value="20%"
-                                                                id="" name="" disabled>
+                                                        <div class="table-responsive">
+                                                            <table class="table table-hover table-white"
+                                                                id="tableSommation">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td class="text-right">Sub_total</td>
+                                                                        <td
+                                                                            style="text-align: right; padding-right: 30px; width:100px;">
+                                                                            <input type="text"
+                                                                                class="form-control text-right"
+                                                                                id="sub_total" name="sub_total"
+                                                                                value="{{ $total_sum }}">
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td colspan="5" class="text-right">Tax</td>
+                                                                        <td
+                                                                            style="text-align: right; padding-right: 30px; width:210px;">
+                                                                            <input type="text"
+                                                                                class="form-control text-right bg-gray-900"
+                                                                                id="tax_1" name="tax_1" value="0"
+                                                                                readonly>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td colspan="5" class="text-right">
+                                                                            Discount %
+                                                                        </td>
+                                                                        <td
+                                                                            style="text-align: right; padding-right: 30px; width:210px;">
+                                                                            <input type="text"
+                                                                                class="form-control text-right discount"
+                                                                                id="discount" name="discount_amount"
+                                                                                value="10"
+                                                                                style="background-color: #55efc4">
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td colspan="5" style="text-align: right; ">
+                                                                            Grand Total
+                                                                        </td>
+                                                                        <td
+                                                                            style="text-align: right; padding-right: 30px; width:210px;">
+                                                                            <input
+                                                                                class="form-control text-right bg-danger"
+                                                                                type="text" id="grand_total"
+                                                                                name="total_amount"
+                                                                                value="{{ $invoice['payement']['total_amount'] }}"
+                                                                                readonly>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
                                                         </div>
-                                                        <div class="input-group mb-3">
-                                                            <span class="input-group-text">Remise</span>
-                                                            <input type="text" class="form-control text-end" id="FGST"
-                                                                value="0" name="discount_amount" onchange="GetTotal()">
-                                                        </div>
-                                                        {{-- <div class="input-group mb-3">
-                                                            <span class="input-group-text">GST</span>
-                                                            <input type="number" class="form-control text-end" id="FGST"
-                                                                name="FGST" onchange="GetTotal()">
-                                                        </div> --}}
-                                                        <div class="input-group mb-3">
-                                                            <span class="input-group-text">Grand Total </span>
-                                                            <input type="text" class="form-control text-end" id="FNet"
-                                                                name="total_amount" readonly>
-                                                        </div>
-
-
                                                     </div>
                                                 </div>
+                                                <!-- /.card-body -->
                                             </div>
                                             <div class="card-body row">
                                                 <div class="form-group col-md-4">
-                                                    <label for="" style="font-weight:bold ">Status Paiement <i
-                                                            class="fas fa-donate text-danger"></i></label>
-                                                    <select name="paid_status"
+                                                    <label for="" style="font-weight:bold ">Montant versé <i
+                                                            class="fas fa-money-bill text-danger"></i></label>
+                                                    <input type="text" name="paid_amount" class="form-control "
+                                                        value="{{ $invoice['payement']['paid_amount'] }}">
+                                                    {{-- <select name="paid_status"
                                                         class="form-control select2 select2-danger form-control-sm"
                                                         data-dropdown-css-class="select2-danger" id="paid_status">
                                                         <option value="">Selectionner le status de Paiement</option>
                                                         <option value="full_paid">entièrement paye</option>
                                                         <option value="full_due">Non payer</option>
                                                         <option value="partial_paid"> Partiellement Paye</option>
-                                                    </select>
-                                                    <input type="text" name="paid_amount"
+                                                    </select> --}}
+                                                    {{-- <input type="text" name="paid_amount"
                                                         class="form-control form-control-sm paid_amount"
                                                         placeholder="Enter Paid Amount"
-                                                        style="display:none; margin-top:5px;">
+                                                        style="display:none; margin-top:5px;"> --}}
                                                 </div>
                                                 <div class="form-group col-md-4">
                                                     <label for="" style="font-weight:bold ">Status Livraison <i
                                                             class="fas fa-dolly-flatbed text-danger"></i></label>
-                                                    <select name="status_livraison"
-                                                        class="form-control select2 select2-danger form-control-sm"
+                                                    <select name="status_livraison" class="form-control  "
                                                         data-dropdown-css-class="select2-danger" id="status_livraison">
-                                                        <option value="">Selectionner le Status de Livraison</option>
-                                                        <option value="en embarcation">En Embarcation</option>
-                                                        <option value="en cours d'expedition">En cours d'Expedition
+
+                                                        {{-- <option value="{{ $invoice->status_livraison }}" selected>
+                                                            {{
+                                                            $invoice->status_livraison }}</option> --}}
+                                                        <option value="livre" {{ $invoice->status_livraison ==='livre'
+                                                            ?
+                                                            'selected' : '' }}>
+                                                            livre
                                                         </option>
-                                                        <option value="livre">Livree</option>
+                                                        <option {{ $invoice->status_livraison ==="en embarcation" ?
+                                                            'selected' : '' }}
+                                                            value="en embarcation">
+                                                            en embarcation
+                                                        </option>
+                                                        <option {{ $invoice->status_livraison ==="en cours
+                                                            d'expedition" ? 'selected' : '' }}
+                                                            value="en cours d'expedition">
+                                                            en cours d'expedition
+                                                        </option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group col-md-4">
                                                     <label for="package_id" style="font-weight:bold ">Type Conteneur
                                                         <i class="fas fa-truck text-danger"></i></label>
-                                                    <select name="unit_id"
-                                                        class="form-control select2 select2-danger form-control-sm"
+                                                    <select name="unit_id" class="form-control"
                                                         data-dropdown-css-class="select2-danger" id="package_id">
                                                         <option value="">Selectionner un Conteneur</option>
                                                         @foreach ($units as $unit )
-                                                        <option value="{{ $unit->id }}">{{ $unit->name }}-({{
+                                                        <option value="{{ $unit->id }}" {{
+                                                            $invoice['unit']['id']===$unit->id
+                                                            ?
+                                                            'selected' : '' }}>{{ $unit->name }}-({{
                                                             $unit->numero_id
                                                             }})
                                                         </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="package_id" style="font-weight:bold ">
+                                                <div class="">
+                                                    <label for="descrip" class="form-label" style="font-weight:bold ">
                                                         Description</label>
-                                                    <textarea name="description" class="form-control col-md-12">
-                                                  </textarea>
+                                                    <textarea name="description" id="descrip" class="form-control"
+                                                        rows="3" placeholder="entrer une description">
+                                                           {{ $invoice->description }}
+                                                        </textarea>
+
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-row">
                                             <div class="form-group col-md-4">
-                                                <button type="submit" class="btn btn-dark w-100"> Enregistrer les
+                                                <button type="submit" class="btn btn-dark w-100 ">
+                                                    Enregistrer les
                                                     Informations </button>
+                                                {{-- <button type="button" class="btn btn-success swalDefaultSuccess">
+                                                    Launch Success Toast
+                                                </button> --}}
                                             </div>
 
                                             <div class="col-5"></div>
@@ -596,92 +566,22 @@
 <!-- /.content-wrapper -->
 @endsection
 @section('scripts')
-<!-- ADD IN INVOICE -->
+<!-- Sweet Alert -->
 <script>
-    function BtnAdd() {
-        // var v = $('#TRow').clone().appendTo('#TBody');
-        // $(v).find('input').val('');
-        // $(v).removeClass('d-none')
-
-        $("#tableEstimate tbody").append(`<tr>
-            <td><input name="model_marque[]" type="text"
-                                                                    class="form-control"></td>
-                                                            <td><input name="chassis[]" type="text"
-                                                                    class="form-control"></td>
-                                                            <td><input name="longueur[]" style="width: 80px"
-                                                                    type="number" class="form-control"></td>
-                                                            <td><input name="largeur[]" style="width: 80px"
-                                                                    type="number" class="form-control"></td>
-                                                            <td><input name="hauteur[]" style="width: 80px"
-                                                                    type="number" class="form-control"></td>
-                                                            <td><input type="number" class="form-control text-end"
-                                                                    name="unit_price[]" onchange="Calc(this);"></td>
-                                                            <td><input type="number" style="width: 50px"
-                                                                    class="form-control text-end" name="qty[]"
-                                                                    onchange="Calc(this);"></td>
-                                                            <td><input type="number" class="form-control text-end"
-                                                                    name="item_total[]" value="0" readonly></td>
-                                                            <td class="NoPrint"><button type="button"
-                                                                    class="btn btn-sm btn-danger" style=""
-                                                                    onclick="BtnDel(this)"><i
-                                                                        class="fa fa-trash"></i></button></td>
-                     </tr>`);
-        // });
-    }
-
-    function BtnDel(v) {
-        $(v).parent().parent().remove();
-        GetTotal();
-    }
-
-    function Calc(v) {
-        var index = $(v).parent().parent().index();
-        var qty = document.getElementsByName('qty[]')[index].value;
-        var unit_price = document.getElementsByName('unit_price[]')[index].value;
-    //    alert(qty);
-        var total = qty*unit_price
-        document.getElementsByName('item_total[]')[index].value=total;
-        // alert(index);
-        GetTotal();
-    }
-
-    //   function GetTotal() {
-    //     var sum = 0;
-    //     var amts = document.getElementsByName('amt');
-
-    //     for (let index = 0; index < amts.length; index++) {
-    //         var amt = amts[index].value;
-    //         sum = +(sum) +  +(amt);
-    //     }
-    //     document.getElementById('FTotal').value = sum;
-
-    //     var gst = document.getElementById('FGST').value;
-        
-
-
-    //     var net = +(sum) + +(gst);
-    //     document.getElementById('FNet').value = net;
-    //   }
-
-    function GetTotal() {
-        var sum = 0;
-        var  unit_prices = document.getElementsByName('item_total[]');
-
-        for (let index = 0; index < unit_prices.length; index++) {
-            var amt = unit_prices[index].value;
-            sum = +(sum) +  +(amt);
-        }
-        document.getElementById('FTotal').value = sum;
-        var sum1 = sum;
-        var TAX = sum1*0.2;
-
-        var discount = document.getElementById('FGST').value;
-        
-
-
-        var net = +(sum) + +(TAX) - (discount);
-        document.getElementById('FNet').value = net;
-    }
+    $(document).ready(function() {
+        var Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000
+    });
+        $('.swalDefaultSuccess').click(function() {
+      Toast.fire({
+        icon: 'success',
+        title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+      })
+    });
+    })
 </script>
 <!-- Number script -->
 <script src="{{ asset('build/js/intlTelInput.min.js') }}"></script>
@@ -791,36 +691,36 @@
                                 </td>
                                 <td>
                                     <input type="text" class="form-control"
-                                        style="min-width: 100px;" id="chassis" name="chassis[]">
+                                        style="min-width: 160px;" id="chassis" name="chassis[]">
                                 </td>
                                 <td>
                                     <input type="text" class="form-control "
-                                        style="width: 70px;" id="length" name="longueur[]">
+                                        style="width: 50px;" id="length" name="longueur[]">
                                 </td>
                                 <td>
                                     <input type="number" class="form-control "
-                                        style="width: 70px;" id="width" name="largeur[]">
+                                        style="width: 50px;" id="width" name="largeur[]">
                                 </td>
                                 <td>
                                     <input type="number" class="form-control "
-                                        style="width: 80px;" id="height" name="hauteur[]"
-                                        value="0">
+                                        style="width: 50px;" id="height" name="hauteur[]"
+                                        value="">
                                 </td>
                                 <td>
                                     <input type="number" class="form-control unit_price"
-                                        style="width: 120px;" id="unit_price"
+                                        style="width: 100px;" id="unit_price"
                                         name="unit_price[]">
                                 </td>
                                 <td>
                                     <input type="number" class="form-control total qty"
-                                        style="width: 100px;" id="qty" name="qty[]">
+                                        style="width: 50px;" id="qty" name="qty[]">
                                 </td>
                                 <td>
                                     <input type="text" class="form-control item_total" readonly
                                         style="width: 100px;" id="item_total"
                                         name="item_total[]" value="0">
                                 </td>
-                                <td><a href="javascript:void(0)" class="btn btn-danger remove" title="Remove"><i class="fas fa-trash"></i></a></td>
+                                <td><a href="javascript:void(0)" class="btn btn-danger btn-sm remove" title="Remove"><i class="fas fa-trash"></i></a></td>
                             </tr>`);
                 });
                     // remoe the row colum

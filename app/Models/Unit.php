@@ -15,8 +15,5 @@ class Unit extends Model
         'created_by',
         'updated_by'
     ];
-    public function client()
-    {
-       return $this->hasOne(Client::class,'unit_id','id');
-    }
+   
 }

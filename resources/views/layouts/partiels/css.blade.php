@@ -1,5 +1,9 @@
 <!-- Font Awesome Icons -->
 <link rel="stylesheet" href="{{ asset('admin/plugins/fontawesome-free/css/all.min.css')}}">
+<!-- SweetAlert2 -->
+<link rel="stylesheet" href="{{ asset('admin/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
+<!-- Toastr -->
+<link rel="stylesheet" href="{{ asset('admin/plugins/toastr/toastr.min.css') }}">
 <!-- overlayScrollbars -->
 <link rel="stylesheet" href="{{ asset('admin/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
 <!-- daterange picker -->
@@ -14,4 +18,6 @@
 <link rel="stylesheet" href="{{ asset('admin/plugins/select2/css/select2.min.css') }}">
 <link rel="stylesheet" href="{{ asset('admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
 {{-- mesage notifid --}}
+{{--
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+--}}

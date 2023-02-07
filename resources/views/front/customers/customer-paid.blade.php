@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h3 class="m-0 font-weight-bold">Gestions des Clients</h3>
+                    <h3 class="m-0 font-weight-bold">Gestions des Finances</h3>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -65,10 +65,27 @@
                                             <td><span class="badge badge-success">{{ number_format($payment->paid_amount
                                                     ,0,' ',',')}} Fcfa</span> </td>
                                             <td>
-                                                <a href="{{ route('invoices.details.pdf',$payment->invoice_id) }}"
+                                                {{-- <a href="{{ route('invoices.details.pdf',$payment->invoice_id) }}"
                                                     target="_blank" title="details" class="btn btn-sm btn-success mr-1">
                                                     <i class="fa fa-eye"></i>
-                                                </a>
+                                                </a> --}}
+                                                <div class="btn-group">
+                                                    <button type="button" style="background: #43BD00"
+                                                        class="btn  btn-flat btn-sm dropdown-toggle dropdown-icon"
+                                                        data-toggle="dropdown">
+                                                        <span class=""
+                                                            style="background: #43BD00; color: white; padding: 2px">Actions</span>
+                                                    </button>
+                                                    <div class="dropdown-menu" role="menu">
+                                                        <a href="{{ route('invoices.details.pdf',$payment->invoice_id) }}"
+                                                            target="_blank" title="details" class="dropdown-item"><span
+                                                                class="text-xs text-dark font-weight-bold"
+                                                                style="margin-left: -8px">
+                                                                <i class="fa fa-eye"></i> Voir les details
+                                                                paiements</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
                                             </td>
                                             @php
                                             $total_paid += $payment ->paid_amount;
