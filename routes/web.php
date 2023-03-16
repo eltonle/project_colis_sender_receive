@@ -61,6 +61,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/Listes-clients',[CustomerController::class,'index'])->name('customers.index');
         Route::get('/add_client',[CustomerController::class,'create'])->name('customers.create');
         Route::post('/store_client',[CustomerController::class,'store'])->name('customers.store');
+        Route::post('/store_clientExp',[CustomerController::class,'storeExp'])->name('customers.storeExp');
+        Route::post('/store_clientDex',[CustomerController::class,'storeDex'])->name('customers.storeDex');
         Route::get('/edit_client/{id}',[CustomerController::class,'edit'])->name('customers.edit');
         Route::post('/update_client/{id}',[CustomerController::class,'update'])->name('customers.update');
         Route::delete('/delete_client/{id}',[CustomerController::class,'delete'])->name('customers.delete');
@@ -123,7 +125,18 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/rapport/quotidien',[InvoiceController::class,'dailyReport'])->name('invoices.daily.report');
         Route::get('/rapport/quotidien/pdf',[InvoiceController::class,'dailyReportPdf'])->name('invoices.daily.report.pdf');
         
-        
+        // Route pour colis DImensionne
+        Route::post('/colis_dimensions',[InvoiceController::class,'colisDimStore'])->name('colisDim.store');
+        Route::get('/getdata/colis_dimensions',[InvoiceController::class,'geteDataColisDim'])->name('getDataDim');
+        Route::post('/delet/{id}',[InvoiceController::class,'deleteDataColisDim']);
+
+        // Route pour colis Prix
+        Route::post('/colis_prix',[InvoiceController::class, 'colisPrixStore'])->name('colisPrix.store');
+        Route::get('/getdata/colis_prix',[InvoiceController::class, 'getDataColisPrix'])->name('getDataPrix');
+        Route::post('/deletPrix/{id}',[InvoiceController::class,'deleteDataColisPrix']);
+
+        // Route pour la somme 
+        Route::get('/get_somme',[InvoiceController::class,'getSomme'])->name('sommeTotal');
     });
     Route::prefix('countries')->group(function(){
         Route::get('/Listes_des_pays',[CountryController::class,'index'])->name('countries.index');

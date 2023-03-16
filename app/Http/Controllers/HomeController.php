@@ -38,9 +38,9 @@ class HomeController extends Controller
         $data['thisYearPaidCount'] = Payement::whereYear('created_at',$thisYear)->count();
 
         // Remise
-        $data['thisDayDiscountSum'] = Payement::whereDate('created_at',$todayDate)->sum('discount_amount');
-        $data['thisMonthDiscountSum'] = Payement::whereMonth('created_at',$thisMonth)->sum('discount_amount');
-        $data['thisYearDiscountSum'] = Payement::whereYear('created_at',$thisYear)->sum('discount_amount');
+        // $data['thisDayDiscountSum'] = Payement::whereDate('created_at',$todayDate)->sum('discount_amount');
+        // $data['thisMonthDiscountSum'] = Payement::whereMonth('created_at',$thisMonth)->sum('discount_amount');
+        // $data['thisYearDiscountSum'] = Payement::whereYear('created_at',$thisYear)->sum('discount_amount');
         // Paid
         $data['thisDayPaidSum'] = Payement::whereDate('created_at',$todayDate)->sum('paid_amount');
         $data['thisMonthPaidSum'] = Payement::whereMonth('created_at',$thisMonth)->sum('paid_amount');

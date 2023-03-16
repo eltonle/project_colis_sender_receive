@@ -98,7 +98,7 @@
             <div class="card dark-mode">
                 <div class="card-footer">
                     <div class="row">
-                        <div class="col-sm-3 col-6">
+                        <div class="col-sm-4 col-6">
                             <div class="description-block border-right">
                                 {{-- <span class="description-percentage text-success">
                                     <i class="fas fa-caret-up"></i>
@@ -110,7 +110,7 @@
                             <!-- /.description-block -->
                         </div>
                         <!-- /.col -->
-                        <div class="col-sm-3 col-6">
+                        <div class="col-sm-4 col-6">
                             <div class="description-block border-right">
                                 {{-- <span class="description-percentage text-warning"><i class="fas fa-caret-left"></i>
                                     0%</span> --}}
@@ -118,21 +118,20 @@
                                     ',',') }} Fcfa</h5> <br>
                                 <span class="description-text">TOTAL PAIEMENT DE L'ANNEE</span>
                             </div>
-                            <!-- /.description-block -->Û
+                            <!-- /.description-block -->
                         </div>
                         <!-- /.col -->
-                        <div class="col-sm-3 col-6">
+                        {{-- <div class="col-sm-3 col-6">
                             <div class="description-block border-right">
-                                {{-- <span class="description-percentage text-success"><i class="fas fa-caret-up"></i>
-                                    20%</span> --}}
+
                                 <h5 class="description-header">{{ number_format( $thisYearDiscountSum,0,'
                                     ',',') }} Fcfa</h5> <br>
                                 <span class="description-text">TOTAL REMISE DE L'ANNEE</span>
                             </div>
-                            <!-- /.description-block -->
-                        </div>
+
+                        </div> --}}
                         <!-- /.col -->
-                        <div class="col-sm-3 col-6">
+                        <div class="col-sm-4 col-6">
                             <div class="description-block">
                                 {{-- <span class="description-percentage text-danger"><i class="fas fa-caret-down"></i>
                                     18%</span> --}}
@@ -151,7 +150,7 @@
             <div class="card">
                 <div class="card-footer">
                     <div class="row">
-                        <div class="col-sm-3 col-6">
+                        <div class="col-sm-4 col-6">
                             <div class="description-block border-right">
                                 {{-- <span class="description-percentage text-success">
                                     <i class="fas fa-caret-up"></i>
@@ -163,7 +162,7 @@
                             <!-- /.description-block -->
                         </div>
                         <!-- /.col -->
-                        <div class="col-sm-3 col-6">
+                        <div class="col-sm-4 col-6">
                             <div class="description-block border-right">
                                 {{-- <span class="description-percentage text-warning"><i class="fas fa-caret-left"></i>
                                     0%</span> --}}
@@ -174,18 +173,17 @@
                             <!-- /.description-block -->
                         </div>
                         <!-- /.col -->
-                        <div class="col-sm-3 col-6">
+                        {{-- <div class="col-sm-3 col-6">
                             <div class="description-block border-right">
-                                {{-- <span class="description-percentage text-success"><i class="fas fa-caret-up"></i>
-                                    20%</span> --}}
+
                                 <h5 class="description-header">{{ number_format( $thisMonthDiscountSum,0,'
                                     ',',') }} fcfa</h5><br>
                                 <span class="description-text">TOTAL DE REMISE DU MOIS</span>
                             </div>
-                            <!-- /.description-block -->
-                        </div>
+
+                        </div> --}}
                         <!-- /.col -->
-                        <div class="col-sm-3 col-6">
+                        <div class="col-sm-4 col-6">
                             <div class="description-block">
                                 {{-- <span class="description-percentage text-danger"><i class="fas fa-caret-down"></i>
                                     18%</span> --}}
@@ -206,7 +204,7 @@
             <div class="card dark-mode">
                 <div class="card-footer">
                     <div class="row">
-                        <div class="col-sm-3 col-6">
+                        <div class="col-sm-4 col-6">
                             <div class="description-block border-right">
                                 {{-- <span class="description-percentage text-success">
                                     <i class="fas fa-caret-up"></i>
@@ -218,7 +216,7 @@
                             <!-- /.description-block -->
                         </div>
                         <!-- /.col -->
-                        <div class="col-sm-3 col-6">
+                        <div class="col-sm-4 col-6">
                             <div class="description-block border-right">
                                 {{-- <span class="description-percentage text-warning"><i class="fas fa-caret-left"></i>
                                     0%</span> --}}
@@ -229,18 +227,17 @@
                             <!-- /.description-block -->
                         </div>
                         <!-- /.col -->
-                        <div class="col-sm-3 col-6">
+                        {{-- <div class="col-sm-3 col-6">
                             <div class="description-block border-right">
-                                {{-- <span class="description-percentage text-success"><i class="fas fa-caret-up"></i>
-                                    20%</span> --}}
+
                                 <h5 class="description-header">{{ number_format( $thisDayDiscountSum,0,'
                                     ',',') }} Fcfa</h5><br>
                                 <span class="description-text">TOTAL DE REMISE DE LA JOURNEE</span>
                             </div>
-                            <!-- /.description-block -->
-                        </div>
+
+                        </div> --}}
                         <!-- /.col -->
-                        <div class="col-sm-3 col-6">
+                        <div class="col-sm-4 col-6">
                             <div class="description-block">
                                 {{-- <span class="description-percentage text-danger"><i class="fas fa-caret-down"></i>
                                     18%</span> --}}

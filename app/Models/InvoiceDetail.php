@@ -12,6 +12,7 @@ class InvoiceDetail extends Model
         'date',
         'invoice_id',
         'model_marque',
+        'description_colis',
         'chassis',
         'longueur',
         'largeur',

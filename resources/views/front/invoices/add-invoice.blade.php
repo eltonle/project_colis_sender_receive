@@ -66,7 +66,7 @@
                     <form action="{{ route('invoices.store') }}" method="post" enctype="multipart/form-data"
                         id="myForm">
                         @csrf
-                        {{-- left col --}}
+                        {{-- left col
                         <section class="col-md-12">
                             {{-- custom tabs --}}
                             <div class="card">
@@ -102,496 +102,718 @@
                                 {{-- <div class="row"> --}}
                                     {{-- left col --}}
                                     <section class="col-md-12">
-                                        {{-- custom tabs --}}
-                                        <div class="">
-                                            <div class="card-header">
-                                                <h3><i class="fas fa-user-friends" style="color: #2c3e50"></i>
-                                                    Information
-                                                    sur l'Expediteur:
-                                                </h3>
-                                            </div>
-                                            <!-- expediteur -->
-                                            <div class="form-group col-md-12" style="margin-top: 20px">
-                                                <label>NOM DE L'EXPEDITEUR</label>
-                                                <select name="customer_id" id="customer_id"
-                                                    class="form-control select2 select2-danger form-control-sm"
-                                                    data-dropdown-css-class="select2-gray">
-                                                    <option value="">Selectionner un client</option>
-                                                    @foreach ($customers as $customer)
-                                                    <option value="{{ $customer->id }}">
-                                                        {{ $customer->nom }}-({{ $customer->email }} - {{
-                                                        $customer->phone }} - {{ $customer->address }})
-                                                    </option>
-                                                    @endforeach
-                                                    <option value="0"> Ajouter un Nouveau Expediteur</option>
-                                                </select>
-                                            </div>
 
-                                            <div class="form-row col-md-12 new_customer" style="display: none;">
-                                                <div class="form-group col-md-4">
-                                                    <input type="text" name="nom" class="form-control form-control-sm"
-                                                        placeholder="Nom du Client">
-                                                </div>
-                                                <div class="form-group col-md-4">
-                                                    <input type="text" name="prenom"
-                                                        class="form-control form-control-sm"
-                                                        placeholder="Prenom du Client">
-                                                </div>
-                                                <div class="form-group col-md-4">
-                                                    <input type="email" name="email"
-                                                        class="form-control form-control-sm"
-                                                        placeholder="Email du Client">
-                                                </div>
-                                                <div class="form-group col-md-4">
-                                                    <input type="text" name="address"
-                                                        class="form-control form-control-sm"
-                                                        placeholder="Address du Client">
-                                                </div>
-                                                <div class="form-group col-md-4">
-                                                    <input type="tel" id="phone" name="phone"
-                                                        class="form-control form-control-sm">
-                                                    <span id="valid-msg" class="hide error0 text-sm">✓ Valid</span>
-                                                    <span id="error-msg" class="hide error1"></span>
-                                                </div>
-                                            </div>
-                                            <br><br>
-                                            <!-- destinataire -->
-                                            <div class="card-header">
-                                                <h3><i class="fas fa-user-friends" style="color: #2c3e50"></i>
-                                                    Information
-                                                    sur le Destinataire:
-                                                </h3>
-                                            </div>
-                                            <div class="form-group col-md-12" style="margin-top: 20px">
-                                                <label>NOM DU DESTINATAIRE</label>
-                                                <select name="receive_id" id="receive_id"
-                                                    class="form-control select2 select2-danger form-control-sm"
-                                                    data-dropdown-css-class="select2-gray">
-                                                    <option value="">Selectionner un Destinataire</option>
-                                                    @foreach ($receives as $receive)
-                                                    <option value="{{ $receive->id }}">
-                                                        {{ $receive->nom }}-({{ $receive->email }} - {{
-                                                        $receive->phone }} - {{ $receive->address }})
-                                                    </option>
-                                                    @endforeach
-                                                    <option value="0"> Ajouter un Nouveau Destinataire</option>
-                                                </select>
-                                            </div>
+                                        <div class="card-header">
+                                            <h3><i class="fas fa-user-friends" style="color: #2c3e50"></i>
+                                                Information
+                                                sur l'Expediteur:
+                                            </h3>
+                                        </div>
+                                        <!-- expediteur -->
+                                        <div class="form-group col-md-12" style="margin-top: 20px">
+                                            <label>NOM DE L'EXPEDITEUR</label> <button type="button" data-toggle="modal"
+                                                id="btn_id" data-target="#modal-lg" title="Ajouter un Expediteur"
+                                                class="btn btn-sm float-end"
+                                                style="background: #563DEA; color: #fff;  margin-bottom: 5px;"><i
+                                                    class="fa fa-plus"></i></button>
+
+                                            <select name="customer_id" id="customer_id"
+                                                class="form-control select2 select2-danger form-control-sm"
+                                                data-dropdown-css-class="select2-gray">
+                                                <option value="0">Selectionner un Expediteur</option>
+                                                @foreach ($customers as $customer)
+                                                <option value="{{ $customer->id }}">
+                                                    {{ $customer->nom }}-({{ $customer->email }} - {{
+                                                    $customer->phone }} - {{ $customer->address }})
+                                                </option>
+                                                @endforeach
+                                                {{-- <option value="0"> Ajouter un Nouveau Expediteur</option> --}}
+                                            </select>
+                                        </div>
 
 
+                                        <br><br>
+                                        <!-- destinataire -->
+                                        <div class="card-header">
+                                            <h3><i class="fas fa-user-friends" style="color: #2c3e50"></i>
+                                                Information
+                                                sur le Destinataire:
+                                            </h3>
+                                        </div>
+                                        <div class="form-group col-md-12" style="margin-top: 20px">
+                                            <label>NOM DU DESTINATAIRE</label>
+                                            <button type="button" id="btn_id_1" title="Ajouter un Destinataire"
+                                                data-toggle="modal" data-target="#modal-lg1"
+                                                class="btn btn-sm float-end"
+                                                style="background: #563DEA; color: #fff;  margin-bottom: 5px;"><i
+                                                    class="fa fa-plus"></i></button>
+
+                                            <select name="receive_id" id="receive_id"
+                                                class="form-control select2 select2-danger form-control-sm"
+                                                data-dropdown-css-class="select2-gray">
+                                                <option value="0">Selectionner un Destinataire</option>
+                                                @foreach ($receives as $receive)
+                                                <option value="{{ $receive->id }}">
+                                                    {{ $receive->nom }}-({{ $receive->email }} - {{
+                                                    $receive->phone }} - {{ $receive->address }})
+                                                </option>
+                                                @endforeach
+                                                {{-- <option value="0"> Ajouter un Nouveau Destinataire</option>
+                                                --}}
+                                            </select>
+                                        </div>
 
 
-                                            <div class="form-row col-md-12 new_receive" style="display: none;">
-                                                <div class="form-group col-md-4">
-                                                    <input type="text" name="nomr" class="form-control form-control-sm"
-                                                        placeholder="Nom du recepteur">
-                                                </div>
-                                                <div class="form-group col-md-4">
-                                                    <input type="text" name="prenomr"
-                                                        class="form-control form-control-sm"
-                                                        placeholder="prenom du recepteur">
-                                                </div>
-                                                <div class="form-group col-md-4">
-                                                    <input type="email" name="emailr"
-                                                        class="form-control form-control-sm"
-                                                        placeholder="email du recepteur">
-                                                </div>
-                                                <div class="form-group col-md-4">
-                                                    <input type="text" name="addressr"
-                                                        class="form-control form-control-sm"
-                                                        placeholder="Address du recepteur">
-                                                </div>
-                                                <div class="form-group col-md-4">
-                                                    <input type="tel" id="phoner" name="phoner"
-                                                        class="form-control form-control-sm">
-                                                    <span id="valid-msgr" class="hide error0 text-sm">✓ Valid</span>
-                                                    <span id="error-msgr" class="hide error1"></span>
-                                                </div>
+                                        {{-- country sender and receive --}}
+                                        <div class="row mt-5">
+                                            {{-- send --}}
+                                            <div class="col-md-6">
+                                                <div class="card card-gray">
+                                                    <div class="card-header">
 
-                                            </div>
-
-                                            {{-- country sender and receive --}}
-                                            <div class="row mt-5">
-                                                {{-- send --}}
-                                                <div class="col-md-6">
-                                                    <div class="card card-gray">
-                                                        <div class="card-header">
-
-                                                            <h3 class="card-title">
-                                                                <i class="fas fa-globe-africa text-dark"></i>
-                                                                Expedition
-                                                            </h3>
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <div class="form-group">
-                                                                <label>Pays d'Expedition</label>
-                                                                <div class="input-group">
-                                                                    <select
-                                                                        class="form-control select2 select2-danger form-control-sm"
-                                                                        data-dropdown-css-class="select2-gray"
-                                                                        id="country_id" name="country_id">
-                                                                        <option value="">Selectionner un Pays</option>
-                                                                        @foreach ($countries as $country)
-                                                                        <option value="{{ $country->id }}">{{
-                                                                            $country->name }}</option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label>Ville d'Expedition</label>
-                                                                <div class="input-group">
-                                                                    <select name="state_id"
-                                                                        class="form-control select2 select2-danger form-control-sm"
-                                                                        data-dropdown-css-class="select2-gray"
-                                                                        id="state_id">
-                                                                        <option value="">Selectionner une Ville</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                        <h3 class="card-title">
+                                                            <i class="fas fa-globe-africa text-dark"></i>
+                                                            Expedition
+                                                        </h3>
                                                     </div>
-                                                </div>
-                                                {{-- receive --}}
-                                                <div class="col-md-6">
-                                                    <div class="card card-gray">
-                                                        <div class="card-header">
-                                                            <h3 class="card-title">
-
-                                                                <i class="fas fa-globe-africa text-dark"></i>
-                                                                Destination
-                                                            </h3>
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <div class="form-group">
-                                                                <label>Pays Destination</label>
-
-                                                                <div class="input-group">
-                                                                    <select
-                                                                        class="form-control select2 select2-danger form-control-sm"
-                                                                        data-dropdown-css-class="select2-gray"
-                                                                        id="countryr_id" name="countryr_id">
-                                                                        <option value="">Selectionner un Pays</option>
-                                                                        @foreach ($countries as $country)
-                                                                        <option value="{{ $country->id }}">{{
-                                                                            $country->name }}</option>
-                                                                        @endforeach
-                                                                        </option>
-                                                                    </select>
-                                                                </div>
+                                                    <div class="card-body">
+                                                        <div class="form-group">
+                                                            <label>Pays d'Expedition</label>
+                                                            <div class="input-group">
+                                                                <select
+                                                                    class="form-control select2 select2-danger form-control-sm"
+                                                                    data-dropdown-css-class="select2-gray"
+                                                                    id="country_id" name="country_id">
+                                                                    <option value="">Selectionner un Pays</option>
+                                                                    @foreach ($countries as $country)
+                                                                    <option value="{{ $country->id }}">{{
+                                                                        $country->name }}</option>
+                                                                    @endforeach
+                                                                </select>
                                                             </div>
-                                                            <div class="form-group">
-                                                                <label>Ville Destination</label>
-
-                                                                <div class="input-group">
-                                                                    <select
-                                                                        class="form-control select2 select2-danger form-control-sm"
-                                                                        data-dropdown-css-class="select2-gray"
-                                                                        id="stater_id" name="stater_id">
-                                                                        <option value="">Selectionner une Ville</option>
-                                                                    </select>
-                                                                </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Ville d'Expedition</label>
+                                                            <div class="input-group">
+                                                                <select name="state_id"
+                                                                    class="form-control select2 select2-danger form-control-sm"
+                                                                    data-dropdown-css-class="select2-gray"
+                                                                    id="state_id">
+                                                                    <option value="">Selectionner une Ville</option>
+                                                                </select>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                            {{-- receive --}}
+                                            <div class="col-md-6">
+                                                <div class="card card-gray">
+                                                    <div class="card-header">
+                                                        <h3 class="card-title">
 
-                                            {{-- package --}}
-                                            <div class="card-header">
-                                                <h3><i class="	fas fa-file-alt" style="color: #2c3e50"></i> Information
-                                                    sur le Colis
-                                                    :
-
-
-                                                    {{-- <a href="javascript:void(0)"
-                                                        class="btn float-right btn-md pt-2" id="addBtn" title="Ajouter"
-                                                        style="background: #2962FF;color: #fff"><i class="fa fa-plus">
-                                                            Ajouter</i></a> --}}
-                                                </h3>
-                                            </div><!-- /.card-header -->
-
-                                            <div class="card-body">
-                                                <!-- /.card-header -->
-                                                {{-- <div class="col-md-12 col-sm-12">
-                                                    <div class="">
-                                                        <table class="table table-hover table-white" id="tableEstimate">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th class="col-sm-2">Marque & Model</th>
-                                                                    <th class="col-sm-1">Nº de châssis</th>
-                                                                    <th style="width:80px;">Longueur</th>
-                                                                    <th style="width:80px;">Largeur</th>
-                                                                    <th style="width:80px;">Hauteur</th>
-                                                                    <th style="width:100px;">Prix Unitaire</th>
-                                                                    <th style="width:80px;">Qty</th>
-                                                                    <th>Total</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td>
-                                                                        <input type="text" class="form-control"
-                                                                            style="min-width: 130px;" id="model_marque"
-                                                                            name="model_marque[]">
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type="text" class="form-control"
-                                                                            style="min-width: 100px;" id="chassis"
-                                                                            name="chassis[]">
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type="text" class="form-control "
-                                                                            style="width: 70px;" id="length"
-                                                                            name="longueur[]">
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type="number" class="form-control "
-                                                                            style="width: 70px;" id="width"
-                                                                            name="largeur[]">
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type="number" class="form-control "
-                                                                            style="width: 80px;" id="height"
-                                                                            name="hauteur[]" value="">
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type="number"
-                                                                            class="form-control unit_price"
-                                                                            style="width: 120px;" id="unit_price"
-                                                                            name="unit_price[]">
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type="number"
-                                                                            class="form-control total qty"
-                                                                            style="width: 100px;" id="qty" name="qty[]">
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type="text"
-                                                                            class="form-control item_total" readonly
-                                                                            style="width: 100px;" id="item_total"
-                                                                            name="item_total[]" value="0">
-                                                                    </td>
-
-                                                                </tr>
-
-                                                            </tbody>
-                                                        </table>
+                                                            <i class="fas fa-globe-africa text-dark"></i>
+                                                            Destination
+                                                        </h3>
                                                     </div>
-                                                    <div class="table-responsive">
-                                                        <table class="table table-hover table-white"
-                                                            id="tableSommation">
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td class="text-right">Sub_total</td>
-                                                                    <td
-                                                                        style="text-align: right; padding-right: 30px; width:210px;">
-                                                                        <input type="text"
-                                                                            class="form-control text-right"
-                                                                            id="sub_total" name="sub_total" value="0">
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td colspan="5" class="text-right">Tax</td>
-                                                                    <td
-                                                                        style="text-align: right; padding-right: 30px; width:210px;">
-                                                                        <input type="text"
-                                                                            class="form-control text-right bg-gradient-gray"
-                                                                            id="tax_1" name="tax_1" value="0" readonly>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td colspan="5" class="text-right">
-                                                                        Discount %
-                                                                    </td>
-                                                                    <td
-                                                                        style="text-align: right; padding-right: 30px; width:210px;">
-                                                                        <input type="text"
-                                                                            class="form-control text-right discount"
-                                                                            id="discount" name="discount_amount"
-                                                                            value="10"
-                                                                            style="background-color: #55efc4">
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td colspan="5" style="text-align: right; ">
-                                                                        Grand Total
-                                                                    </td>
-                                                                    <td
-                                                                        style="text-align: right; padding-right: 30px; width:210px;">
-                                                                        <input class="form-control text-right bg-danger"
-                                                                            type="text" id="grand_total"
-                                                                            name="total_amount" value="0.00  fcfa"
-                                                                            readonly>
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
+                                                    <div class="card-body">
+                                                        <div class="form-group">
+                                                            <label>Pays Destination</label>
+
+                                                            <div class="input-group">
+                                                                <select
+                                                                    class="form-control select2 select2-danger form-control-sm"
+                                                                    data-dropdown-css-class="select2-gray"
+                                                                    id="countryr_id" name="countryr_id">
+                                                                    <option value="">Selectionner un Pays</option>
+                                                                    @foreach ($countries as $country)
+                                                                    <option value="{{ $country->id }}">{{
+                                                                        $country->name }}</option>
+                                                                    @endforeach
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Ville Destination</label>
+
+                                                            <div class="input-group">
+                                                                <select
+                                                                    class="form-control select2 select2-danger form-control-sm"
+                                                                    data-dropdown-css-class="select2-gray"
+                                                                    id="stater_id" name="stater_id">
+                                                                    <option value="">Selectionner une Ville</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
                                                     </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {{-- package --}}
+                                        <div class="card-header">
+                                            <h3><i class="	fas fa-file-alt" style="color: #2c3e50"></i> Information
+                                                sur le Colis type Vehicule
+                                                :
+                                            </h3>
+                                        </div><!-- /.card-header -->
+
+                                        <table class="table table-hover table-bordered" id="tableEstimate">
+                                            <thead class="table-secondary">
+                                                <tr>
+                                                    <th scope="col" class="text-center">Marque&Model</th>
+                                                    <th scope="col" class="text-center">Description</th>
+                                                    <th scope="col" class="text-center">Nº châssis</th>
+                                                    <th scope="col" class="text-center">Longueur(cm)</th>
+                                                    <th scope="col" class="text-center">Largeur(cm)</th>
+                                                    <th scope="col" class="text-center">Hauteur(cm)</th>
+                                                    <th scope="col" class="text-center">Prix U.</th>
+                                                    <th scope="col" class="text-center">Qty</th>
+                                                    <th scope="col" class="text-center">Total</th>
+                                                    <th scope="col" class="NoPrint text-right">
+                                                        <button type="button" class="btn btn-sm"
+                                                            style="background: #563DEA; color: #fff"
+                                                            onclick="BtnAdd()"><i class="fa fa-plus"></i></button>
+
+                                                    </th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody id="TBody">
+                                                <tr id="TRow">
+                                                    <td><input name="model_marque[]" type="text"
+                                                            class="form-control form-control-sm"
+                                                            placeholder="Model&Marque">
+                                                    </td>
+                                                    <td><input name="description_colis[]" type="text"
+                                                            class="form-control form-control-sm"
+                                                            placeholder="Description Colis"></td>
+                                                    <td><input name="chassis[]" type="text"
+                                                            class="form-control-sm form-control" value="0"></td>
+                                                    <td><input name="longueur[]" style="width: 50px" type="number"
+                                                            class="form-control form-control-sm" value="0"></td>
+                                                    <td><input name="largeur[]" style="width: 50px" type="number"
+                                                            class="form-control form-control-sm" value="0"></td>
+                                                    <td><input name="hauteur[]" style="width: 50px" type="number"
+                                                            class="form-control form-control-sm" value="0"></td>
+                                                    <td><input type="number"
+                                                            class="form-control form-control-sm text-end"
+                                                            name="unit_price[]" onchange="Calc(this);" value="0">
+                                                    </td>
+                                                    <td><input type="number" style="width: 50px" value="1"
+                                                            class="form-control form-control-sm text-end" name="qty[]"
+                                                            onchange="Calc(this);"></td>
+                                                    <td><input type="number"
+                                                            class="form-control form-control-sm text-end"
+                                                            name="item_total[]" value="0" readonly></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        {{-- DISPLAY COLIS --}}
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="card  card-tabs">
+                                                    <div class="card-header" style="margin-bottom: 10px">
+                                                        <h3><i class="	fas fa-file-alt" style="color: #2c3e50"></i>
+                                                            Liste Colis Ajouter
+
+                                                        </h3>
+                                                    </div>
+                                                    {{-- <div class="row"> --}}
+
+                                                        <div id="card-container" class=" row  m-1">
+
+                                                        </div>
+                                                        <div id="card-container1" class=" row  m-1">
+
+                                                        </div>
+
+                                                        {{--
+                                                    </div> --}}
+
+                                                    <!-- /.card -->
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row mt-3">
+                                            <div class="col-7">
+                                            </div>
+                                            <div class="col-5">
+                                                {{-- <div class="input-group mb-3">
+                                                    <span class="input-group-text">Total</span>
+                                                    <input type="text" class="form-control text-end" id="FTotal"
+                                                        name="FTotal" disabled="" value="0">
                                                 </div> --}}
-                                                <!-- /.card-body -->
-
-                                                <table class="table table-hover table-bordered" id="tableEstimate">
-                                                    <thead class="table-secondary">
-                                                        <tr>
-                                                            <th scope="col" class="text-center">Marque&Model</th>
-                                                            <th scope="col" class="text-center">Nº châssis</th>
-                                                            <th scope="col" class="text-center">Longueur</th>
-                                                            <th scope="col" class="text-center">Largeur</th>
-                                                            <th scope="col" class="text-center">Hauteur</th>
-                                                            <th scope="col" class="text-center">Prix U.</th>
-                                                            <th scope="col" class="text-center">Qty</th>
-                                                            <th scope="col" class="text-center">Total</th>
-                                                            <th scope="col" class="NoPrint text-right">
-                                                                <button type="button" class="btn btn-sm"
-                                                                    style="background: #563DEA; color: #fff"
-                                                                    onclick="BtnAdd()"><i
-                                                                        class="fa fa-plus"></i></button>
-
-                                                            </th>
-
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody id="TBody">
-                                                        <tr id="TRow">
-                                                            <td><input name="model_marque[]" type="text"
-                                                                    class="form-control"></td>
-                                                            <td><input name="chassis[]" type="text"
-                                                                    class="form-control"></td>
-                                                            <td><input name="longueur[]" style="width: 80px"
-                                                                    type="number" class="form-control"></td>
-                                                            <td><input name="largeur[]" style="width: 80px"
-                                                                    type="number" class="form-control"></td>
-                                                            <td><input name="hauteur[]" style="width: 80px"
-                                                                    type="number" class="form-control"></td>
-                                                            <td><input type="number" class="form-control text-end"
-                                                                    name="unit_price[]" onchange="Calc(this);"></td>
-                                                            <td><input type="number" style="width: 50px"
-                                                                    class="form-control text-end" name="qty[]"
-                                                                    onchange="Calc(this);"></td>
-                                                            <td><input type="number" class="form-control text-end"
-                                                                    name="item_total[]" value="0" readonly></td>
-                                                            {{-- <td class="NoPrint"><button type="button"
-                                                                    class="btn btn-sm btn-danger" style=""
-                                                                    onclick="BtnDel(this)"><i
-                                                                        class="fa fa-trash"></i></button></td> --}}
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-
-                                                <div class="row mt-3">
-                                                    <div class="col-7">
-                                                    </div>
-                                                    <div class="col-5">
-                                                        <div class="input-group mb-3">
-                                                            <span class="input-group-text">Total</span>
-                                                            <input type="text" class="form-control text-end" id="FTotal"
-                                                                name="FTotal" disabled="">
-                                                        </div>
-                                                        <div class="input-group mb-3">
-                                                            <span class="input-group-text">TAX</span>
-                                                            <input type="text" class="form-control text-end" value="20%"
-                                                                id="" name="" disabled>
-                                                        </div>
-                                                        <div class="input-group mb-3">
-                                                            <span class="input-group-text">Remise</span>
-                                                            <input type="text" class="form-control text-end" id="FGST"
-                                                                value="0" name="discount_amount" onchange="GetTotal()">
-                                                        </div>
-                                                        {{-- <div class="input-group mb-3">
-                                                            <span class="input-group-text">GST</span>
-                                                            <input type="number" class="form-control text-end" id="FGST"
-                                                                name="FGST" onchange="GetTotal()">
-                                                        </div> --}}
-                                                        <div class="input-group mb-3">
-                                                            <span class="input-group-text">Grand Total </span>
-                                                            <input type="text" class="form-control text-end" id="FNet"
-                                                                name="total_amount" readonly>
-                                                        </div>
-
-
-                                                    </div>
+                                                {{-- <div class="input-group mb-3">
+                                                    <span class="input-group-text">TAX</span>
+                                                    <input type="text" class="form-control text-end" id="tva" name="tva"
+                                                        onchange="GetTotal()" value="0">
+                                                </div> --}}
+                                                {{-- <div class="input-group mb-3">
+                                                    <span class="input-group-text">Remise</span>
+                                                    <input type="text" class="form-control text-end" id="FGST" value="0"
+                                                        name="discount_amount" onchange="GetTotal()">
+                                                </div> --}}
+                                                {{-- <div class="input-group mb-3">
+                                                    <span class="input-group-text">GST</span>
+                                                    <input type="number" class="form-control text-end" id="FGST"
+                                                        name="FGST" onchange="GetTotal()">
+                                                </div> --}}
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text text-danger font-weight-bold">Grand
+                                                        Total </span>
+                                                    <input type="text" class="form-control text-end" id="FNet"
+                                                        name="total_amount" readonly>
+                                                    <div class="mt-2 ml-1 font-bold">FCFA</div>
                                                 </div>
-                                            </div>
-                                            <div class="card-body row">
-                                                <div class="form-group col-md-4">
-                                                    <label for="" style="font-weight:bold ">Status Paiement <i
-                                                            class="fas fa-donate text-danger"></i></label>
-                                                    <select name="paid_status"
-                                                        class="form-control select2 select2-danger form-control-sm"
-                                                        data-dropdown-css-class="select2-danger" id="paid_status">
-                                                        <option value="">Selectionner le status de Paiement</option>
-                                                        <option value="full_paid">entièrement paye</option>
-                                                        <option value="full_due">Non payer</option>
-                                                        <option value="partial_paid"> Partiellement Paye</option>
-                                                    </select>
-                                                    <input type="text" name="paid_amount"
-                                                        class="form-control form-control-sm paid_amount"
-                                                        placeholder="Enter Paid Amount"
-                                                        style="display:none; margin-top:5px;">
-                                                </div>
-                                                <div class="form-group col-md-4">
-                                                    <label for="" style="font-weight:bold ">Status Livraison <i
-                                                            class="fas fa-dolly-flatbed text-danger"></i></label>
-                                                    <select name="status_livraison"
-                                                        class="form-control select2 select2-danger form-control-sm"
-                                                        data-dropdown-css-class="select2-danger" id="status_livraison">
-                                                        <option value="">Selectionner le Status de Livraison</option>
-                                                        <option value="en embarcation">En Embarcation</option>
-                                                        <option value="en cours d'expedition">En cours d'Expedition
-                                                        </option>
-                                                        <option value="livre">Livree</option>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group col-md-4">
-                                                    <label for="package_id" style="font-weight:bold ">Type Conteneur
-                                                        <i class="fas fa-truck text-danger"></i></label>
-                                                    <select name="unit_id"
-                                                        class="form-control select2 select2-danger form-control-sm"
-                                                        data-dropdown-css-class="select2-danger" id="package_id">
-                                                        <option value="">Selectionner un Conteneur</option>
-                                                        @foreach ($units as $unit )
-                                                        <option value="{{ $unit->id }}">{{ $unit->name }}-({{
-                                                            $unit->numero_id
-                                                            }})
-                                                        </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="package_id" style="font-weight:bold ">
-                                                        Description</label>
-                                                    <textarea name="description" class="form-control col-md-12">
-                                                  </textarea>
-                                                </div>
+
+
                                             </div>
                                         </div>
-                                        <div class="col-row">
-                                            <div class="form-group col-md-4">
-                                                <button type="submit" class="btn btn-dark w-100"> Enregistrer les
-                                                    Informations </button>
-                                            </div>
-
-                                            <div class="col-5"></div>
-                                            <div class="col-3"></div>
-                                        </div>
-                                    </section>
-                                    {{--
+                                        {{--
                                 </div> --}}
 
-                            </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="card  card-tabs">
+                                            <div class="card-header" style="margin-bottom: 10px">
+                                                <h3><i class="	fas fa-file-alt" style="color: #2c3e50"></i>
+                                                    Associer Colis
+                                                    :
+                                                </h3>
+                                            </div>
+                                            {{-- button modal colis dimmensionne --}}
+                                            <div class="d-flex justify-content-between p-4">
+                                                <button type="button" class="btn btn-dark" data-toggle="modal"
+                                                    data-target="#modal-lg-dim">
+                                                    Ajouter un Colis Dimensionne
+                                                </button>
+                                                <button type="button" class="btn btn-dark" data-toggle="modal"
+                                                    data-target="#modal-lg-prix">
+                                                    Ajouter un Colis A Prix
+                                                </button>
+                                                <button type="button" class="btn btn-dark" data-toggle="modal"
+                                                    data-target="#modal-lg-standard">
+                                                    Ajouter un Colis Dimensionne
+                                                </button>
+                                            </div>
+
+                                            <!-- /.card -->
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="row">
+                                    <div class="form-group col-md-4">
+                                        <label for="" style="font-weight:bold ">Entrer un Montant <i
+                                                class="fas fa-donate text-danger"></i></label>
+
+                                        <input type="text" name="paid_amount" class="form-control form-control-sm"
+                                            placeholder="Entrer un Montant" value="0" id="paid_amount">
+                                        <div id="somme" style="display: none">
+                                            <span class="text-sm text-danger font-weight-bold font-italic">Le
+                                                Montant saisi est superieur au Grand Total
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="" style="font-weight:bold ">Status Livraison <i
+                                                class="fas fa-dolly-flatbed text-danger"></i></label>
+                                        <select name="status_livraison"
+                                            class="form-control select2 select2-danger form-control-sm"
+                                            data-dropdown-css-class="select2-danger" id="status_livraison">
+                                            <option value="">Selectionner le Status de Livraison</option>
+                                            <option value="en embarcation">En Embarcation</option>
+                                            <option value="en cours d'expedition">En cours d'Expedition
+                                            </option>
+                                            <option value="livre">Livree</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="package_id" style="font-weight:bold ">Type Conteneur
+                                            <i class="fas fa-truck text-danger"></i></label>
+                                        <select name="unit_id"
+                                            class="form-control select2 select2-danger form-control-sm"
+                                            data-dropdown-css-class="select2-danger" id="package_id">
+                                            <option value="">Selectionner un Conteneur</option>
+                                            @foreach ($units as $unit )
+                                            <option value="{{ $unit->id }}">{{ $unit->name }}-({{
+                                                $unit->numero_id
+                                                }})
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="package_id" style="font-weight:bold ">
+                                            Description</label>
+                                        <textarea name="description" class="form-control col-md-12">
+                                                  </textarea>
+                                    </div>
+                                </div>
+                                <div class="col-row">
+                                    <div class="form-group col-md-4">
+                                        <button type="submit" class="btn btn-dark w-100" id="submit">
+                                            Enregistrer les
+                                            Informations </button>
+                                    </div>
+
+                                    <div class="col-5"></div>
+                                    <div class="col-3"></div>
+                                </div>
+
                         </section>
-                    </form>
-                </div>
+                        {{--
+                </div> --}}
+
             </div>
-            <!-- /.row -->
-        </div><!-- /.container-fluid -->
+            </section>
+
+            </form>
+        </div>
     </div>
-    <!-- /.content -->
+    <!-- /.row -->
+</div><!-- /.container-fluid -->
+
+<!-- /.MODAL Exp -->
+<div class="modal fade" id="modal-lg">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"><i class="fa fa-user-alt"></i>
+                    Ajouter un Expediteur
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{ route('customers.storeExp') }}" method="post" id="myFomExp">
+                @csrf
+                <div class="modal-body">
+                    {{-- <p>One fine body&hellip;</p> --}}
+                    <div class="form-row col-md-12 ">
+                        <div class="form-group col-md-4">
+                            <label for="">Nom</label>
+                            <input type="text" name="nom" class="form-control form-control-sm"
+                                placeholder="Nom du Client">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="">Prenom</label>
+                            <input type="text" name="prenom" class="form-control form-control-sm"
+                                placeholder="Prenom du Client">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for=""> Email</label>
+                            <input type="email" name="email" class="form-control form-control-sm"
+                                placeholder="Email du Client">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="">Address</label>
+                            <input type="text" name="address" class="form-control form-control-sm"
+                                placeholder="Address du Client">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="">Phone</label>
+                            <input type="tel" id="phone" name="phone" class="form-control form-control-sm">
+                            <span id="valid-msg" class="hide error0 text-sm">✓
+                                Valid</span>
+                            <span id="error-msg" class="hide error1"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                    <button type="submit" class="btn btn-primary">
+                        Sauvegarder</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+<!-- /.Modal End-->
+
+<!-- MODAL Dex -->
+<div class="modal fade" id="modal-lg1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"><i class="fa fa-user-alt"></i>
+                    Ajouter un Destinataire
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{ route('customers.storeDex') }}" method="post" id="myFomDex">
+                @csrf
+                <div class="modal-body">
+                    {{-- <p>One fine body&hellip;</p> --}}
+                    <div class="form-row col-md-12">
+                        <div class="form-group col-md-4">
+                            <label for="">Nom</label>
+                            <input type="text" name="nomr" class="form-control form-control-sm"
+                                placeholder="Nom du recepteur">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="">Prenom</label>
+                            <input type="text" name="prenomr" class="form-control form-control-sm"
+                                placeholder="prenom du recepteur">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="">Email</label>
+                            <input type="email" name="emailr" class="form-control form-control-sm"
+                                placeholder="email du recepteur">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="">Address</label>
+                            <input type="text" name="addressr" class="form-control form-control-sm"
+                                placeholder="Address du recepteur">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="">Phone</label>
+                            <input type="tel" id="phoner" name="phoner" class="form-control form-control-sm">
+                            <span id="valid-msgr" class="hide error0 text-sm">✓ Valid</span>
+                            <span id="error-msgr" class="hide error1"></span>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                    <button type="submit" class="btn btn-primary">
+                        Sauvegarder</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+<!-- /.Modal End-->
+
+
+<!-- MODAL COlIS DIMENSIONNE-->
+<div class="modal fade" id="modal-lg-dim">
+    <div class="modal-dialog modal-lg">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"><i class="fas fa-cubes text-primary"></i> Colis Dimensionné</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="formDim" action="{{ route('colisDim.store') }}" method="POST">
+                @csrf
+                <div class="modal-body">
+                    <p>One fine body&hellip;</p>
+                    <div class="row">
+                        <!-- col1 -->
+                        <div class="col-sm-8" style="margin-left:20px;">
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <!-- text input -->
+                                    <div class="form-group">
+                                        <label>Titre :</label>
+                                        <input type="text" id="titre" class="form-control" placeholder="Titre"
+                                            name="titre">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <!-- text input -->
+                                    <div class="form-group">
+                                        <label>Nombre de colis :</label>
+                                        <input type="number" id="quantite" class="form-control"
+                                            placeholder="Nombre de colis" name="quantite" value="1">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <!-- text input -->
+                                    <div class="form-group">
+                                        <label>Largeur (en cm) :</label>
+                                        <input type="number" class="form-control" placeholder="Largeur du colis"
+                                            id="largeur" name="largeur">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <!-- text input -->
+                                    <div class="form-group">
+                                        <label>Longueur (en cm) :</label>
+                                        <input type="number" class="form-control" placeholder="Longueur du colis"
+                                            id="longueur" name="longueur">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <!-- text input -->
+                                    <div class="form-group">
+                                        <label>Hauteur (en cm) :</label>
+                                        <input type="number" class="form-control" placeholder="Hauteur du colis"
+                                            id="hauteur" name="hauteur">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <!-- text input -->
+                                    {{-- <div class="form-group">
+                                        <label>Ajouter une photo...</label>
+                                        <input type="file" class="form-control" id="photo" placeholder="Enter ..."
+                                            name="photo">
+                                    </div> --}}
+                                    <div class="form-group">
+                                        <label>Poids du colis (en kg)</label>
+                                        <input type="number" class="form-control" id="poids" placeholder="Enter ..."
+                                            name="poids">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- col2 -->
+                        <div class="col-sm-3 text-center pt-5" style="border:2px solid black;  margin-left:40px;">
+                            <div class="row mx-auto ">
+                                <div class="form-group">
+                                    <label>Prix par kilogramme</label>
+                                    <input type="number" class="form-control" id="prix_kilo" value="650"
+                                        name="prix_kilo">
+                                </div>
+                                <div class="form-group">
+                                    <label>prix par metre cube </label>
+                                    <input type="number" class="form-control" id="prix_vol" value="650" name="prix_vol">
+                                </div>
+                                <div class="form-group">
+                                    <label>Facteur de Conversion</label>
+                                    <input type="number" class="form-control" id="conversion" value="1000"
+                                        name="conversion">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-top: 50px">
+                            <div class="col-md-6 ">
+                                <div class="row">
+                                    <div class="col-md-6 font-weight-bold mt-2">
+                                        Prix groupé en FCFA:
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" name="total" id="total" class="form-control" value="0"
+                                            readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+
+                                <div class="row">
+                                    <div class="col-md-6 mt-2 font-weight-bold">
+                                        Prix d'un colis en FCFA
+                                        :
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" name="prix" id="prix" class="form-control" value="0"
+                                            readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-around m-3">
+                    <button type="button" class="btn btn-dark" data-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Enregistrer le Colis
+                    </button>
+                </div>
+            </form>
+            {{-- <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="btn btn-primary">
+                    Enregistrer le Colis
+                </button>
+            </div> --}}
+        </div>
+        <!-- /.modal-content -->
+
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.Modal End-->
+
+<!-- MODAL COlIS A PRIX-->
+<div class="modal fade" id="modal-lg-prix">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"> <i class="fas fa-cubes text-primary"></i> Colis a Prix</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form id="formPrice" action="{{ route('colisPrix.store') }}" method="POST">
+                @csrf
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label for="">Titre :</label>
+                            <input type="text" name="titre" id="titre1" class="form-control">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="">Nombres de Pieces :</label>
+                            <input type="number" name="qty" id="qty" min="1" class="form-control">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="">Coût en FCFA :</label>
+                            <input type="number" name="prix" id="prix1" min="1" value="0" class="form-control">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="">Prix d'un colis en FCFA :</label>
+                            <input type="number" name="prix_unit" id="prix_unit" min="0" value="0" readonly
+                                class="form-control">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="">Prix Total en FCFA :</label>
+                            <input type="number" name="prix_total" id="prix_total" min="0" value="0" readonly
+                                class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-dark" data-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Enregistrer le Colis
+                    </button>
+                </div>
+            </form>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+</div>
+<!-- /.Modal End-->
+
+
+<!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
 @endsection
@@ -605,21 +827,22 @@
 
         $("#tableEstimate tbody").append(`<tr>
             <td><input name="model_marque[]" type="text"
-                                                                    class="form-control"></td>
+                                                                    class="form-control form-control-sm"></td>
+                                                                    
+                                                            <td><input name="description_colis[]" type="text"
+                                                                    class="form-control form-control-sm"></td>
                                                             <td><input name="chassis[]" type="text"
-                                                                    class="form-control"></td>
-                                                            <td><input name="longueur[]" style="width: 80px"
-                                                                    type="number" class="form-control"></td>
-                                                            <td><input name="largeur[]" style="width: 80px"
-                                                                    type="number" class="form-control"></td>
-                                                            <td><input name="hauteur[]" style="width: 80px"
-                                                                    type="number" class="form-control"></td>
-                                                            <td><input type="number" class="form-control text-end"
+                                                                    class="form-control form-control-sm"></td>
+                                                            <td><input name="longueur[]" 
+                                                                    type="number" class="form-control form-control-sm" style="width: 50px"></td>
+                                                            <td><input name="largeur[]"                                                                      type="number" class="form-control form-control-sm" style="width: 50px"></td>
+                                                            <td><input name="hauteur[]"                                                                      type="number" class="form-control form-control-sm" style="width: 50px"></td>
+                                                            <td><input type="number" class="form-control form-control-sm text-end"
                                                                     name="unit_price[]" onchange="Calc(this);"></td>
                                                             <td><input type="number" style="width: 50px"
-                                                                    class="form-control text-end" name="qty[]"
+                                                                    class="form-control form-control-sm text-end" name="qty[]"
                                                                     onchange="Calc(this);"></td>
-                                                            <td><input type="number" class="form-control text-end"
+                                                            <td><input type="number" class="form-control form-control-sm text-end"
                                                                     name="item_total[]" value="0" readonly></td>
                                                             <td class="NoPrint"><button type="button"
                                                                     class="btn btn-sm btn-danger" style=""
@@ -631,7 +854,8 @@
 
     function BtnDel(v) {
         $(v).parent().parent().remove();
-        GetTotal();
+        sumAjax() 
+        // GetTotal();
     }
 
     function Calc(v) {
@@ -642,7 +866,9 @@
         var total = qty*unit_price
         document.getElementsByName('item_total[]')[index].value=total;
         // alert(index);
-        GetTotal();
+         sumAjax() 
+       
+        // GetTotal(totalsum);
     }
 
     //   function GetTotal() {
@@ -663,7 +889,46 @@
     //     document.getElementById('FNet').value = net;
     //   }
 
-    function GetTotal() {
+
+     // getData
+    //  $.ajax({
+    //     url: "{{ route('sommeTotal') }}",
+    //     type: 'GET',
+    //     dataType: 'json',
+    //     success: function(data) {
+    //         console.log(data);
+    //         var totalsum = 0;
+    //    $.each(data, function(i,elt){
+    //       console.log(elt);
+    //       totalsum += parseInt(elt);
+    //     })
+    //     console.log(totalsum);
+    //     // GetTotal(totalsum);
+    //      return totalsum;
+    //     }
+    // });
+
+   function sumAjax() {
+    $.ajax({
+        url: "{{ route('sommeTotal') }}",
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            console.log(data);
+            var totalsum = 0;
+       $.each(data, function(i,elt){
+          console.log(elt);
+          totalsum += parseInt(elt);
+        })
+        console.log(totalsum);
+        GetTotal(totalsum);
+        //  return totalsum;
+        }
+    });
+   }
+
+
+    function GetTotal(t) {
         var sum = 0;
         var  unit_prices = document.getElementsByName('item_total[]');
 
@@ -671,15 +936,17 @@
             var amt = unit_prices[index].value;
             sum = +(sum) +  +(amt);
         }
-        document.getElementById('FTotal').value = sum;
-        var sum1 = sum;
-        var TAX = sum1*0.2;
+        // document.getElementById('FTotal').value = sum;
+        // var sum1 = sum;
+        // var tva =  document.getElementById('tva').value
+        // var TAX = sum1*(tva/100);
 
-        var discount = document.getElementById('FGST').value;
+        // var discount = document.getElementById('FGST').value;
         
 
 
-        var net = +(sum) + +(TAX) - (discount);
+        // var net = +(sum) + +(TAX) - (discount) + t;
+        var net = +(sum) + + t;
         document.getElementById('FNet').value = net;
     }
 </script>
@@ -773,136 +1040,26 @@
 </script>>
 
 
-<script type="text/javascript">
-    $(document).ready(function(){
-                $('#addBtn').on("click",function(){
-                
-                //   var model = $('#model_marque').val();
-                //   if (model == '') {
-                //     $.notify("model is required",{globalPosition: 'top right',className: 'error'});
-                //     return false;
-                //   }
-                    
-                    $("#tableEstimate tbody").append(`<tr>
-                    
-                                <td>
-                                <input type="text" class="form-control"
-                                        style="min-width: 130px;" id="item" name="model_marque[]">
-                                </td>
-                                <td>
-                                    <input type="text" class="form-control"
-                                        style="min-width: 100px;" id="chassis" name="chassis[]">
-                                </td>
-                                <td>
-                                    <input type="text" class="form-control "
-                                        style="width: 70px;" id="length" name="longueur[]">
-                                </td>
-                                <td>
-                                    <input type="number" class="form-control "
-                                        style="width: 70px;" id="width" name="largeur[]">
-                                </td>
-                                <td>
-                                    <input type="number" class="form-control "
-                                        style="width: 80px;" id="height" name="hauteur[]"
-                                        value="0">
-                                </td>
-                                <td>
-                                    <input type="number" class="form-control unit_price"
-                                        style="width: 120px;" id="unit_price"
-                                        name="unit_price[]">
-                                </td>
-                                <td>
-                                    <input type="number" class="form-control total qty"
-                                        style="width: 100px;" id="qty" name="qty[]">
-                                </td>
-                                <td>
-                                    <input type="text" class="form-control item_total" readonly
-                                        style="width: 100px;" id="item_total"
-                                        name="item_total[]" value="0">
-                                </td>
-                                <td><a href="javascript:void(0)" class="btn btn-danger remove" title="Remove"><i class="fas fa-trash"></i></a></td>
-                            </tr>`);
-                });
-                    // remoe the row colum
-                $("#tableEstimate tbody").on("click ", ".remove", function(){
-                    $(this).closest("tr").remove();
-                    calc_total();
-                });
-
-                $("#tableEstimate tbody").on("input", ".unit_price", function () {
-                    var unit_price = parseFloat($(this).val());
-                    var qty = parseFloat($(this).closest("tr").find(".qty").val());
-                    var total = $(this).closest("tr").find(".item_total");
-                    // total.val(unit_price * qty);
-
-                    calc_total();
-                });
-
-                $("#tableEstimate tbody").on("input", ".qty", function () {
-                    var qty = parseFloat($(this).val());
-                    var unit_price = parseFloat($(this).closest("tr").find(".unit_price").val());
-                    var total = $(this).closest("tr").find(".item_total");
-                    total.val(unit_price * qty);
-                    calc_total();
-                });
-                function calc_total() {
-                    var sum = 0;
-
-                    $(".item_total").each(function () {
-                    sum += parseFloat($(this).val());
-                    });
-                    // $("#subtotal").text(sum);
-                    
-                    var tax     = 100;
-                    $(document).on("change keyup blur", "#qty", function() 
-                    {
-                        var amounts = sum;
-                        var qty = $("#qty").val();
-                        var discount = $(".discount").val();
-                        $("#sub_total").val(amounts);
-                        $("#tax_1").val((amounts * qty)/tax);
-                        $("#grand_total").val((parseInt(amounts)) - (parseInt(discount)));
-                        
-                        // $(".item_total").val(amounts*qty);
-                        // $("#sub_total").val(amounts * qty);
-                        // $("#tax_1").val((amounts * qty)/tax);
-                        // $("#grand_total").val((parseInt(amounts)) - (parseInt(discount)));
-                    }); 
-                }
-            })              
-</script>
-<script type="text/javascript">
-    //paid status
-    $(document).on("change","#paid_status",function(){
-      var paid_status = $(this).val();
-      if (paid_status=='partial_paid') {
-        $('.paid_amount').show();
-      } else {
-        $('.paid_amount').hide();
-      }
-  })
-</script>
 <script>
-    //New customer
-  $(document).on("change","#customer_id",function(){
-      var customer_id = $(this).val();
-      if (customer_id=='0') {
-        $('.new_customer').show();
-      } else {
-        $('.new_customer').hide();
-      }
-  })
-
-  $(document).on("change","#receive_id",function(){
-      var receive_id = $(this).val();
-      if (receive_id=='0') {
-        $('.new_receive').show();
-      } else {
-        $('.new_receive').hide();
-      }
-  })
-
-
+    //  Compare value 
+  $(document).ready(function () {
+    $('#paid_amount').change(function () {
+        // console.log($(this).val());
+        var paid_amount = document.getElementById('paid_amount').value;
+       console.log(paid_amount);
+       var total_paid = document.getElementById('FNet').value;
+       console.log(total_paid);
+       if (parseInt(paid_amount) > parseInt(total_paid)) {
+         $('#somme').show('');
+         $('#paid_amount').addClass('is-invalid');
+         $('#submit').addClass('disabled');
+       }else{
+        $('#somme').hide('');    
+        $('#submit').removeClass('disabled');
+       }
+    })
+      
+    })
 </script>
 <script>
     $(function () {
@@ -954,15 +1111,83 @@
 <!-- Page specific script -->
 <script type="text/javascript">
     $(document).ready(function(){
+    $('#myFomExp').validate({
+        rules:{
+            nom: {
+                required:true,
+            },
+            prenom: {
+                required:true,
+            },
+            email: {
+                required:true,
+            },
+            address: {
+                required:true,
+            },
+            phone: {
+                required:true,
+            },
+        },
+            messages: {
+
+            },
+            errorElement: 'span',
+            errorPlacement:function(error,element){
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight:function(element,errorClass,validClass){
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function(element,errorClass,validClass){
+                $(element).removeClass('is-invalid');
+            }
+    })
+ })
+</script>
+<script type="text/javascript">
+    $(document).ready(function(){
+    $('#myFomDex').validate({
+        rules:{
+            nomr: {
+                required:true,
+            },
+            prenomr: {
+                required:true,
+            },
+            emailr: {
+                required:true,
+            },
+            addressr: {
+                required:true,
+            },
+            phoner: {
+                required:true,
+            },
+        },
+            messages: {
+
+            },
+            errorElement: 'span',
+            errorPlacement:function(error,element){
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight:function(element,errorClass,validClass){
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function(element,errorClass,validClass){
+                $(element).removeClass('is-invalid');
+            }
+    })
+ })
+</script>
+<script type="text/javascript">
+    $(document).ready(function(){
     $('#myForm').validate({
         rules:{
-            paid_status: {
-                required:true,
-            },
             status_livraison: {
-                required:true,
-            },
-            unit_id: {
                 required:true,
             },
             customer_id: {
@@ -1002,5 +1227,267 @@
  })
 </script>
 
+{{-- SCRIPT des COLIS DIMENSIONS --}}
 
+<script>
+    function refreshContent() {
+    // getData
+    $.ajax({
+        url: "{{ route('getDataDim') }}",
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            console.log(data);
+            $('#card-container').empty(); // vider la div
+            $.each(data, function(index, element) {
+                var cardHtml = '<div class="card col-md-3  data-list"  id="element-' + element.id + '">';
+                cardHtml += '<div class=" d-flex justify-content-between mt-1">';
+                cardHtml += '<h6 class="font-bold text-lg">' + element.titre + '</h6>';
+                cardHtml += '<p id="' + element.id + '"> <i class="far fa-window-close delete-btn" style="font-size:24px"></i> </p>';
+            
+
+                cardHtml += '</div>';
+                cardHtml += '<div class="d-flex justify-content-between align-items-center">';
+                cardHtml += '<p class="text-md">' + 'Largeur :' + '</p>';
+                cardHtml += '<p class="">' + element.largeur + '</p>';
+                cardHtml += '</div>';
+              
+                cardHtml += '<div class="d-flex justify-content-between align-items-center">';
+                cardHtml += '<p class="text-md">' + 'Longueur :' + '</p>';
+                cardHtml += '<p class="">' + element.longueur + '</p>';
+                cardHtml += '</div>';
+
+                cardHtml += '<div class="d-flex justify-content-between align-items-center">';
+                cardHtml += '<p class="text-md">' + 'Hauteur :' + '</p>';
+                cardHtml += '<p class="">' + element.hauteur + '</p>';
+                cardHtml += '</div>';
+
+                cardHtml += '<div class="d-flex justify-content-between align-items-center">';
+                cardHtml += '<p class="text-md">' + 'Quantité  :' + '</p>';
+                cardHtml += '<p class="">' + element.quantite + ' PCs' + '</p>';
+                cardHtml += '</div>';
+
+                cardHtml += '<div class="d-flex justify-content-between align-items-center">';
+                cardHtml += '<p class="text-md">' + 'prix Total  :' + '</p>';
+                cardHtml += '<p class="">' + element.total + ' FCFA' + '</p>';
+                cardHtml += '</div>';
+
+                cardHtml += '</div></div>';
+
+              $('#card-container').append(cardHtml);
+        
+          });
+          sumAjax(); 
+        }
+    });
+ }
+    $(document).ready(function () {
+        // Store
+        $('#formDim').submit(function (event) {
+             event.preventDefault();
+             var formData = $(this).serialize();
+              
+             console.log(formData);
+             $.ajax({
+                type: 'POST',
+                url: "{{ route('colisDim.store') }}",
+                data: formData,
+                success: function(response) {
+                    $('#formDim')[0].reset(); // Réinitialiser le formulaire
+                    refreshContent();
+                },
+                error : function (error) {
+                    console.log(error);
+                }
+             })
+        })
+
+         refreshContent(); // appeler refreshContent pour la première fois
+        //  setInterval(refreshContent, 2000); // actualiser toutes les 2 secondes
+
+            //    DELETE DATA
+            $('#card-container').on('click', '.delete-btn', function() {
+                var id = $(this).parent().attr('id'); // Récupère l'ID de l'élément parent
+                console.log(id);
+                // Envoyer une requête AJAX à votre route de suppression avec l'ID récupéré
+                $.ajax({
+                    url: '/invoices/delet/' + id,
+                type: 'POST',
+                success: function(data) {
+                    console.log('delete');
+                    $('#element-' + id).remove();
+                    sumAjax(); 
+                },
+                data: {
+                    "_token": "{{ csrf_token() }}"
+                },
+                });
+            });
+
+
+
+           
+     })
+
+     
+
+
+</script>
+
+{{-- SOMME COLIS DIM --}}
+<script>
+    $(document).ready(function () {
+          //    CALCUL DE LA SOMME 
+     
+          function calcul(quantite,largeur,longueur,hauteur,poids,prix_kilo,prix_vol,conversion) {
+             
+            var volume = longueur*largeur*hauteur / conversion;
+            var prixVolume = volume*prix_vol;
+
+            var prixPoidsUn = poids*prix_kilo;
+            
+            var prixTotalUn = Math.round(prixPoidsUn + prixVolume);
+            var prixTotalNbre = Math.round(prixPoidsUn*quantite + prixVolume*quantite);
+            $("#prix").val(prixTotalUn);
+            $("#total").val(prixTotalNbre);
+            console.log(volume);
+        }
+
+            // Événement à déclencher quand les inputs de poids et de volume sont modifiés
+            $("#largeur,#longueur,#hauteur,#poids,#prix_kilo,#prix_vol, #total, #prix,#quantite,#conversion").on("input", function() {
+            // Récupération des valeurs de poids et de volume
+
+            var quantite = $('#quantite').val();
+            var largeur = $('#largeur').val();
+            var longueur = $('#longueur').val();
+            var hauteur = $('#hauteur').val();
+            var conversion = $('#conversion').val();
+            var poids = $('#poids').val();
+            var prix_kilo = $('#prix_kilo').val();
+            var prix_vol = $('#prix_vol').val();
+            var total = $("#total").val();
+            var prix = $("#prix").val();
+            
+            // Calcul du prix en fonction du poids et du volume
+             calcul(quantite,largeur,longueur,hauteur,poids,prix_kilo,prix_vol,conversion);
+        });
+    })
+</script>
+
+
+{{-- SCRIPT de COLIS PRIX --}}
+
+<script>
+    function refreshContentPrice() {
+    // getData
+    $.ajax({
+        url: "{{ route('getDataPrix') }}",
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            console.log(data);
+            $('#card-container1').empty(); // vider la div
+            $.each(data, function(index, element) {
+                var cardHtml1 = '<div class="card col-md-3  data-list"  id="element-' + element.id + '">';
+                cardHtml1 += '<div class=" d-flex justify-content-between mt-1">';
+                cardHtml1 += '<h6 class="font-bold text-lg">' + element.titre + '</h6>';
+                cardHtml1 += '<p id="' + element.id + '"> <i class="far fa-window-close delete-btn1" style="font-size:24px"></i> </p>';
+                cardHtml1 += '</div>';
+              
+                cardHtml1 += '<div class="d-flex justify-content-between align-items-center">';
+                cardHtml1 += '<p class="text-md">' + 'Quantité  :' + '</p>';
+                cardHtml1 += '<p class="">' + element.qty + ' PCs' + '</p>';
+                cardHtml1 += '</div>';
+
+                cardHtml1 += '<div class="d-flex justify-content-between align-items-center">';
+                cardHtml1 += '<p class="text-md">' + 'prix Total  :' + '</p>';
+                cardHtml1 += '<p class="">' + element.prix_total + ' FCFA' + '</p>';
+                cardHtml1 += '</div>';
+
+                cardHtml1 += '</div></div>';
+
+              $('#card-container1').append(cardHtml1);
+        
+          });
+          sumAjax(); 
+        }
+    });
+ }
+
+    $(document).ready(function () {
+
+         // STORE
+         $('#formPrice').submit(function (event) {
+             event.preventDefault();
+             var formDataC = $(this).serializeArray();
+              
+             console.log(formDataC);
+             $.ajax({
+                type: 'POST',
+                url: "{{ route('colisPrix.store') }}",
+                data: formDataC,
+                success: function(response) {
+                    $('#formPrice')[0].reset(); // Réinitialiser le formulaire
+                  
+                    refreshContentPrice();
+                },
+                error : function (error) {
+                    console.log(error);
+                }
+             })
+        })
+
+        refreshContentPrice();
+
+          //    DELETE DATA
+          $('#card-container1').on('click', '.delete-btn1', function() {
+        var id = $(this).parent().attr('id'); // Récupère l'ID de l'élément parent
+        console.log(id);
+        // Envoyer une requête AJAX à votre route de suppression avec l'ID récupéré
+         $.ajax({
+            url: '/invoices/deletPrix/' + id,
+            type: 'POST',
+            success: function(data) {
+                console.log('delete');
+                $('#element-' + id).remove();
+                sumAjax(); 
+            },
+            data: {
+                "_token": "{{ csrf_token() }}"
+            },
+            });
+         });
+    })
+</script>
+
+{{-- SOMME COLIS PRIX --}}
+
+<script>
+    $(document).ready(function () {
+          //    CALCUL DE LA SOMME 
+     
+          function calculPrix(qty,prix1) {
+             
+            var prix_unit = prix1;
+            var prix_unitNbr = prix1*qty;
+            
+            var prixTotalUn = Math.round(prix_unit);
+            var prixTotalNbre = Math.round(prix_unitNbr);
+            $("#prix_unit").val(prixTotalUn);
+            $("#prix_total").val(prixTotalNbre);
+           
+        }
+
+            // Événement à déclencher quand les inputs de poids et de volume sont modifiés
+            $("#qty,#prix1").on("input", function() {
+            // Récupération des valeurs de poids et de volume
+
+            var qty = $('#qty').val();
+            var prix1 = $('#prix1').val();
+            
+            // Calcul du prix en fonction du poids et du volume
+             calculPrix(qty,prix1);
+        });
+    })
+</script>
 @endsection

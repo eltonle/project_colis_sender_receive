@@ -39,6 +39,30 @@ class CustomerController extends Controller
         $category->save();
         return redirect()->route('customers.index')->with('message','Client enregistrer avec success...');
     }
+    public function storeExp(Request $request)
+    {
+        $category = new Customer();
+        $category->nom=$request->nom;
+        $category->prenom=$request->prenom;
+        $category->email=$request->email;
+        $category->address=$request->address;
+        $category->phone=$request->phone;
+        $category->created_by=Auth()->user()->id;
+        $category->save();
+        return redirect()->route('invoices.create')->with('message',' Enregistrer avec success...');
+    }
+    public function storeDex(Request $request)
+    {
+        $category = new Customer();
+        $category->nom=$request->nomr;
+        $category->prenom=$request->prenomr;
+        $category->email=$request->emailr;
+        $category->address=$request->addressr;
+        $category->phone=$request->phoner;
+        $category->created_by=Auth()->user()->id;
+        $category->save();
+        return redirect()->route('invoices.create')->with('message',' Enregistrer avec success...');
+    }
     public function edit($id)
     {
         $edit = Customer::find($id);

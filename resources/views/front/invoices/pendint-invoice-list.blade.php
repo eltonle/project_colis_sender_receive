@@ -9,6 +9,7 @@
 @endsection
 
 @section('content')
+
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -17,6 +18,7 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h3 class="m-0 font-weight-bold">Gestions des Expeditions</h3>
+
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -66,13 +68,15 @@
                                             <th hidden>id</th>
                                             <th hidden>id</th>
                                             <th hidden>id</th>
+                                            <th hidden>paid_amount</th>
+                                            <th hidden>total_amount</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($allData as $key => $invoice)
                                         <tr>
 
-                                            <td style="color:#2962FF;font-weight: 900; padding: 2px;">
+                                            <td style="color:#2962FF;font-weight: 900; ">
                                                 Récép №#{{$invoice->invoice_no}} </td>
 
                                             <td class="nom">
@@ -89,15 +93,15 @@
                                                 @if ($invoice->status_livraison == 'en embarcation')
                                                 <span class="badge"
                                                     style="background: #2962FF;color:white; padding: 3px;">
-                                                    <i class="fa fa-ship"></i> en embarcation</span>
+                                                    <i class="fa fa-ship"></i> En Embarcation</span>
                                                 @elseif ($invoice->status_livraison == "en cours d'expedition")
                                                 <span class="badge"
                                                     style="background: #010742; color:white; padding: 3px;">
-                                                    <i class="fa fa-globe-americas"></i> en cours d'expedition</span>
+                                                    <i class="fa fa-globe-americas"></i> En Cours d'Expedition</span>
                                                 @elseif ($invoice->status_livraison == 'livre')
                                                 <span class="badge"
                                                     style="background:  #B61418; color:white; padding: 3px;">
-                                                    <i class="fa fa-check"></i> livre</span>
+                                                    <i class="fa fa-check"></i> Livré</span>
                                                 @endif
                                             </td>
                                             <td hidden>
@@ -113,26 +117,26 @@
                                                 @if ($invoice['payement']['paid_status'] == 'partial_paid')
                                                 <span class="badge"
                                                     style="background: #43BD00;color:white; padding: 3px;">
-                                                    <i class="fa fa-burn"></i> partiel</span>
+                                                    <i class="fa fa-burn"></i> Partiel</span>
                                                 @elseif ($invoice['payement']['paid_status'] == 'full_due')
                                                 <span class="badge"
                                                     style="background:  #B61418; color:white; padding: 3px;">
-                                                    <i class="fa fa-dailymotion"></i> Non payer</span>
+                                                    <i class="fas fa-thumbs-down "></i> Non Payer</span>
                                                 @elseif ($invoice['payement']['paid_status']=='full_paid')
                                                 <span class="badge"
                                                     style="background: #36BEA6; color:white; padding: 3px;">
-                                                    payer</span>
+                                                    <i class="fas fa-thumbs-up"></i> Payer</span>
                                                 @endif
                                             </td>
                                             <td class="">
-                                                @if ($invoice->status == '0')
+                                                {{-- @if ($invoice->status == '0')
                                                 <span class="badge"
-                                                    style="background: #EF2856;color:white; padding: 3px;"> en
-                                                    attente</span>
-                                                @elseif ($invoice->status == '1')
+                                                    style="background: #EF2856;color:white; padding: 3px;"> En
+                                                    Attente</span> --}}
+                                                @if ($invoice->status == '1')
                                                 <span class="badge"
                                                     style="background: #B61418; color:white; padding: 3px;">
-                                                    <i class="fa fa-check"></i> valide</span>
+                                                    <i class="fa fa-check"></i> Validé</span>
                                                 @endif
                                             </td>
 
@@ -171,14 +175,14 @@
                                                             title="verifier la saisier et valider"
                                                             class="dropdown-item"><span
                                                                 class="text-xs text-dark font-weight-bold"><i
-                                                                    class="fa fa-eye"></i> Voir l'expedition</span></a>
+                                                                    class="fa fa-eye"></i> Voir l'Expedition</span></a>
 
                                                         <a href="{{ route('invoices.edit_invoice',$invoice->id) }}"
-                                                            type="button" title="editer
-                                                            l'expedition" class="dropdown-item">
+                                                            type="button" title="editer l'expedition
+                                                            " class="dropdown-item">
                                                             <span class="text-xs text-dark font-weight-bold"><i
                                                                     class="fas fa-edit"></i> Editer
-                                                                l'expedition</span>
+                                                                l'Expedition</span>
                                                         </a>
                                                         <div class="dropdown-item">
                                                             {{-- <form method="POST"
@@ -198,7 +202,7 @@
                                                                     title='Supprimer'> <span
                                                                         class="text-xs text-dark font-weight-bold"><i
                                                                             class="fa fa-trash"></i> Supprimer
-                                                                        l'expedition</span></button>
+                                                                        l'Expedition</span></button>
                                                             </form>
                                                         </div>
                                                         <a href="#" type="button"
@@ -209,36 +213,42 @@
                                                                     class="fas fa-sync-alt"></i> Status
                                                                 Livraison</span>
                                                         </a>
-                                                        <a href="#" type="button" title="ajouter un paiement"
+                                                        @if ($invoice['payement']['paid_amount'] <
+                                                            $invoice['payement']['total_amount']) <a href="#"
+                                                            type="button" title="ajouter un paiement"
                                                             class="btn btn-default dropdown-item modal-lg2 editPayement"
                                                             data-toggle="modal" data-target="#modal-lg2">
                                                             <span class="text-xs text-dark font-weight-bold"><i
                                                                     class="fas fa-money-bill-alt"></i> Ajouter un
                                                                 Paiement</span>
-                                                        </a>
+                                                            </a>
+                                                            @endif
 
-                                                        <a href="javascript:void(0)" id="show-user" data-url="{{
-                                                            route('customers.paid_modal',$invoice->id) }}"
-                                                            class="dropdown-item showPayemnt" data-toggle="modal"
-                                                            data-target="#modal-lg">
-                                                            <span class="text-xs text-dark font-weight-bold"><i
-                                                                    class="fa fa-eye"></i> Voir les
-                                                                Paiement</span>
+                                                            <a href="javascript:void(0)" id="show-user" data-url="{{
+                                                                route('customers.paid_modal',$invoice->id) }}"
+                                                                class="dropdown-item showPayemnt" data-toggle="modal"
+                                                                data-target="#modal-lg">
+                                                                <span class="text-xs text-dark font-weight-bold"><i
+                                                                        class="fa fa-eye"></i> Voir les
+                                                                    Paiement</span>
 
-                                                        </a>
-                                                        <a href="{{ route('invoices.print',$invoice->id) }}"
-                                                            target="_blank" title="imprimer recépissé"
-                                                            class="dropdown-item">
-                                                            <span class="text-xs text-dark font-weight-bold"><i
-                                                                    class="fa fa-print"></i> imprimer
-                                                                recépissé</span>
-                                                        </a>
-                                                        <a href="{{ route('invoices.etiquette',$invoice->id) }}"
-                                                            target="_blank" title="imprimer l'étiquette"
-                                                            class="dropdown-item">
-                                                            <span class="text-xs text-dark font-weight-bold"><i
-                                                                    class="fa fa-print"></i> imprimer l'étiquette</span>
-                                                        </a>
+                                                            </a>
+
+
+                                                            <a href="{{ route('invoices.print',$invoice->id) }}"
+                                                                target="_blank" title="imprimer recépissé"
+                                                                class="dropdown-item">
+                                                                <span class="text-xs text-dark font-weight-bold"><i
+                                                                        class="fa fa-print"></i> Imprimer
+                                                                    Recépissé</span>
+                                                            </a>
+                                                            <a href="{{ route('invoices.etiquette',$invoice->id) }}"
+                                                                target="_blank" title="imprimer l'étiquette"
+                                                                class="dropdown-item">
+                                                                <span class="text-xs text-dark font-weight-bold"><i
+                                                                        class="fa fa-print"></i> Imprimer
+                                                                    l'Etiquette</span>
+                                                            </a>
                                                     </div>
                                                 </div>
 
@@ -248,8 +258,8 @@
                                             <td hidden>{{$invoice['payement']['due_amount'] }} </td>
                                             <td hidden>{{ number_format($invoice['payement']['total_amount'],0,'
                                                 ',',')}} FCFA</td>
-
-                                            <!-- /.modal -->
+                                            <td hidden>{{$invoice['payement']['paid_amount'] }} </td>
+                                            <td hidden>{{$invoice['payement']['total_amount'] }} </td>
                                         </tr>
 
                                         @endforeach
@@ -270,6 +280,8 @@
                                             <th hidden>id</th>
                                             <th hidden>id</th>
                                             <th hidden>id</th>
+                                            <th hidden>paid_amount</th>
+                                            <th hidden>total_amount</th>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -428,7 +440,7 @@
                             <hr>
                             <div class="row" id="">
                                 <div class="form-group col-md-4">
-                                    <label for=""> <i class="fa fa-money-bill-alt" style="color: #2962FF"></i> Montant
+                                    <label for=""> <i class="fa fa-money-bill-alt" style="color: #2962FF"></i> Coût
                                         Total de l'Expedition</label>
                                     <input type="text" class="form-control bg-blue" id="total_amount1" disabled>
                                 </div>
@@ -458,12 +470,15 @@
                             <div class="form-group col-md-5">
                                 <label for=""><i class="fas fa-calendar" style="color: #43BD00"></i> Saisir une
                                     Date</label>
-                                <input type="date" class="form-control" name="date">
+                                <input type="date" class="form-control" value="{{ $date }}" name="date">
                             </div>
                             <div class="form-group col-md-5">
                                 <label for=""><i class="fas fa-money-check-alt" style="color: #43BD00"></i> Saisir un
                                     Montant</label>
-                                <input type="text" class="form-control" name="paid_amount1" id="">
+                                <input type="number" class="form-control" name="paid_amount1" id="paid_amount_show1">
+                                <div id="errMsg"></div>
+                                <input type="text" class="form-control bg-danger" name="due_amount_show1"
+                                    id="due_amount_show1" hidden>
                             </div>
                             <div class="form-group col-md-2" style="padding-top:30px;">
                                 <input type="text" class="form-control" value='FCFA' disabled>
@@ -473,7 +488,8 @@
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-                        <button type="submit" class="btn " style="background: #2962FF; color: #fff">Enregistrer le
+                        <button type="submit" class="btn " style="background: #2962FF; color: #fff"
+                            id="submit">Enregistrer le
                             Paiement</button>
                     </div>
                 </form>
@@ -532,14 +548,16 @@
                         <hr>
                         <div class="row">
                             <div class="form-group col-md-4">
-                                <label for=""> <i class="fa fa-money-bill-alt" style="color: #2962FF"></i> Montant
+                                <label for=""> <i class="fa fa-money-bill-alt" style="color: #2962FF"></i> Coût
                                     Total de l'Expedition</label>
                                 <input type="text" class="form-control bg-blue" id="total_amount2" disabled>
+                                <input type="text" class="form-control bg-blue" id="total_amount_show2" hidden>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for=""> <i class="fa fa-money-bill-alt" style="color: #0c1561"></i> Montant
                                     Payé</label>
                                 <input type="text" class="form-control bg-navy" name="" id="paid_amount2" disabled>
+                                <input type="text" class="form-control bg-navy" name="" id="paid_amount_show22" hidden>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for=""><i class="fas fa-money-check-alt" style="color: #EF2856"></i> Reste à
@@ -566,37 +584,45 @@
 
                         </tbody>
                     </table>
-                    <div class="row" style="margin-bottom: -33px">
+                </div>
+                <div class="" id="pay_toggle">
+                    <div class="" style="margin-bottom: -33px">
                         <h4 class="text-center"><i class="fa fa-edit" style="color: #43BD00"></i>Ajouter un Paiement
                         </h4>
                     </div>
-                </div>
-                <form action="/update_facture1/" method="POST" enctype="multipart/form-data" id="editForm2">
-                    @csrf
-                    {{-- @method('PUT') --}}
-                    <div class="row modal-body" style=" margin-top: 30px">
-                        <div class="form-group col-md-5">
-                            <label for=""><i class="fas fa-calendar" style="color: #43BD00"></i> Saisir une
-                                Date</label>
-                            <input type="date" class="form-control" name="date">
+
+                    <form action="/update_facture1/" method="POST" enctype="multipart/form-data" id="editForm2">
+                        @csrf
+                        <div class="row modal-body" style=" margin-top: 30px">
+                            <div class="form-group col-md-5">
+                                <label for=""><i class="fas fa-calendar" style="color: #43BD00"></i> Saisir une
+                                    Date</label>
+                                <input type="date" value="{{ $date }}" class="form-control" name="date">
+                            </div>
+                            <div class="form-group col-md-5">
+                                <label for=""><i class="fas fa-money-check-alt" style="color: #43BD00"></i> Saisir un
+                                    Montant</label>
+                                <input type="number" class="form-control" name="paid_amount2" id="paid_amount_show2">
+                                <div id="errMsg1"></div>
+                                <input type="text" class="form-control" name="due_amount_show2" id="due_amount_show2"
+                                    hidden>
+
+                                <input type="hidden" class="form-control" name="new_paid_amount2" id="due_amount_2">
+                            </div>
+                            <div class="form-group col-md-2" style="padding-top:30px;">
+                                <input type="text" class="form-control" value='FCFA'>
+                            </div>
+
                         </div>
-                        <div class="form-group col-md-5">
-                            <label for=""><i class="fas fa-money-check-alt" style="color: #43BD00"></i> Saisir un
-                                Montant</label>
-                            <input type="text" class="form-control" name="paid_amount2" id="">
-                            <input type="hidden" class="form-control" name="new_paid_amount2" id="due_amount_2">
-                        </div>
-                        <div class="form-group col-md-2" style="padding-top:30px;">
-                            <input type="text" class="form-control" value='FCFA'>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" id="submit1" class="btn"
+                                style="background: #2962FF; color: #fff">Enregistrer le
+                                Paiement</button>
                         </div>
 
-                    </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn" style="background: #2962FF; color: #fff">Enregistrer le
-                            Paiement</button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
             <!-- /.modal-content -->
         </div>
@@ -676,6 +702,7 @@
          })
     }) 
 </script>
+
 {{-- modal update Payemeny --}}
 <script>
     $(document).ready(function() {
@@ -696,11 +723,51 @@
             $('#due_amount').val(data[7]);
             $('#due_amount1').val(data[12]);
             $('#total_amount1').val(data[13]);
+            $('#due_amount_show1').val(data[12]);
+            
+            $paid_amount_show1 = $('#paid_amount_show1').val();
+            $due_amount_show1 = $('#due_amount_show1').val();
+             
+            $('#paid_amount_show1').keyup(function () {
+                $paid_amount_show1 = $(this).val();
+                $due_amount_show1 = $('#due_amount_show1').val();
+                console.log($due_amount_show1);
+                console.log($paid_amount_show1);
+                console.log(typeof($paid_amount_show1));
+
+            //  if (parseInt($paid_amount_show1 )> 0) {
+                if ($paid_amount_show1 == '') {
+                    $('#submit').attr('disabled', false);
+                    $("div#errMsg").css("color", "#16a085");
+                    $("div#errMsg").html("");
+                }
+                else if (parseInt($paid_amount_show1) > parseInt($due_amount_show1)) {
+                    $('#submit').attr('disabled', true);
+                    $("div#errMsg").css("color", "red");
+                    $("div#errMsg").html("Montant elevé");
+                }else if (parseInt($paid_amount_show1) === parseInt($due_amount_show1)) {
+                    $('#submit').attr('disabled', false);
+                    $("div#errMsg").css("color", "green");
+                    $("div#errMsg").html("payer Totalement");
+                }
+                 else {
+                    $('#submit').attr('disabled', false);
+                    $("div#errMsg").css("color", "green");
+                    $("div#errMsg").html("Payer partielement");
+                }
+            //  }
+               
+              
+            })
 
             $('#editForm1').attr('action','/invoices/update_facture/'+data[11]);
          })
+
+        
     }) 
 </script>
+
+
 {{-- modal update ShowPayemeny --}}
 <script>
     $(document).ready(function() {
@@ -712,7 +779,7 @@
                 $tr = $tr.prev('.parent');
             }
             var data = table.row($tr).data();
-            console.log(data);
+            // console.log(data);
             $('#e_recep2').val(data[0]);
             $('#name2').val(data[1]);
             $('#namer2').val(data[2]);
@@ -721,6 +788,58 @@
             $('#due_amount2').val(data[7]);
             $('#due_amount_2').val(data[12]);
             $('#total_amount2').val(data[13]);
+
+            $('#paid_amount_show22').val(data[14]);
+            $('#total_amount_show2').val(data[15]);
+
+
+            $('#due_amount_show2').val(data[12]);
+            
+            // $paid_amount_show2 = $('#paid_amount_show2').val();
+            $due_amount_show2 = $('#due_amount_show2').val();
+            $total_amount_show2 = $('#total_amount_show2').val();
+
+            $('#paid_amount_show2').keyup(function () {
+                $paid_amount_show2 = $(this).val();
+                // alert($paid_amount_show2).
+                $due_amount_show2 = $('#due_amount_show2').val();               
+                $total_amount_show2 = $('#total_amount_show2').val();
+                // console.log($due_amount_show2);
+                // console.log($paid_amount_show2);
+
+                if ($paid_amount_show2 == '') {
+                    $('#submit1').attr('disabled', false);
+                    $("div#errMsg1").css("color", "#16a085");
+                    $("div#errMsg1").html(" ");
+                }
+                else if (parseInt($paid_amount_show2) > parseInt($due_amount_show2)) {
+                    $('#submit1').attr('disabled', true);
+                    $("div#errMsg1").css("color", "red");
+                    $("div#errMsg1").html("Montant elevé");
+                }else if (parseInt($paid_amount_show2) === parseInt($due_amount_show2)) {
+                    $('#submit1').attr('disabled', false);
+                    $("div#errMsg1").css("color", "green");
+                    $("div#errMsg1").html("payer Totalement");
+                }
+                else {
+                    $('#submit1').attr('disabled', false);
+                    $("div#errMsg1").css("color", "green");
+                    $("div#errMsg1").html("payer Partiellement")
+                }
+            })
+            
+            $paid_amount_show22 = $('#paid_amount_show22').val();
+            $total_amount_show2 = $('#total_amount_show2').val();
+           
+             console.log($paid_amount_show22);
+             console.log($total_amount_show2);
+             if (parseInt($total_amount_show2) === parseInt($paid_amount_show22)) {
+                console.log('egal');
+                $("div#pay_toggle").hide();
+             }else{
+                $("div#pay_toggle").show();
+             }
+
 
             $('#editForm2').attr('action','/invoices/update_facture1/'+data[11]);
          })
