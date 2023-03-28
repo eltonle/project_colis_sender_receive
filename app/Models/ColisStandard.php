@@ -5,19 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ColisPrice extends Model
+class ColisStandard extends Model
 {
     use HasFactory;
-    
+
     protected $fillable = [
-        'invoice_id',
-        'status',
         'titre',
-        'qty',
-        'prix',
+        'quantite',
+        'largeur',
+        'longueur',
+        'hauteur',
         'description',
-        'prix_unit',
-        'prix_total',
-    ];
-    
+        'prix',
+     ];
 }

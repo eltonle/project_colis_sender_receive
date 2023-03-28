@@ -17,17 +17,27 @@ return new class extends Migration
             $table->id();
             $table->integer('invoice_id')->nullable();
             $table->boolean('status')->default('0');
+
+            $table->string('code_zip')->nullable();
+            $table->integer('charge')->nullable();
+            $table->integer('decharge')->nullable();
+            $table->integer('vehicule_id')->nullable();
+            $table->integer('entrepot_id')->nullable();
+            $table->integer('conteneur_id')->nullable();
+            
             $table->string('titre');
-            $table->integer('quantite');
-            $table->double('largeur');
-            $table->double('conversion');
-            $table->double('longueur');
-            $table->double('hauteur');
-            $table->double('poids');
-            $table->double('prix_kilo');
-            $table->double('prix_vol');
+            // $table->integer('quantite');
+            $table->double('largeur')->nullable();
+            $table->double('conversion')->nullable();
+            $table->double('longueur')->nullable();
+            $table->double('hauteur')->nullable();
+            $table->double('poids')->nullable();
+            $table->double('prix_kilo')->nullable();
+            $table->double('prix_vol')->nullable();
+            $table->string('type');
             $table->integer('prix');
-            $table->integer('total');
+            // $table->integer('total');
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }

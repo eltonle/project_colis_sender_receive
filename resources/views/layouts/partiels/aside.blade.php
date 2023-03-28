@@ -176,37 +176,11 @@
                     </ul>
                 </li>
 
-                <li class="nav-item {{ request()->is('finances*') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link {{ request()->is('finances*') ? 'active' : '' }}">
-                        <i class="nav-icon 	fas fa-folder"></i>
-                        <p>
-                            Gestion des Finances
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('finances.credit') }}"
-                                class="nav-link {{ request()->routeIs('finances.credit')|| request()->routeIs('customers.edit.invoice')? 'active' : '' }}">
-                                <i class="far fas fa-long-arrow-alt-right"></i>
-                                <p>Voir Credit Client</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('finances.paid') }}"
-                                class="nav-link {{ request()->routeIs('finances.paid')? 'active' : '' }}">
-                                <i class="far fas fa-long-arrow-alt-right"></i>
-                                <p> Voir Payement Client</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
                 <li class="nav-item {{ request()->is('units*') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ request()->is('units*') ? 'active' : '' }}">
                         <i class="nav-icon 	fas fa-folder"></i>
                         <p>
-                            Gestion des Conteneurs
+                            Gestion des Colis
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
@@ -215,88 +189,167 @@
                             <a href="{{ route('units.index') }}"
                                 class="nav-link {{ request()->routeIs('units.index')||request()->routeIs('units.edit')||request()->routeIs('units.delete') ? 'active' : '' }}">
                                 <i class="far fas fa-long-arrow-alt-right"></i>
-                                <p>Listes des Conteneurs</p>
+                                <p>Listes des Colis</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('units.create') }}"
+                            {{-- <a href="{{ route('units.create') }}"
                                 class="nav-link {{ request()->routeIs('units.create') ? 'active' : '' }}">
                                 <i class="far fas fa-long-arrow-alt-right"></i>
-                                <p>Ajouter un Conteneur</p>
+                                <p>Ajouter un Colis</p>
+                            </a> --}}
+                        <li class="nav-item {{ request()->is('units*') ? 'menu-open' : '' }}">
+                            <a href="#" class="nav-link {{ request()->is('units*') ? 'active' : '' }}">
+                                {{-- <i class="nav-icon 	fas fa-folder"></i> --}}
+                                <i class="far fas fa-long-arrow-alt-right"></i>
+                                <p>
+                                    Colis standard
+
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
                             </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('units.index') }}"
+                                        class="nav-link {{ request()->routeIs('units.index')||request()->routeIs('units.edit')||request()->routeIs('units.delete') ? 'active' : '' }}">
+                                        <i class="far fa-circle"></i>
+                                        <p>Listes</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('units.create') }}"
+                                        class="nav-link {{ request()->routeIs('units.create') ? 'active' : '' }}">
+                                        <i class="far fa-circle"></i>
+                                        <p>Ajouter </p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
-                    </ul>
                 </li>
-                <li class="nav-item {{ request()->is('countries*')||request()->is('states*') ? 'menu-open' : '' }}">
-                    <a href="#"
-                        class="nav-link {{ request()->is('countries*')|| request()->is('states*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-map-marker-alt"></i>
-                        <p>
-                            Pays & Villes
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('countries.index') }}"
-                                class="nav-link {{ request()->routeIs('countries.index')||request()->routeIs('countries.store')||request()->routeIs('countries.update')||request()->routeIs('countries.delete') ? 'active' : '' }}">
-                                <i class="far fas fa-long-arrow-alt-right"></i>
-                                <p>Listes des Pays</p>
-                            </a>
-                            <a href="{{ route('countries.create') }}"
-                                class="nav-link {{request()->routeIs('countries.create') ? 'active' : '' }}">
-                                <i class="far fas fa-long-arrow-alt-right"></i>
-                                <p>Ajouter un Pays</p>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('states.index') }}"
-                                class="nav-link {{ request()->routeIs('states.index')||request()->routeIs('states.store')||request()->routeIs('states.update')||request()->routeIs('states.delete') ? 'active' : '' }}">
-                                <i class="far fas fa-long-arrow-alt-right"></i>
-                                <p>Listes des Villes</p>
-                            </a>
-                            <a href="{{ route('states.create') }}"
-                                class="nav-link {{request()->routeIs('states.create') ? 'active' : '' }}">
-                                <i class="far fas fa-long-arrow-alt-right"></i>
-                                <p>Ajouter une Ville</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+            </ul>
+            </li>
 
-                <li class="nav-item ">
-                    <a href="#" class="nav-link ">
-                        <i class="nav-icon fas fa-user-alt"></i>
-                        <p>
-                            Utilisations
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
 
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link " href="#" role="button" data-bs-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false" v-pre>
-                                <i class="nav-icon fa fa-power-off"></i>
-                                {{-- {{ Auth::user()->name }} --}}Deconnection
-                            </a>
+            <li class="nav-item {{ request()->is('finances*') ? 'menu-open' : '' }}">
+                <a href="#" class="nav-link {{ request()->is('finances*') ? 'active' : '' }}">
+                    <i class="nav-icon 	fas fa-folder"></i>
+                    <p>
+                        Gestion des Finances
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{ route('finances.credit') }}"
+                            class="nav-link {{ request()->routeIs('finances.credit')|| request()->routeIs('customers.edit.invoice')? 'active' : '' }}">
+                            <i class="far fas fa-long-arrow-alt-right"></i>
+                            <p>Voir Credit Client</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('finances.paid') }}"
+                            class="nav-link {{ request()->routeIs('finances.paid')? 'active' : '' }}">
+                            <i class="far fas fa-long-arrow-alt-right"></i>
+                            <p> Voir Payement Client</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
 
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item text-danger font-weight-bold" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();
+            <li class="nav-item {{ request()->is('units*') ? 'menu-open' : '' }}">
+                <a href="#" class="nav-link {{ request()->is('units*') ? 'active' : '' }}">
+                    <i class="nav-icon 	fas fa-folder"></i>
+                    <p>
+                        Gestion des Conteneurs
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{ route('units.index') }}"
+                            class="nav-link {{ request()->routeIs('units.index')||request()->routeIs('units.edit')||request()->routeIs('units.delete') ? 'active' : '' }}">
+                            <i class="far fas fa-long-arrow-alt-right"></i>
+                            <p>Listes des Conteneurs</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('units.create') }}"
+                            class="nav-link {{ request()->routeIs('units.create') ? 'active' : '' }}">
+                            <i class="far fas fa-long-arrow-alt-right"></i>
+                            <p>Ajouter un Conteneur</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item {{ request()->is('countries*')||request()->is('states*') ? 'menu-open' : '' }}">
+                <a href="#"
+                    class="nav-link {{ request()->is('countries*')|| request()->is('states*') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-map-marker-alt"></i>
+                    <p>
+                        Pays & Villes
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{ route('countries.index') }}"
+                            class="nav-link {{ request()->routeIs('countries.index')||request()->routeIs('countries.store')||request()->routeIs('countries.update')||request()->routeIs('countries.delete') ? 'active' : '' }}">
+                            <i class="far fas fa-long-arrow-alt-right"></i>
+                            <p>Listes des Pays</p>
+                        </a>
+                        <a href="{{ route('countries.create') }}"
+                            class="nav-link {{request()->routeIs('countries.create') ? 'active' : '' }}">
+                            <i class="far fas fa-long-arrow-alt-right"></i>
+                            <p>Ajouter un Pays</p>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{ route('states.index') }}"
+                            class="nav-link {{ request()->routeIs('states.index')||request()->routeIs('states.store')||request()->routeIs('states.update')||request()->routeIs('states.delete') ? 'active' : '' }}">
+                            <i class="far fas fa-long-arrow-alt-right"></i>
+                            <p>Listes des Villes</p>
+                        </a>
+                        <a href="{{ route('states.create') }}"
+                            class="nav-link {{request()->routeIs('states.create') ? 'active' : '' }}">
+                            <i class="far fas fa-long-arrow-alt-right"></i>
+                            <p>Ajouter une Ville</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item ">
+                <a href="#" class="nav-link ">
+                    <i class="nav-icon fas fa-user-alt"></i>
+                    <p>
+                        Utilisations
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+
+                    <li class="nav-item dropdown">
+                        <a id="navbarDropdown" class="nav-link " href="#" role="button" data-bs-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false" v-pre>
+                            <i class="nav-icon fa fa-power-off"></i>
+                            {{-- {{ Auth::user()->name }} --}}Deconnection
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item text-danger font-weight-bold" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                  document.getElementById('logout-form').submit();">
-                                    {{ __('se deconnecter') }}
-                                </a>
+                                {{ __('se deconnecter') }}
+                            </a>
 
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </div>
+                    </li>
+                </ul>
+            </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

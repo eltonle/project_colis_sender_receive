@@ -132,9 +132,14 @@ Route::group(['middleware' => 'auth'], function () {
 
         // Route pour colis Prix
         Route::post('/colis_prix',[InvoiceController::class, 'colisPrixStore'])->name('colisPrix.store');
-        Route::get('/getdata/colis_prix',[InvoiceController::class, 'getDataColisPrix'])->name('getDataPrix');
-        Route::post('/deletPrix/{id}',[InvoiceController::class,'deleteDataColisPrix']);
+        // Route::get('/getdata/colis_prix',[InvoiceController::class, 'getDataColisPrix'])->name('getDataPrix');
+        // Route::post('/deletPrix/{id}',[InvoiceController::class,'deleteDataColisPrix']);
 
+        //Route colis Standard
+        Route::post('/colis_standard',[InvoiceController::class, 'colisStandardStore'])->name('colisStand.store');
+        Route::get('/colis_standard',[InvoiceController::class, 'getDatacolisStandard'])->name('getDataStand');
+        Route::get('/storeStand/{id}',[InvoiceController::class,'colisStandColisDim']);
+         
         // Route pour la somme 
         Route::get('/get_somme',[InvoiceController::class,'getSomme'])->name('sommeTotal');
     });

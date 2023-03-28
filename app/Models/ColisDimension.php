@@ -12,15 +12,15 @@ class ColisDimension extends Model
         'invoice_id',
         'status',
         'titre',
-        'quantite',
         'largeur',
         'longueur',
         'hauteur',
+        'description',
         'conversion',
+        'type',
         'poids',
         'prix_kilo',
         'prix_vol',
         'prix',
-        'total',
     ];
 }

@@ -17,6 +17,15 @@ return new class extends Migration
             $table->id();
             $table->date('date');
             $table->integer('invoice_id');
+
+            $table->integer('code_zip')->nullable();
+            $table->integer('charge')->nullable();
+            $table->integer('decharge')->nullable();
+            $table->integer('vehicule_id')->nullable();
+            $table->integer('entrepot_id')->nullable();
+            $table->integer('conteneur_id')->nullable();
+            $table->boolean('status')->default('0');
+
             $table->string('model_marque')->nullable();
             $table->string('description_colis')->nullable();
             $table->string('chassis')->nullable();

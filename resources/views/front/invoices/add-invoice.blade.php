@@ -614,7 +614,6 @@
             <form id="formDim" action="{{ route('colisDim.store') }}" method="POST">
                 @csrf
                 <div class="modal-body">
-                    <p>One fine body&hellip;</p>
                     <div class="row">
                         <!-- col1 -->
                         <div class="col-sm-8" style="margin-left:20px;">
@@ -677,11 +676,15 @@
                                             name="poids">
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <textarea name="description" placeholder="description ...."
+                                        class="form-control"></textarea>
+                                </div>
                             </div>
 
                         </div>
                         <!-- col2 -->
-                        <div class="col-sm-3 text-center pt-5" style="border:2px solid black;  margin-left:40px;">
+                        <div class="col-sm-3 text-center " style="border:2px solid black;  margin-left:40px;">
                             <div class="row mx-auto ">
                                 <div class="form-group">
                                     <label>Prix par kilogramme</label>
@@ -753,7 +756,7 @@
 </div>
 <!-- /.Modal End-->
 
-<!-- MODAL COlIS A PRIX-->
+<!-- MODAL COlIS A PRIX -->
 <div class="modal fade" id="modal-lg-prix">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -764,31 +767,39 @@
                 </button>
             </div>
 
-            <form id="formPrice" action="{{ route('colisPrix.store') }}" method="POST">
+            <form id="formPrice" action="{{ route('colisDim.store') }}" method="POST">
                 @csrf
                 <div class="modal-body">
                     <div class="row">
-                        <div class="form-group col-md-12">
+                        <div class="form-group col-md-6">
                             <label for="">Titre :</label>
-                            <input type="text" name="titre" id="titre1" class="form-control">
+                            <input type="text" name="titre" id="titre1" placeholder="titre..." class="form-control">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="">Nombres de Pieces :</label>
-                            <input type="number" name="qty" id="qty" min="1" class="form-control">
+                            <input type="number" name="quantite" id="qty" min="1" class="form-control">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="">Coût en FCFA :</label>
-                            <input type="number" name="prix" id="prix1" min="1" value="0" class="form-control">
+                            <input type="number" name="prix_unitaire" id="prix1" min="1" value="0" class="form-control">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="">Prix d'un colis en FCFA :</label>
-                            <input type="number" name="prix_unit" id="prix_unit" min="0" value="0" readonly
+                            <input type="number" name="prix" id="prix_unit" min="0" value="0" readonly
                                 class="form-control">
                         </div>
-                        <div class="form-group col-md-6">
-                            <label for="">Prix Total en FCFA :</label>
-                            <input type="number" name="prix_total" id="prix_total" min="0" value="0" readonly
-                                class="form-control">
+                        <div class="form-group col-md-12">
+                            <textarea name="description" id="" class="form-control"
+                                placeholder="description ....."></textarea>
+                        </div>
+                        <div class=" row">
+                            <div class="col-md-4 text-md mt-2 ml-0">Prix Total en FCFA :</div>
+                            <div class="col-md-4">
+                                <input type="number" name="total" id="prix_total" min="0" value="0" readonly
+                                    class="form-control ">
+                            </div>
+                            <div class="col-md-4 text-md mt-2"> FCFA </div>
+
                         </div>
                     </div>
                 </div>
@@ -803,6 +814,90 @@
                 </div>
             </form>
 
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<!-- MODAL COlIS STANDARD -->
+<div class="modal fade" id="modal-lg-standard">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"><i class="fas fa-cubes text-primary"></i> <strong> Listes des colis
+                        standards</strong></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card">
+
+                    <div class="card-header">
+                        <h2 class="card-title" style="font-size: 22px;">
+                            <strong>Enregistrer un Colis</strong>
+                        </h2>
+                    </div>
+                    <div class="card-body ">
+                        <form action="" method="POST" id="formStand">
+                            @csrf
+
+                            <div class="row" style="width: 100%; margin-left: 4px; height:290px ;background:#f2f2f6;">
+                                <h5 class=" text-center mt-2"><strong>Ajout d'un colis standard</strong></h5>
+
+
+                                <div class=" col-sm-6 text-center mt-2">
+                                    <input type="text" name="titre" class="form-control" placeholder="titre...">
+                                </div>
+                                <div class=" col-sm-6 text-center mt-2">
+                                    <input type="number" name="prix" class="form-control" placeholder="prix ...">
+                                </div>
+                                <div class=" col-sm-4 text-center mt-2">
+                                    <input type="number" name="largeur" class="form-control" placeholder="largeur ...">
+                                </div>
+                                <div class=" col-sm-4 text-center mt-2">
+                                    <input type="number" name="longueur" class="form-control"
+                                        placeholder="longueur ...">
+                                </div>
+                                <div class=" col-sm-4 text-center mt-2">
+                                    <input type="number" name="hauteur" class="form-control" placeholder="hauteur ...">
+                                </div>
+                                <div class="col-md-12 mt-2">
+                                    <textarea name="description" id="" class="form-control"
+                                        placeholder="une description ..." cols="5" rows=""></textarea>
+                                </div>
+                                <div class="mt-4 text-center">
+                                    <button type="submit" class="btn btn-primary">Ajouter
+                                        colis</button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <table class="table table-bordered mt-3 " id="tableColisStandard">
+                            <thead style="background-color:#636e72; color:white;">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Type</th>
+                                    <th>Titre</th>
+                                    <th>Prix en FCFA</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodycol">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="btn btn-primary">
+                    Save changes
+                </button>
+            </div>
         </div>
         <!-- /.modal-content -->
     </div>
@@ -1240,6 +1335,7 @@
             console.log(data);
             $('#card-container').empty(); // vider la div
             $.each(data, function(index, element) {
+
                 var cardHtml = '<div class="card col-md-3  data-list"  id="element-' + element.id + '">';
                 cardHtml += '<div class=" d-flex justify-content-between mt-1">';
                 cardHtml += '<h6 class="font-bold text-lg">' + element.titre + '</h6>';
@@ -1247,29 +1343,51 @@
             
 
                 cardHtml += '</div>';
+                if(element.type == "colis a prix" ){
                 cardHtml += '<div class="d-flex justify-content-between align-items-center">';
+                cardHtml += '<p  style="font-size:18px; font-weight:bold;">' + 'type :' + '</p>';
+                    cardHtml += '<p class="font-bold">' + 'Colis a Prix' + '</p>';
+                    cardHtml += '</div>';
+                }
+                if(element.type == "colis standard"){
+                cardHtml += '<div class="d-flex justify-content-between align-items-center">';
+                cardHtml += '<p  style="font-size:18px; font-weight:bold;">' + 'type :' + '</p>';
+                    cardHtml += '<p class="font-bold">' + 'Colis Standard' + '</p>';
+                    cardHtml += '</div>';
+                }
+                if(element.type == "colis dimension" ){
+                cardHtml += '<div class="d-flex justify-content-between align-items-center">';
+                cardHtml += '<p style="font-size:18px; font-weight:bold;">' + 'type :' + '</p>';
+                    cardHtml += '<p class="">' + 'Colis  dimensionné' + '</p>';
+                    cardHtml += '</div>';
+                }
+                if(!(element.largeur == null) ){
+                cardHtml += '<div class="d-flex justify-content-between align-items-center" style="margin-top:-5px;">';
                 cardHtml += '<p class="text-md">' + 'Largeur :' + '</p>';
-                cardHtml += '<p class="">' + element.largeur + '</p>';
-                cardHtml += '</div>';
-              
-                cardHtml += '<div class="d-flex justify-content-between align-items-center">';
+                    cardHtml += '<p class="">' + element.largeur + '</p>';
+                    cardHtml += '</div>';
+                }
+                if(!(element.longueur == null) ){
+                cardHtml += '<div class="d-flex justify-content-between align-items-center" style="margin-top:-20px;">';
                 cardHtml += '<p class="text-md">' + 'Longueur :' + '</p>';
                 cardHtml += '<p class="">' + element.longueur + '</p>';
                 cardHtml += '</div>';
-
-                cardHtml += '<div class="d-flex justify-content-between align-items-center">';
+                }
+                if(!(element.hauteur == null) ){
+                cardHtml += '<div class="d-flex justify-content-between align-items-center" style="margin-top:-20px;">';
                 cardHtml += '<p class="text-md">' + 'Hauteur :' + '</p>';
                 cardHtml += '<p class="">' + element.hauteur + '</p>';
                 cardHtml += '</div>';
+                }
 
-                cardHtml += '<div class="d-flex justify-content-between align-items-center">';
-                cardHtml += '<p class="text-md">' + 'Quantité  :' + '</p>';
-                cardHtml += '<p class="">' + element.quantite + ' PCs' + '</p>';
-                cardHtml += '</div>';
+                // cardHtml += '<div class="d-flex justify-content-between align-items-center">';
+                // cardHtml += '<p class="text-md">' + 'Quantité  :' + '</p>';
+                // cardHtml += '<p class="">' + element.quantite + ' PCs' + '</p>';
+                // cardHtml += '</div>';
 
-                cardHtml += '<div class="d-flex justify-content-between align-items-center">';
-                cardHtml += '<p class="text-md">' + 'prix Total  :' + '</p>';
-                cardHtml += '<p class="">' + element.total + ' FCFA' + '</p>';
+                cardHtml += '<div class="d-flex justify-content-between align-items-center" style="margin-top:-20px;">';
+                cardHtml += '<p class="text-md">' + 'prix :' + '</p>';
+                cardHtml += '<p class="">' + element.prix + ' FCFA' + '</p>';
                 cardHtml += '</div>';
 
                 cardHtml += '</div></div>';
@@ -1288,6 +1406,8 @@
              var formData = $(this).serialize();
               
              console.log(formData);
+             var q = $('#quantite').val();
+             for(var i = 0;i < q; i++){
              $.ajax({
                 type: 'POST',
                 url: "{{ route('colisDim.store') }}",
@@ -1300,6 +1420,7 @@
                     console.log(error);
                 }
              })
+            }
         })
 
          refreshContent(); // appeler refreshContent pour la première fois
@@ -1324,13 +1445,8 @@
                 });
             });
 
-
-
            
      })
-
-     
-
 
 </script>
 
@@ -1379,85 +1495,86 @@
 
 <script>
     function refreshContentPrice() {
-    // getData
-    $.ajax({
-        url: "{{ route('getDataPrix') }}",
-        type: 'GET',
-        dataType: 'json',
-        success: function(data) {
-            console.log(data);
-            $('#card-container1').empty(); // vider la div
-            $.each(data, function(index, element) {
-                var cardHtml1 = '<div class="card col-md-3  data-list"  id="element-' + element.id + '">';
-                cardHtml1 += '<div class=" d-flex justify-content-between mt-1">';
-                cardHtml1 += '<h6 class="font-bold text-lg">' + element.titre + '</h6>';
-                cardHtml1 += '<p id="' + element.id + '"> <i class="far fa-window-close delete-btn1" style="font-size:24px"></i> </p>';
-                cardHtml1 += '</div>';
-              
-                cardHtml1 += '<div class="d-flex justify-content-between align-items-center">';
-                cardHtml1 += '<p class="text-md">' + 'Quantité  :' + '</p>';
-                cardHtml1 += '<p class="">' + element.qty + ' PCs' + '</p>';
-                cardHtml1 += '</div>';
+        // getData
+        // $.ajax({
+        //     url: "{{ route('getDataPrix') }}",
+        //     type: 'GET',
+        //     dataType: 'json',
+        //     success: function(data) {
+        //         console.log(data);
+        //         $('#card-container1').empty(); // vider la div
+        //         $.each(data, function(index, element) {
+        //             var cardHtml1 = '<div class="card col-md-3  data-list"  id="element-' + element.id + '">';
+        //             cardHtml1 += '<div class=" d-flex justify-content-between mt-1">';
+        //             cardHtml1 += '<h6 class="font-bold text-lg">' + element.titre + '</h6>';
+        //             cardHtml1 += '<p id="' + element.id + '"> <i class="far fa-window-close delete-btn1" style="font-size:24px"></i> </p>';
+        //             cardHtml1 += '</div>';
+                
+        //             cardHtml1 += '<div class="d-flex justify-content-between align-items-center">';
+        //             cardHtml1 += '<p class="text-md">' + 'Quantité  :' + '</p>';
+        //             cardHtml1 += '<p class="">' + element.qty + ' PCs' + '</p>';
+        //             cardHtml1 += '</div>';
 
-                cardHtml1 += '<div class="d-flex justify-content-between align-items-center">';
-                cardHtml1 += '<p class="text-md">' + 'prix Total  :' + '</p>';
-                cardHtml1 += '<p class="">' + element.prix_total + ' FCFA' + '</p>';
-                cardHtml1 += '</div>';
+        //             cardHtml1 += '<div class="d-flex justify-content-between align-items-center">';
+        //             cardHtml1 += '<p class="text-md">' + 'prix Total  :' + '</p>';
+        //             cardHtml1 += '<p class="">' + element.prix_total + ' FCFA' + '</p>';
+        //             cardHtml1 += '</div>';
 
-                cardHtml1 += '</div></div>';
+        //             cardHtml1 += '</div></div>';
 
-              $('#card-container1').append(cardHtml1);
-        
-          });
-          sumAjax(); 
-        }
-    });
- }
+        //           $('#card-container1').append(cardHtml1);
+            
+        //       });
+        //       sumAjax(); 
+        //     }
+        // });
+     }
 
     $(document).ready(function () {
 
-         // STORE
+        //  STORE
          $('#formPrice').submit(function (event) {
              event.preventDefault();
              var formDataC = $(this).serializeArray();
-              
-             console.log(formDataC);
+             var q = $('#qty').val();
+             for(var i = 0;i < q; i++){
              $.ajax({
                 type: 'POST',
-                url: "{{ route('colisPrix.store') }}",
+                url: "{{  route('colisPrix.store') }}",
                 data: formDataC,
                 success: function(response) {
                     $('#formPrice')[0].reset(); // Réinitialiser le formulaire
                   
-                    refreshContentPrice();
+                    refreshContent();
                 },
                 error : function (error) {
                     console.log(error);
                 }
              })
+            } 
         })
 
-        refreshContentPrice();
+        // refreshContent();
 
           //    DELETE DATA
-          $('#card-container1').on('click', '.delete-btn1', function() {
-        var id = $(this).parent().attr('id'); // Récupère l'ID de l'élément parent
-        console.log(id);
-        // Envoyer une requête AJAX à votre route de suppression avec l'ID récupéré
-         $.ajax({
-            url: '/invoices/deletPrix/' + id,
-            type: 'POST',
-            success: function(data) {
-                console.log('delete');
-                $('#element-' + id).remove();
-                sumAjax(); 
-            },
-            data: {
-                "_token": "{{ csrf_token() }}"
-            },
-            });
-         });
-    })
+        // $('#card-container1').on('click', '.delete-btn1', function() {
+        //     var id = $(this).parent().attr('id'); // Récupère l'ID de l'élément parent
+        //     console.log(id);
+        //     // Envoyer une requête AJAX à votre route de suppression avec l'ID récupéré
+        //     $.ajax({
+        //     url: '/invoices/deletPrix/' + id,
+        //     type: 'POST',
+        //     success: function(data) {
+        //         console.log('delete');
+        //         $('#element-' + id).remove();
+        //         sumAjax(); 
+        //     },
+        //     data: {
+        //         "_token": "{{ csrf_token() }}"
+        //     },
+        //     });
+        //  });
+     })
 </script>
 
 {{-- SOMME COLIS PRIX --}}
@@ -1480,14 +1597,90 @@
 
             // Événement à déclencher quand les inputs de poids et de volume sont modifiés
             $("#qty,#prix1").on("input", function() {
-            // Récupération des valeurs de poids et de volume
+           // Récupération des valeurs de poids et de volume
 
             var qty = $('#qty').val();
             var prix1 = $('#prix1').val();
             
-            // Calcul du prix en fonction du poids et du volume
+           // Calcul du prix en fonction du poids et du volume
              calculPrix(qty,prix1);
         });
-    })
+     })
 </script>
+
+
+{{-- SCRIPT des COLIS STANDARD --}}
+
+<script>
+    function refreshContentDataColisStandard() {
+    // getData
+    $.ajax({
+        url: "{{ route('getDataStand') }}",
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            console.log(data);
+             $('#tableColisStandard tbody' ).empty(); // vider la div
+            $.each(data, function(index, element) {
+              var loop = index + 1;
+              var cardHtml = "<tr class='data-row'  data-id='" + element.id + "'>" +
+                                "<td>"+ "#" + loop + "</td>" +
+                                "<td>" + "Appariels electronique" + "</td>" +
+                                "<td>" + element.titre + "</td>" +
+                                "<td>" + element.prix + " FCFA " + "</td>" +
+                            "</tr>";
+                               
+
+              $('#tableColisStandard tbody').append(cardHtml);
+        
+            });
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        
+            // Store
+            $('#formStand').submit(function (event) {
+                event.preventDefault();
+                var formData = $(this).serialize();
+                
+                console.log(formData);
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ route('colisStand.store') }}",
+                    data: formData,
+                    success: function(response) {
+                        $('#formStand')[0].reset(); // Réinitialiser le formulaire
+                        refreshContentDataColisStandard(); // celui qui va recuperer les donnees
+                    },
+                    error : function (error) {
+                        console.log(error);
+                    }
+                })
+            })
+
+          refreshContentDataColisStandard(); // appeler refreshContent pour la première fois
+
+            //    DETAILS et enregistrement
+            $('#tbodycol').on('click', '.data-row', function() {
+
+                var id = $(this).data("id");// Récupère l'ID de l'élément parent
+                console.log(id);
+                // Envoyer une requête AJAX pour enregistrer
+                $.ajax({
+                    url: '/invoices/storeStand/' + id,
+                    type: 'GET',
+                    dataType: "json",
+                    success: function(data) {
+                    console.log(data);
+                    refreshContent();
+                        // sumAjax(); 
+                    },
+                   
+                });
+            });
+     })
+</script>
+
 @endsection

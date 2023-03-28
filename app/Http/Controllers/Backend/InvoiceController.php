@@ -2,23 +2,25 @@
 
 namespace App\Http\Controllers\Backend;
 
+use PDF;
+use Carbon\Carbon;
 use App\Models\Unit;
+use App\Models\Country;
 use App\Models\Invoice;
 use App\Models\Receive;
 use App\Models\Customer;
 use App\Models\Payement;
+use App\Models\ColisPrice;
 use Illuminate\Http\Request;
+use App\Models\ColisStandard;
+use App\Models\InvoiceDetail;
+use App\Models\ColisDimension;
+use App\Models\PayementDetail;
+use PhpParser\Node\Stmt\Return_;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\ColisDimension;
-use App\Models\ColisPrice;
-use App\Models\Country;
-use App\Models\InvoiceDetail;
-use App\Models\PayementDetail;
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
-use PDF;
+use Illuminate\Database\Eloquent\Model;
 
 class InvoiceController extends Controller
 {
@@ -29,6 +31,8 @@ class InvoiceController extends Controller
     // }
     public function create()
     {
+        // $colis = ColisDimension::where('status',0)->get();
+        //   dd($colis);
         $data['countries'] = Country::all();
         $data['units'] = Unit::all();
         $data['customers'] = Customer::all(); 
@@ -185,16 +189,33 @@ class InvoiceController extends Controller
                     $payement_detail->date = date('Y-m-d',strtotime($request->date));
                     $payement_detail->save();
 
-                    $colisDimVerifie = ColisDimension::where('status', 0);
-                    if ($colisDimVerifie) {
-                        
-                         ColisDimension::where('status', 0)->update(['invoice_id' => $invoice->id, 'status'=> 1]);
+                    //COLIS STORE 
+                    // ::::::::::::
+                        // $today = date(format:'Ymd');
+                        // $codesZip = ColisDimension::where('code_zip','like',$today.'%')->pluck('code_zip');
+                        // do {
+                        //     $codeZip= $today . rand(100000, 999999);
+                        // } while ($codesZip->contains($codeZip));
+                    //::::::::::::::
+
+                    $colisDimVerifie = ColisDimension::where('status', 0)->get();
+
+                    for($i = 0; $i < count($colisDimVerifie); $i++) {
+                      // ::::::::::::
+                        $today = date(format:'Ymd');
+                        $codesZip = ColisDimension::where('code_zip','like',$today.'%')->pluck('code_zip');
+                        do {
+                            $codeZip= $today . rand(100000, 999999);
+                        } while ($codesZip->contains($codeZip));
+                      //::::::::::::::
+                      $colisDimVerifie[$i]->invoice_id = $invoice->id;
+                      $colisDimVerifie[$i]->status = 1;
+                      $colisDimVerifie[$i]->code_zip = $codeZip;
+                      $colisDimVerifie[$i]->save();            
                     }
-                    $colisPrixVerifie = ColisPrice::where('status', 0);
-                    if ($colisPrixVerifie) {
-                        
-                      ColisPrice::where('status', 0)->update(['invoice_id' => $invoice->id, 'status'=> 1]);
-                    }
+                   
+                   
+                    // END COLIS
                 }
                });
             }
@@ -542,16 +563,17 @@ class InvoiceController extends Controller
         $colis_dim = new ColisDimension();
 
         $colis_dim->titre = $request->input('titre');
-        $colis_dim->quantite = $request->input('quantite');
+        $colis_dim->description = $request->input('description');
         $colis_dim->largeur = $request->input('largeur');
         $colis_dim->conversion = $request->input('conversion');
         $colis_dim->longueur = $request->input('longueur');
         $colis_dim->hauteur = $request->input('hauteur');
+        $colis_dim->type = "colis dimension";
         $colis_dim->prix_kilo = $request->input('prix_kilo');
         $colis_dim->poids = $request->input('poids');
         $colis_dim->prix_vol = $request->input('prix_vol');
         $colis_dim->prix = $request->input('prix');
-        $colis_dim->total = $request->input('total');
+        // $colis_dim->total = $request->input('total');
         $colis_dim->save();
 
         return redirect()->back();
@@ -577,18 +599,17 @@ class InvoiceController extends Controller
     // Partir dES colis price
     
     public function colisPrixStore(Request $request){
-        
-        $colis_prix = new ColisPrice();
 
-        $colis_prix->titre = $request->input('titre');
-        $colis_prix->qty = $request->input('qty');
-        $colis_prix->prix = $request->input('prix');
-        $colis_prix->prix_unit = $request->input('prix_unit');
-        $colis_prix->prix_total = $request->input('prix_total');
-        
-        $colis_prix->save();
+            $colis_dim = new ColisDimension();
+            $colis_dim->titre = $request->input('titre');
+            $colis_dim-> description= $request->input('description');
+            $colis_dim-> type= "colis a prix";
+            $colis_dim-> prix= $request->input('prix');
+            $colis_dim->save();
+      
+    
 
-        return redirect()->back();
+       Return response()->json();
     }
 
     public function getDataColisPrix ()
@@ -606,15 +627,59 @@ class InvoiceController extends Controller
       
     }
 
+    //partir des COLIS STANDARD
+
+    public function colisStandardStore(Request $request)
+    {
+        $colis_standard = new ColisStandard();
+        $colis_standard->titre = $request->input('titre');
+        $colis_standard-> largeur= $request->input('largeur');
+        $colis_standard-> longueur= $request->input('longueur');
+        $colis_standard-> hauteur= $request->input('hauteur');       
+        $colis_standard-> description= $request->input('description');
+        $colis_standard-> prix= $request->input('prix');
+        $colis_standard->save();
+
+       Return response()->json();
+    }
+
+
+    public function getDatacolisStandard()
+    {
+        $data = ColisStandard::all();
+        return response()->json($data);
+    }
+    public function colisStandColisDim($id)
+    {
+        // recuperer l'element correspondant
+        $data = ColisStandard::find($id);
+        
+        // Enregistrer les détails de l'élément dans une autre table
+        $details = new ColisDimension();
+        $details->titre = $data->titre;
+        $details->largeur = $data->largeur;
+        $details->longueur = $data->longueur;
+        $details->hauteur = $data->hauteur;
+        $details->type = "colis standard";
+        $details->description = $data->description;
+        $details->prix = $data->prix;
+        $details->save();
+
+        return response()->json($data);
+    }
+
+
+
+
 
     // GET LA SOMME TOTAL
 
     public function getSomme()
     {
-        $sumDim = ColisDimension::where('status', '0')->sum('total');
-        $sumPrix = ColisPrice::where('status', '0')->sum('prix_total');
+        $sumDim = ColisDimension::where('status', '0')->sum('prix');
+        // $sumPrix = ColisPrice::where('status', '0')->sum('prix_total');
         return response()->json([
-        $sumDim,$sumPrix
+        $sumDim
 
         ]);
     }
