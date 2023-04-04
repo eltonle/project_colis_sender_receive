@@ -45,6 +45,9 @@
                                         <tr>
                                             <th>Numero ou Identifiant du Conteneur</th>
                                             <th>Nom du Conteneur</th>
+                                            <th>Date chagement</th>
+                                            <th>statut</th>
+                                            
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -53,6 +56,8 @@
                                         <tr>
                                             <td>{{ $unit->numero_id }}</td>
                                             <td>{{ $unit->name }}</td>
+                                            <td>{{ $unit->Date_chagement }}</td>
+                                            <td>{{ $unit->statut }}</td>
                                             <td>
                                                 <div style="display: flex; align-items: center">
 
@@ -82,8 +87,11 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <th>Numero ou Identifiant du Conteneur</th>
+                                        <th>Numero ou Identifiant du Conteneur</th>
                                             <th>Nom du Conteneur</th>
+                                            <th>Date chagement</th>
+                                            <th>statut</th>
+                                            
                                             <th>Actions</th>
                                         </tr>
                                     </tfoot>

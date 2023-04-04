@@ -13,6 +13,7 @@ use App\Http\Controllers\Backend\DropdownController;
 use App\Http\Controllers\Backend\InvoiceController;
 use App\Http\Controllers\Backend\ReceiveController;
 use App\Http\Controllers\Backend\StateController;
+use App\Http\Controllers\Backend\VehiculeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,12 +45,25 @@ Route::group(['middleware' => 'auth'], function () {
     // route ajax country
     Route::get('/get-states',[DropdownController::class,'getStates'])->name('get-states');
     Route::get('/get-states-receive',[DropdownController::class,'getStatesReceive'])->name('get-states-receive');
-
+    
+    Route::prefix('vehicule')->group(function(){
+        Route::get('/index',[VehiculeController::class,'index'])->name('vehicule.index');
+        Route::post('/add_vehicule',[VehiculeController::class,'store'])->name('vehicule.index.store');
+        Route::post('index/update_vehicule',[VehiculeController::class,'update_vehicule'])->name('vehicule.update');
+        Route::post('/update_affection',[VehiculeController::class,'updateAffectation'])->name('affectation.update');
+        Route::delete('/delete_vehicule/{id}',[VehiculeController::class,'delete'])->name('vehicule.delete');
+        Route::get('/index_afect',[VehiculeController::class,'index_affectation'])->name('vehicule.affectation');
+        Route::post('/add_afect',[VehiculeController::class,'add_affectation'])->name('add_affectation');
+        Route::delete('/delete_affection/{id}',[VehiculeController::class,'deleteAffectation'])->name('delete_affection');
+        
+    });
 
     
     Route::prefix('units')->group(function(){
         Route::get('/Listes-units',[UnitController::class,'index'])->name('units.index');
         Route::get('/add_unit',[UnitController::class,'create'])->name('units.create');
+        Route::get('/', function () {return view('front.units.chargement');})->name('units.chargement');
+
         Route::post('/store_unit',[UnitController::class,'store'])->name('units.store');
         Route::get('/edit_unit/{id}',[UnitController::class,'edit'])->name('units.edit');
         Route::post('/update_unit/{id}',[UnitController::class,'update'])->name('units.update');
@@ -130,9 +144,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/getdata/colis_dimensions',[InvoiceController::class,'geteDataColisDim'])->name('getDataDim');
         Route::post('/delet/{id}',[InvoiceController::class,'deleteDataColisDim']);
 
-        // Route pour colis Prix
+        //getDataPrix Route pour colis Prix
         Route::post('/colis_prix',[InvoiceController::class, 'colisPrixStore'])->name('colisPrix.store');
-        // Route::get('/getdata/colis_prix',[InvoiceController::class, 'getDataColisPrix'])->name('getDataPrix');
+        Route::get('/getdata/colis_prix',[InvoiceController::class, 'getDataColisPrix'])->name('getDataPrix');
         // Route::post('/deletPrix/{id}',[InvoiceController::class,'deleteDataColisPrix']);
 
         //Route colis Standard

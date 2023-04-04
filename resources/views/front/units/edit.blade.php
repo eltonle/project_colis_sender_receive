@@ -43,22 +43,26 @@
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label for="name"> Nom du Conteneur</label>
-                                            <input type="text" id="name" name="name" value="{{ $edit->name }}"
-                                                class="form-control">
+                                        <div class="form-group col-md-4">
+                                            <label for="name">Nom du Conteneur</label>
+                                            <input type="text" id="name" name="name"value="{{ $edit->name }}" class="form-control">
                                         </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="numero_id">Numero ou Identifiant du Conteneur </label>
-                                            <input type="text" id="numero_id" name="numero_id"
-                                                value="{{ $edit->numero_id }}" class="form-control">
+                                        <div class="form-group col-md-4">
+                                            <label for="numero_id">Date De Chargement Du Conteneur </label>
+                                            <input type="date" id="numero_id" name="Date_chagement"value="{{ $edit->Date_chagement }}" class="form-control">
+                                        </div>
+                                       
+                                        <div class="form-group col-md-4">
+                                            <label for="numero_id">Description Du Conteneur</label>
+                                            <input type="text" id="numero_id" name="description"value="{{ $edit->description }}" class="form-control">
                                         </div>
 
                                         <div class="form-group col-md-6">
-                                            <input type="submit" value="Enregistrer les Modifications" class="btn"
+                                            <input type="submit" value="Enregistrer les Informations" class="btn"
                                                 style="background: #563DEA;color: #fff">
                                         </div>
                                     </div>
+                                    
 
                                 </form>
                             </div>
