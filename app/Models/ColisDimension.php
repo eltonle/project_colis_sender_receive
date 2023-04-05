@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Invoice;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ColisDimension extends Model
 {
@@ -23,4 +24,9 @@ class ColisDimension extends Model
         'prix_vol',
         'prix',
     ];
+
+    public function invoice()
+    {
+       return $this->belongsTo(Invoice::class,'invoice_id','id');
+    }
 }

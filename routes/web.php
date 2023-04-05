@@ -7,6 +7,7 @@ use App\Http\Controllers\Backend\UnitController;
 use App\Http\Controllers\Backend\ClientController;
 use App\Http\Controllers\Backend\ArticleController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\ColisController;
 use App\Http\Controllers\Backend\CountryController;
 use App\Http\Controllers\Backend\CustomerController;
 use App\Http\Controllers\Backend\DropdownController;
@@ -54,6 +55,14 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/edit_unit/{id}',[UnitController::class,'edit'])->name('units.edit');
         Route::post('/update_unit/{id}',[UnitController::class,'update'])->name('units.update');
         Route::delete('/delete_unit/{id}',[UnitController::class,'delete'])->name('units.delete');
+
+    });
+
+    Route::prefix('colis')->group(function(){
+        Route::get('/Listes_des_colis',[ColisController::class,'index'])->name("colis.index");
+        Route::get('/Details_colis/{id}',[ColisController::class,'detailsColis'])->name("colis.details");
+        Route::get('/print_colis/{id}',[ColisController::class,'printColis'])->name('colis.print');
+        
 
     });
  

@@ -176,8 +176,8 @@
                     </ul>
                 </li>
 
-                <li class="nav-item {{ request()->is('units*') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link {{ request()->is('units*') ? 'active' : '' }}">
+                <li class="nav-item {{ request()->is('colis*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->is('colis*') ? 'active' : '' }}">
                         <i class="nav-icon 	fas fa-folder"></i>
                         <p>
                             Gestion des Colis
@@ -186,8 +186,8 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('units.index') }}"
-                                class="nav-link {{ request()->routeIs('units.index')||request()->routeIs('units.edit')||request()->routeIs('units.delete') ? 'active' : '' }}">
+                            <a href="{{ route('colis.index') }}"
+                                class="nav-link {{ request()->routeIs('colis.index') ? 'active' : '' }}">
                                 <i class="far fas fa-long-arrow-alt-right"></i>
                                 <p>Listes des Colis</p>
                             </a>
@@ -212,14 +212,14 @@
                                 <li class="nav-item">
                                     <a href="{{ route('units.index') }}"
                                         class="nav-link {{ request()->routeIs('units.index')||request()->routeIs('units.edit')||request()->routeIs('units.delete') ? 'active' : '' }}">
-                                        <i class="far fa-circle"></i>
+                                        <i class="fas fa-bars"></i>
                                         <p>Listes</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('units.create') }}"
                                         class="nav-link {{ request()->routeIs('units.create') ? 'active' : '' }}">
-                                        <i class="far fa-circle"></i>
+                                        <i class="fas fa-plus-circle"></i>
                                         <p>Ajouter </p>
                                     </a>
                                 </li>

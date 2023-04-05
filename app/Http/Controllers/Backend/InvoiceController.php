@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\Backend;
 
 use PDF;
-use Carbon\Carbon;
 use App\Models\Unit;
 use App\Models\Country;
 use App\Models\Invoice;
-use App\Models\Receive;
 use App\Models\Customer;
 use App\Models\Payement;
 use App\Models\ColisPrice;
@@ -16,7 +14,6 @@ use App\Models\ColisStandard;
 use App\Models\InvoiceDetail;
 use App\Models\ColisDimension;
 use App\Models\PayementDetail;
-use PhpParser\Node\Stmt\Return_;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -612,11 +609,11 @@ class InvoiceController extends Controller
        Return response()->json();
     }
 
-    public function getDataColisPrix ()
-    {
-        $data = ColisPrice::where('status', 0)->get();
-       return response()->json($data);
-    }
+    // public function getDataColisPrix ()
+    // {
+    //     $data = ColisPrice::where('status', 0)->get();
+    //    return response()->json($data);
+    // }
 
     public function deleteDataColisPrix($id)
     {

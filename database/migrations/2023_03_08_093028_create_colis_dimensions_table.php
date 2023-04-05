@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('colis_dimensions', function (Blueprint $table) {
             $table->id();
             $table->integer('invoice_id')->nullable();
-            $table->boolean('status')->default('0');
+            $table->string('status')->default('0');
 
             $table->string('code_zip')->nullable();
             $table->integer('charge')->nullable();

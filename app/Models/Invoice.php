@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\ColisDimension;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Invoice extends Model
 {
@@ -13,6 +14,10 @@ class Invoice extends Model
     { 
        return $this->belongsTo(Payement::class,'id','invoice_id');
     }
+   //  public function colisDimension()
+   //  { 
+   //     return $this->belongsTo(ColisDimension::class,'invoice_id','id');
+   //  }
 
     public function invoice_details()
     {
@@ -24,6 +29,7 @@ class Invoice extends Model
     {
        return $this->belongsTo(Country::class,'unit_id','id');
     }
+    
     public function country()
     {
        return $this->belongsTo(Country::class,'country_id','id');
