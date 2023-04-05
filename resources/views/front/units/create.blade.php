@@ -35,7 +35,7 @@
                                     <i class="fa fa-list"></i> LISTES DES CONTENEURS
                                 </a>
                             </h3>
-                        </div><!-- /.card-header -->
+                        </div><!-- /.card-heade-->
                         <div class="card-body">
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -45,11 +45,24 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="name">Nom du Conteneur</label>
-                                            <input type="text" id="name" name="name" class="form-control">
+                                            <input type="text" id="name" name="name" class="form-control" required>
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label for="numero_id">Numero ou Identifiant du Conteneur</label>
-                                            <input type="text" id="numero_id" name="numero_id" class="form-control">
+                                            <label for="numero_id">Date De Chargement Du Conteneur </label>
+                                            <input type="date" id="numero_id" name="Date_chagement" class="form-control"
+                                                required>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="numero_id">Statut</label>
+                                            <input type="text" id="numero_id" name="statut" 
+                                                class="form-control" value="Inscrit" required disabled>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="numero_id">Description Du Conteneur</label>
+                                            <textarea 
+                                                id="numero_id"
+                                                name="description" class="form-control" required>
+                                        </textarea>
                                         </div>
 
                                         <div class="form-group col-md-6">
@@ -76,33 +89,33 @@
 @section('scripts')
 <!-- Page specific script -->
 <script type="text/javascript">
-    $(document).ready(function(){
+$(document).ready(function() {
     $('#myForm').validate({
-        rules:{
+        rules: {
             name: {
-                required:true,
-                rangelength :[3,30]
+                required: true,
+                rangelength: [3, 30]
             },
             numero_id: {
-                required:true,
-                rangelength :[3,30]
+                required: true,
+                rangelength: [3, 30]
             },
         },
-            messages: {
+        messages: {
 
-            },
-            errorElement: 'span',
-            errorPlacement:function(error,element){
-                error.addClass('invalid-feedback');
-                element.closest('.form-group').append(error);
-            },
-            highlight:function(element,errorClass,validClass){
-                $(element).addClass('is-invalid');
-            },
-            unhighlight: function(element,errorClass,validClass){
-                $(element).removeClass('is-invalid');
-            }
+        },
+        errorElement: 'span',
+        errorPlacement: function(error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function(element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function(element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
     })
- })
+})
 </script>
 @endsection

@@ -13,15 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('units', function (Blueprint $table) {
+        Schema::create('vehicules', function (Blueprint $table) {
             $table->id();
-            $table->string('numero_id');
-            $table->string('name');
-            $table->datetime('Date_chagement');
-            $table->string('statut');
-            $table->string('description');
-            $table->integer('created_by')->nullable();
-            $table->integer('updated_by')->nullable();
+            $table->string('Immatriculation');
+            $table->string('Model');
+            $table->string('Type_Véhicule');
+            $table->string('Numero_Serie');
+            $table->string('status');
+            $table->string('Description');
             $table->timestamps();
         });
     }
@@ -33,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('units');
+        Schema::dropIfExists('vehicules');
     }
 };

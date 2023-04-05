@@ -127,7 +127,9 @@
                                                     $customer->phone }} - {{ $customer->address }})
                                                 </option>
                                                 @endforeach
+                                                
                                                 {{-- <option value="0"> Ajouter un Nouveau Expediteur</option> --}}
+                                           
                                             </select>
                                         </div>
 

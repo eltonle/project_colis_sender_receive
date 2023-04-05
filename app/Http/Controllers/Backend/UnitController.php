@@ -20,10 +20,18 @@ class UnitController extends Controller
     }
 
     public function store(Request $request)
-    {
+    {    $today = date(format:'Ymd');
+        $statut = "Iscrit";
+        $numero_ids = Unit::where('numero_id','like',$today.'%')->pluck('numero_id');
+         do {
+            $numero_id= $today . rand(100000, 999999);
+         } while ($numero_ids->contains($numero_id));
         $unit = new Unit();
+        $unit->numero_id=$numero_id;
         $unit->name=$request->name;
-        $unit->numero_id=$request->numero_id;
+        $unit->Date_chagement=$request->Date_chagement;
+        $unit->statut=$statut;
+        $unit->description=$request->description;
         $unit->created_by=Auth()->user()->id;
         $unit->save();
         return redirect()->route('units.index')->with('message','Data saved successfully...');
@@ -38,7 +46,8 @@ class UnitController extends Controller
     {
         $unit = Unit::find($id);
         $unit->name=$request->name;
-        $unit->numero_id=$request->numero_id;
+        $unit->Date_chagement=$request->Date_chagement;
+        $unit->description=$request->description;
         $unit->updated_by=Auth()->user()->id;
         $unit->save();
         return redirect()->route('units.index')->with('message','Data update successfully...');

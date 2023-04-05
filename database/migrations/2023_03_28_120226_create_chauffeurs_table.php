@@ -13,13 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('units', function (Blueprint $table) {
+        Schema::create('chauffeurs', function (Blueprint $table) {
             $table->id();
-            $table->string('numero_id');
-            $table->string('name');
-            $table->datetime('Date_chagement');
-            $table->string('statut');
-            $table->string('description');
+            $table->string('nom');
+            $table->string('prenom');
+            $table->string('email');
+            $table->string('address');
+            $table->string('phone');
+            $table->tinyInteger('status')->default('1');
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
             $table->timestamps();
@@ -33,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('units');
+        Schema::dropIfExists('chauffeurs');
     }
 };

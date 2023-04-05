@@ -279,8 +279,43 @@
                             <p>Ajouter un Conteneur</p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                    <a href="{{ route('units.chargement') }}"
+                        class="nav-link {{ request()->routeIs('units.chargement') ? 'active' : '' }}">
+                        <i class="far fas fa-long-arrow-alt-right"></i>
+                        <p>charger un Conteneur</p>
+                    </a>
+                </li>
                 </ul>
             </li>
+            
+        <li class="nav-item {{ request()->is('units*') ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link {{ request()->is('units*') ? 'active' : '' }}">
+                <i class="nav-icon 	fas fa-folder"></i>
+                <p>
+                    Gestion des Véhicule
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{{ route('vehicule.index') }}"
+                        class="nav-link {{ request()->routeIs('vehicule.index')||request()->routeIs('units.edit')||request()->routeIs('units.delete') ? 'active' : '' }}">
+                        <i class="far fas fa-long-arrow-alt-right">
+                       
+                        </i>
+                        <p>Listes des véhicule</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('vehicule.affectation') }}"
+                        class="nav-link {{ request()->routeIs('vehicule.affectation') ? 'active' : '' }}">
+                        <i class="far fas fa-long-arrow-alt-right"></i>
+                        <p>Listes des affectation véhicule</p>
+                    </a>
+                </li>
+            </ul>
+        </li>
             <li class="nav-item {{ request()->is('countries*')||request()->is('states*') ? 'menu-open' : '' }}">
                 <a href="#"
                     class="nav-link {{ request()->is('countries*')|| request()->is('states*') ? 'active' : '' }}">

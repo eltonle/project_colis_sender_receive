@@ -10,8 +10,11 @@ class Unit extends Model
 {
     use HasFactory;
     protected $fillable= [
-        'name',
         'numero_id',
+         'name',
+        'Date_chagement',
+        'statut',
+        'description',
         'created_by',
         'updated_by'
     ];
