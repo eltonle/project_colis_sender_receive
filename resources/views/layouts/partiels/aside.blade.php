@@ -198,7 +198,7 @@
                                 <i class="far fas fa-long-arrow-alt-right"></i>
                                 <p>Ajouter un Colis</p>
                             </a> --}}
-                        <li class="nav-item {{ request()->is('units*') ? 'menu-open' : '' }}">
+                        <li class="nav-item {{ request()->is('colis*') ? 'menu-open' : '' }}">
                             <a href="#" class="nav-link {{ request()->is('units*') ? 'active' : '' }}">
                                 {{-- <i class="nav-icon 	fas fa-folder"></i> --}}
                                 <i class="far fas fa-long-arrow-alt-right"></i>
