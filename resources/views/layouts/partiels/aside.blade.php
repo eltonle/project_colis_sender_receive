@@ -176,8 +176,8 @@
                     </ul>
                 </li>
 
-                <li class="nav-item {{ request()->is('units*') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link {{ request()->is('units*') ? 'active' : '' }}">
+                <li class="nav-item {{ request()->is('unit*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->is('unit*') ? 'active' : '' }}">
                         <i class="nav-icon 	fas fa-folder"></i>
                         <p>
                             Gestion des Colis
@@ -199,7 +199,7 @@
                                 <p>Ajouter un Colis</p>
                             </a> --}}
                         <li class="nav-item {{ request()->is('units*') ? 'menu-open' : '' }}">
-                            <a href="#" class="nav-link {{ request()->is('units*') ? 'active' : '' }}">
+                            <a href="#" class="nav-link {{ request()->is('unit*') ? 'active' : '' }}">
                                 {{-- <i class="nav-icon 	fas fa-folder"></i> --}}
                                 <i class="far fas fa-long-arrow-alt-right"></i>
                                 <p>
@@ -289,8 +289,8 @@
                 </ul>
             </li>
             
-        <li class="nav-item {{ request()->is('units*') ? 'menu-open' : '' }}">
-            <a href="#" class="nav-link {{ request()->is('units*') ? 'active' : '' }}">
+        <li class="nav-item {{ request()->is('vehicule*') ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link {{ request()->is('vehicule*') ? 'active' : '' }}">
                 <i class="nav-icon 	fas fa-folder"></i>
                 <p>
                     Gestion des Véhicule
@@ -300,7 +300,7 @@
             <ul class="nav nav-treeview">
                 <li class="nav-item">
                     <a href="{{ route('vehicule.index') }}"
-                        class="nav-link {{ request()->routeIs('vehicule.index')||request()->routeIs('units.edit')||request()->routeIs('units.delete') ? 'active' : '' }}">
+                        class="nav-link {{ request()->routeIs('vehicule.index')||request()->routeIs('vehicule.update') ? 'active' : '' }}">
                         <i class="far fas fa-long-arrow-alt-right">
                        
                         </i>
