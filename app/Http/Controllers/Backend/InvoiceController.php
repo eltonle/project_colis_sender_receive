@@ -629,11 +629,13 @@ class InvoiceController extends Controller
     public function colisStandardStore(Request $request)
     {
         $colis_standard = new ColisStandard();
-        $colis_standard->titre = $request->input('titre');
+        $colis_standard-> titre = $request->input('titre');
         $colis_standard-> largeur= $request->input('largeur');
         $colis_standard-> longueur= $request->input('longueur');
         $colis_standard-> hauteur= $request->input('hauteur');       
         $colis_standard-> description= $request->input('description');
+        $colis_standard-> nature= $request->input('nature');
+        $colis_standard-> poids= $request->input('poids');
         $colis_standard-> prix= $request->input('prix');
         $colis_standard->save();
 
@@ -657,6 +659,7 @@ class InvoiceController extends Controller
         $details->largeur = $data->largeur;
         $details->longueur = $data->longueur;
         $details->hauteur = $data->hauteur;
+        $details->poids = $data->poids;
         $details->type = "colis standard";
         $details->description = $data->description;
         $details->prix = $data->prix;

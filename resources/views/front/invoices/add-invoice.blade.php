@@ -849,21 +849,27 @@
                                 <h5 class=" text-center mt-2"><strong>Ajout d'un colis standard</strong></h5>
 
 
-                                <div class=" col-sm-6 text-center mt-2">
+                                <div class=" col-sm-4 text-center mt-2">
+                                    <input type="text" name="nature" class="form-control" placeholder="type colis...">
+                                </div>
+                                <div class=" col-sm-4 text-center mt-2">
                                     <input type="text" name="titre" class="form-control" placeholder="titre...">
                                 </div>
-                                <div class=" col-sm-6 text-center mt-2">
+                                <div class=" col-sm-4 text-center mt-2">
                                     <input type="number" name="prix" class="form-control" placeholder="prix ...">
                                 </div>
-                                <div class=" col-sm-4 text-center mt-2">
+                                <div class=" col-sm-3 text-center mt-2">
                                     <input type="number" name="largeur" class="form-control" placeholder="largeur ...">
                                 </div>
-                                <div class=" col-sm-4 text-center mt-2">
+                                <div class=" col-sm-3 text-center mt-2">
                                     <input type="number" name="longueur" class="form-control"
                                         placeholder="longueur ...">
                                 </div>
-                                <div class=" col-sm-4 text-center mt-2">
+                                <div class=" col-sm-3 text-center mt-2">
                                     <input type="number" name="hauteur" class="form-control" placeholder="hauteur ...">
+                                </div>
+                                <div class=" col-sm-3 text-center mt-2">
+                                    <input type="number" name="poids" class="form-control" placeholder="poids ...">
                                 </div>
                                 <div class="col-md-12 mt-2">
                                     <textarea name="description" id="" class="form-control"
@@ -1627,7 +1633,7 @@
               var loop = index + 1;
               var cardHtml = "<tr class='data-row'  data-id='" + element.id + "'>" +
                                 "<td>"+ "#" + loop + "</td>" +
-                                "<td>" + "Appariels electronique" + "</td>" +
+                                "<td>" + element.nature + "</td>" +
                                 "<td>" + element.titre + "</td>" +
                                 "<td>" + element.prix + " FCFA " + "</td>" +
                             "</tr>";

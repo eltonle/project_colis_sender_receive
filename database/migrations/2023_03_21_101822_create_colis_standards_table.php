@@ -25,6 +25,8 @@ return new class extends Migration
             $table->double('longueur')->nullable();    
             $table->double('largeur')->nullable();    
             $table->double('hauteur')->nullable();    
+            $table->double('poids')->nullable();    
+            $table->string('nature')->nullable();    
             $table->integer('prix');    
             $table->string('description')->nullable();    
             $table->string('status')->default('0');    

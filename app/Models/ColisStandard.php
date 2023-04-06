@@ -15,7 +15,9 @@ class ColisStandard extends Model
         'largeur',
         'longueur',
         'hauteur',
+        'nature',
         'description',
+        'poids',
         'prix',
      ];
 }

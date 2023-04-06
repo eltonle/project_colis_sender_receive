@@ -198,7 +198,7 @@
                                 <i class="far fas fa-long-arrow-alt-right"></i>
                                 <p>Ajouter un Colis</p>
                             </a> --}}
-                        <li class="nav-item {{ request()->is('units*') ? 'menu-open' : '' }}">
+                        <li class="nav-item {{ request()->is('colis*') ? 'menu-open' : '' }}">
                             <a href="#" class="nav-link {{ request()->is('units*') ? 'active' : '' }}">
                                 {{-- <i class="nav-icon 	fas fa-folder"></i> --}}
                                 <i class="far fas fa-long-arrow-alt-right"></i>
@@ -210,15 +210,15 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="{{ route('units.index') }}"
-                                        class="nav-link {{ request()->routeIs('units.index')||request()->routeIs('units.edit')||request()->routeIs('units.delete') ? 'active' : '' }}">
+                                    <a href="{{ route('colis.listes') }}"
+                                        class="nav-link {{ request()->routeIs('colis.listes') ? 'active' : '' }}">
                                         <i class="fas fa-bars"></i>
                                         <p>Listes</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('units.create') }}"
-                                        class="nav-link {{ request()->routeIs('units.create') ? 'active' : '' }}">
+                                    <a href="{{ route('colis.createStandard') }}"
+                                        class="nav-link {{ request()->routeIs('colis.createStandard') ? 'active' : '' }}">
                                         <i class="fas fa-plus-circle"></i>
                                         <p>Ajouter </p>
                                     </a>
@@ -280,42 +280,42 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                    <a href="{{ route('units.chargement') }}"
-                        class="nav-link {{ request()->routeIs('units.chargement') ? 'active' : '' }}">
-                        <i class="far fas fa-long-arrow-alt-right"></i>
-                        <p>charger un Conteneur</p>
-                    </a>
-                </li>
+                        <a href="{{ route('units.chargement') }}"
+                            class="nav-link {{ request()->routeIs('units.chargement') ? 'active' : '' }}">
+                            <i class="far fas fa-long-arrow-alt-right"></i>
+                            <p>charger un Conteneur</p>
+                        </a>
+                    </li>
                 </ul>
             </li>
-            
-        <li class="nav-item {{ request()->is('units*') ? 'menu-open' : '' }}">
-            <a href="#" class="nav-link {{ request()->is('units*') ? 'active' : '' }}">
-                <i class="nav-icon 	fas fa-folder"></i>
-                <p>
-                    Gestion des Véhicule
-                    <i class="right fas fa-angle-left"></i>
-                </p>
-            </a>
-            <ul class="nav nav-treeview">
-                <li class="nav-item">
-                    <a href="{{ route('vehicule.index') }}"
-                        class="nav-link {{ request()->routeIs('vehicule.index')||request()->routeIs('units.edit')||request()->routeIs('units.delete') ? 'active' : '' }}">
-                        <i class="far fas fa-long-arrow-alt-right">
-                       
-                        </i>
-                        <p>Listes des véhicule</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('vehicule.affectation') }}"
-                        class="nav-link {{ request()->routeIs('vehicule.affectation') ? 'active' : '' }}">
-                        <i class="far fas fa-long-arrow-alt-right"></i>
-                        <p>Listes des affectation véhicule</p>
-                    </a>
-                </li>
-            </ul>
-        </li>
+
+            <li class="nav-item {{ request()->is('units*') ? 'menu-open' : '' }}">
+                <a href="#" class="nav-link {{ request()->is('units*') ? 'active' : '' }}">
+                    <i class="nav-icon 	fas fa-folder"></i>
+                    <p>
+                        Gestion des Véhicule
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{ route('vehicule.index') }}"
+                            class="nav-link {{ request()->routeIs('vehicule.index')||request()->routeIs('units.edit')||request()->routeIs('units.delete') ? 'active' : '' }}">
+                            <i class="far fas fa-long-arrow-alt-right">
+
+                            </i>
+                            <p>Listes des véhicule</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('vehicule.affectation') }}"
+                            class="nav-link {{ request()->routeIs('vehicule.affectation') ? 'active' : '' }}">
+                            <i class="far fas fa-long-arrow-alt-right"></i>
+                            <p>Listes des affectation véhicule</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
             <li class="nav-item {{ request()->is('countries*')||request()->is('states*') ? 'menu-open' : '' }}">
                 <a href="#"
                     class="nav-link {{ request()->is('countries*')|| request()->is('states*') ? 'active' : '' }}">

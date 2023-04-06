@@ -76,6 +76,13 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/Listes_des_colis',[ColisController::class,'index'])->name("colis.index");
         Route::get('/Details_colis/{id}',[ColisController::class,'detailsColis'])->name("colis.details");
         Route::get('/print_colis/{id}',[ColisController::class,'printColis'])->name('colis.print');
+        Route::get('/Listes_colis_standard',[ColisController::class,'listeColisStandard'])->name('colis.listes');
+        Route::get('/editer_colis_standard/{id}',[ColisController::class,'editerColisStandard'])->name('colis.editStandard');
+        Route::post('/update_colis_standard/{id}',[ColisController::class,'updateColisStandard'])->name('colis.updateStandard');
+        Route::get('/creer_colis_standard',[ColisController::class,'createColisStandard'])->name('colis.createStandard');
+        Route::post('/store_colis_standard',[ColisController::class,'storeColisStandard'])->name('colis.storeStandard');
+        
+        Route::delete('/delete_colisStandard/{id}',[ColisController::class,'deleteColisStandard'])->name('colis.deleteStandard');
         
 
     });
@@ -158,7 +165,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/getdata/colis_prix',[InvoiceController::class, 'getDataColisPrix'])->name('getDataPrix');
         // Route::post('/deletPrix/{id}',[InvoiceController::class,'deleteDataColisPrix']);
 
-        //Route colis Standard
+        //Route ajax colis Standard 
         Route::post('/colis_standard',[InvoiceController::class, 'colisStandardStore'])->name('colisStand.store');
         Route::get('/colis_standard',[InvoiceController::class, 'getDatacolisStandard'])->name('getDataStand');
         Route::get('/storeStand/{id}',[InvoiceController::class,'colisStandColisDim']);
