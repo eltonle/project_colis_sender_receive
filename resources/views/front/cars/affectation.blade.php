@@ -46,6 +46,7 @@
                                 <table id="example1" class="table table-bordered table-striped">
                                     <thead style="text-transform: uppercase;">
                                         <tr>
+                                            <th>ID</th>
                                             <th>Immatriculation</th>
                                             <th>Chauffeur</th>
 
@@ -97,6 +98,7 @@
                                     </tbody>
                                     <tfoot class="" style="text-transform: uppercase;">
                                         <tr>
+                                            <th>ID</th>
                                             <th>Immatriculation</th>
                                             <th>Chauffeur</th>
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\ColisDimension;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 
@@ -58,5 +59,11 @@ class UnitController extends Controller
         $Unit = Unit::find($id);
         $Unit->delete();
         return redirect()->route('units.index')->with('error','Package delete successffully...');
+    }
+    public function chargementConteneur()
+    {
+        $colis = ColisDimension::with('invoice')->where('status', '1')->get();
+        $conteneur = Unit::all();
+        return view('front.units.chargement', compact('colis'));
     }
 }

@@ -43,25 +43,24 @@
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-row">
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-4">
                                             <label for="name">Nom du Conteneur</label>
-                                            <input type="text" id="name" name="name" class="form-control" required>
+                                            <input type="text" id="name" name="name" class="form-control"
+                                                placeholder="entrer un nom" required>
                                         </div>
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-4">
                                             <label for="numero_id">Date De Chargement Du Conteneur </label>
                                             <input type="date" id="numero_id" name="Date_chagement" class="form-control"
                                                 required>
                                         </div>
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-4">
                                             <label for="numero_id">Statut</label>
-                                            <input type="text" id="numero_id" name="statut" 
-                                                class="form-control" value="Inscrit" required disabled>
+                                            <input type="text" id="numero_id" name="statut" class="form-control"
+                                                value="Inscrit" required disabled>
                                         </div>
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-12">
                                             <label for="numero_id">Description Du Conteneur</label>
-                                            <textarea 
-                                                id="numero_id"
-                                                name="description" class="form-control" required>
+                                            <textarea id="numero_id" name="description" class="form-control">
                                         </textarea>
                                         </div>
 
@@ -89,7 +88,7 @@
 @section('scripts')
 <!-- Page specific script -->
 <script type="text/javascript">
-$(document).ready(function() {
+    $(document).ready(function() {
     $('#myForm').validate({
         rules: {
             name: {

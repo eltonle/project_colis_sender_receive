@@ -65,7 +65,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::prefix('units')->group(function(){
         Route::get('/Listes-units',[UnitController::class,'index'])->name('units.index');
         Route::get('/add_unit',[UnitController::class,'create'])->name('units.create');
-        Route::get('/', function () {return view('front.units.chargement');})->name('units.chargement');
+        Route::get('/chargement',[UnitController::class,'chargementConteneur'])->name('units.chargement');
+        // Route::get('/', function () {return view('front.units.chargement');})->name('');
 
         Route::post('/store_unit',[UnitController::class,'store'])->name('units.store');
         Route::get('/edit_unit/{id}',[UnitController::class,'edit'])->name('units.edit');
