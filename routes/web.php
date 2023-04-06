@@ -56,6 +56,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/index_afect',[VehiculeController::class,'index_affectation'])->name('vehicule.affectation');
         Route::post('/add_afect',[VehiculeController::class,'add_affectation'])->name('add_affectation');
         Route::delete('/delete_affection/{id}',[VehiculeController::class,'deleteAffectation'])->name('delete_affection');
+        Route::post('/add_chauffeur',[VehiculeController::class,'chauffeur'])->name('vehicule.chauffeur');
+
         
     });
 

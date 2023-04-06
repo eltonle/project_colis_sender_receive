@@ -63,14 +63,15 @@
                                     
                                     <tr>
                                     <td  class="u_id">{{ $affectation->id}}</td>
-                                        <td  class="u_vehicule">{{ $affectation->vehicule ->Immatriculation}}</td>
+                                        <td  class="u_vehicule">{{ $affectation->vehicule->Immatriculation}}</td>
                                         <td  class="u_chauffeur">{{ $affectation->chauffeur->nom }}</td>
                                             <td  class="u_dateDebut">{{ $affectation->dateDebut }}</td>
                                             <td  class="u_dateFin">{{ $affectation->dateFin }}</td>
                                             <td>
                                                 <div style="display: flex; align-items: center">
                                                     <a href="#" title="edit"
-                                                        class="btn btn-sm btn-primary mr-1 modal-defaults"  data-toggle="modal" data-target="#modal-defaults">
+                                                        class="btn btn-sm btn-primary mr-1 modal-defaults
+                                                        "  data-toggle="modal" data-target="#modal-defaults">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
                                                     {{-- <a href="#" title="delete" id="delete"
@@ -213,7 +214,7 @@
             @csrf
             <div class="modal-content ">
                 <div class="modal-header">
-                    <h4 class="modal-title">modifier une Affectation</h4>
+                    <h4 class="modal-title">Modifier une Affectation</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -282,7 +283,7 @@
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
-                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                        <button type="submit" class="btn btn-primary">Modifier</button>
                     </div>
                 </div>
         </form>

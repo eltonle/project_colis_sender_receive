@@ -295,7 +295,9 @@
                                     <select class="form-control select2 select2-danger form-control-md"
                                         data-dropdown-css-class="select2-gray" id="status" name="status"
                                         required>
-                                        <option >{{ $vehicule->status}}</option>
+                                        <option >
+                                            
+                                        </option>
 
                                         <option >EN FONCTIONNEMENT </option>
                                         <option >EN DÉPANNAGE </option>
@@ -324,7 +326,7 @@
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
-                    <button type="submit" class="btn btn-primary">Ajouter</button>
+                    <button type="submit" class="btn btn-primary">Modifier</button>
                 </div>
             </div>
         </form>
