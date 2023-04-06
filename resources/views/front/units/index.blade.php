@@ -41,9 +41,10 @@
                             <!-- /.card-header -->
                             <div class="card-body">
                                 <table id="example1" class="table table-bordered table-striped">
-                                    <thead>
+                                    <thead style="text-transform: uppercase;">
                                         <tr>
-                                            <th>Numero ou Identifiant du Conteneur</th>
+                                        <th>ID</th>
+                                            <th>Numero du Conteneur</th>
                                             <th>Nom du Conteneur</th>
                                             <th>Date chagement</th>
                                             <th>statut</th>
@@ -54,6 +55,7 @@
                                     <tbody>
                                         @foreach ($units as $unit)
                                         <tr>
+                                        <td>{{ $unit->id}}</td>
                                             <td>{{ $unit->numero_id }}</td>
                                             <td>{{ $unit->name }}</td>
                                             <td>{{ $unit->Date_chagement }}</td>
@@ -85,9 +87,10 @@
 
 
                                     </tbody>
-                                    <tfoot>
+                                    <tfoot style="text-transform: uppercase;">
                                         <tr>
-                                        <th>Numero ou Identifiant du Conteneur</th>
+                                        <th>ID</th>
+                                        <th>Numero  du Conteneur</th>
                                             <th>Nom du Conteneur</th>
                                             <th>Date chagement</th>
                                             <th>statut</th>

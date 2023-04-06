@@ -289,8 +289,8 @@
                 </ul>
             </li>
             
-        <li class="nav-item {{ request()->is('units*') ? 'menu-open' : '' }}">
-            <a href="#" class="nav-link {{ request()->is('units*') ? 'active' : '' }}">
+        <li class="nav-item {{ request()->is('vehicule*') ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link {{ request()->is('vehicule*') ? 'active' : '' }}">
                 <i class="nav-icon 	fas fa-folder"></i>
                 <p>
                     Gestion des Véhicule

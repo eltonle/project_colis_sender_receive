@@ -46,6 +46,7 @@
                                 <table id="example1" class="table table-bordered table-striped">
                                     <thead style="text-transform: uppercase;">
                                         <tr>
+                                            <th>ID</th>
                                             <th>Immatriculation</th>
                                             <th>Chauffeur</th>
 
@@ -58,20 +59,21 @@
                                     </thead>
                                     <tbody>
 
-                                        
-                                    @foreach ($affectations as $key => $affectation)
-                                    
-                                    <tr>
-                                    <td  class="u_id">{{ $affectation->id}}</td>
-                                        <td  class="u_vehicule">{{ $affectation->vehicule->Immatriculation}}</td>
-                                        <td  class="u_chauffeur">{{ $affectation->chauffeur->nom }}</td>
-                                            <td  class="u_dateDebut">{{ $affectation->dateDebut }}</td>
-                                            <td  class="u_dateFin">{{ $affectation->dateFin }}</td>
+
+                                        @foreach ($affectations as $key => $affectation)
+
+                                        <tr>
+                                            <td class="u_id">{{ $affectation->id}}</td>
+                                            <td class="u_vehicule">
+                                                {{ $affectation->vehicule->Immatriculation}}({{ $affectation->vehicule->Model}})
+                                            </td>
+                                            <td class="u_chauffeur">{{ $affectation->chauffeur->nom }}</td>
+                                            <td class="u_dateDebut">{{ $affectation->dateDebut }}</td>
+                                            <td class="u_dateFin">{{ $affectation->dateFin }}</td>
                                             <td>
                                                 <div style="display: flex; align-items: center">
-                                                    <a href="#" title="edit"
-                                                        class="btn btn-sm btn-primary mr-1 modal-defaults
-                                                        "  data-toggle="modal" data-target="#modal-defaults">
+                                                    <a href="#" title="edit" class="btn btn-sm btn-primary mr-1 modal-defaults
+                                                        " data-toggle="modal" data-target="#modal-defaults">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
                                                     {{-- <a href="#" title="delete" id="delete"
@@ -91,12 +93,13 @@
                                             </td>
                                         </tr>
 
-                                        
+
                                         @endforeach
 
                                     </tbody>
                                     <tfoot class="" style="text-transform: uppercase;">
                                         <tr>
+                                            <th>ID</th>
                                             <th>Immatriculation</th>
                                             <th>Chauffeur</th>
 
@@ -151,10 +154,10 @@
                                         data-dropdown-css-class="select2-gray" id="country_id" name="chauffeur_id">
                                         <option value="">Selectionner un Chauffeur </option>
                                         @foreach ($chauffeurs as $chauffeur)
-                                                <option value="{{ $chauffeur->id }}">
-                                                    {{$chauffeur->nom }}, {{$chauffeur->prenom }} {{$chauffeur->phone}}
-                                                </option>
-                                                @endforeach
+                                        <option value="{{ $chauffeur->id }}">
+                                            {{$chauffeur->nom }}, {{$chauffeur->prenom }} {{$chauffeur->phone}}
+                                        </option>
+                                        @endforeach
 
                                     </select>
 
@@ -166,10 +169,10 @@
                                     <select class="form-control select2 select2-danger form-control-md"
                                         data-dropdown-css-class="select2-gray" id="country_id" name="vehicule_id">
                                         @foreach ($vehicules as $vehicule)
-                                                <option value="{{ $vehicule->id }}">
-                                                    {{$vehicule->Immatriculation }}
-                                                </option>
-                                                @endforeach
+                                        <option value="{{ $vehicule->id }}">
+                                            {{$vehicule->Immatriculation }}
+                                        </option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -179,7 +182,7 @@
                                     <div class="form-group">
                                         <label>Date Affectation :</label>
                                         <input type="date" class="form-control" style="text-transform: uppercase;"
-                                           name="dateDebut">
+                                            name="dateDebut">
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -187,7 +190,7 @@
                                     <div class="form-group">
                                         <label> Date Fin Affectation:</label>
                                         <input type="date" class="form-control" style="text-transform: uppercase;"
-                                        name="dateFin">
+                                            name="dateFin">
                                     </div>
                                 </div>
                             </div>
@@ -231,16 +234,16 @@
                         <div class="col-sm-12 w-100">
                             <div class="row">
                                 <div class="col-sm-12 ">
-                                <input type="text" name="id" id="id">
+                                    <input type="text" name="id" id="id">
                                     <label>Chauffeur :</label>
                                     <select class="form-control select2 select2-danger form-control-md"
                                         data-dropdown-css-class="select2-gray" id="chauffeur" name="chauffeur_id">
                                         <option value="">Selectionner un Chauffeur </option>
                                         @foreach ($chauffeurs as $chauffeur)
-                                                <option value="{{ $chauffeur->id }}">
-                                                    {{$chauffeur->nom }}, {{$chauffeur->prenom }} {{$chauffeur->phone}}
-                                                </option>
-                                                @endforeach
+                                        <option value="{{ $chauffeur->id }}">
+                                            {{$chauffeur->nom }}, {{$chauffeur->prenom }} {{$chauffeur->phone}}
+                                        </option>
+                                        @endforeach
 
                                     </select>
 
@@ -252,10 +255,10 @@
                                     <select class="form-control select2 select2-danger form-control-md"
                                         data-dropdown-css-class="select2-gray" id="vihicule" name="vehicule_id">
                                         @foreach ($vehicules as $vehicule)
-                                                <option value="{{ $vehicule->id }}">
-                                                    {{$vehicule->Immatriculation }}
-                                                </option>
-                                                @endforeach
+                                        <option value="{{ $vehicule->id }}">
+                                            {{$vehicule->Immatriculation }}
+                                        </option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -264,16 +267,16 @@
                                     <!-- text input -->
                                     <div class="form-group">
                                         <label>Date Affectation :</label>
-                                        <input type="date" class="form-control"  id="dateDate" style="text-transform: uppercase;"
-                                           name="dateDebut">
+                                        <input type="date" class="form-control" id="dateDate"
+                                            style="text-transform: uppercase;" name="dateDebut">
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <!-- text input -->
                                     <div class="form-group">
                                         <label> Date Fin Affectation:</label>
-                                        <input type="date" class="form-control" id="dateFin" style="text-transform: uppercase;"
-                                        name="dateFin">
+                                        <input type="date" class="form-control" id="dateFin"
+                                            style="text-transform: uppercase;" name="dateFin">
                                     </div>
                                 </div>
                             </div>
@@ -297,18 +300,17 @@
 @section('scripts')
 <!-- Page specific script -->
 <script>
-        $(document).on('click','.modal-defaults',function()
-        {
-            var _this = $(this).parents('tr');
-            $('#id').val(_this.find('.u_id').text());
-            $('#chauffeur').val(_this.find('.u_chauffeur').text());
-            $('#vehicule').val(_this.find('.u_vehicule').text());
-            $('#dateDebut').val(_this.find('.u_dateDebut').text());
-            $('#dateFin').val(_this.find('.u_dateFin').text());
-            
-            
-        });
-    </script>
+$(document).on('click', '.modal-defaults', function() {
+    var _this = $(this).parents('tr');
+    $('#id').val(_this.find('.u_id').text());
+    $('#chauffeur').val(_this.find('.u_chauffeur').text());
+    $('#vehicule').val(_this.find('.u_vehicule').text());
+    $('#dateDebut').val(_this.find('.u_dateDebut').text());
+    $('#dateFin').val(_this.find('.u_dateFin').text());
+
+
+});
+</script>
 <script>
 $(function() {
     $("#example1").DataTable({
