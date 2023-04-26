@@ -57,13 +57,28 @@ class ColisController extends Controller
     // ROUTE COLIS STANDARD
     public function listeColisStandard()
     {
-        $colisStandard = ColisStandard::all();
-        return view('front.colis.ListeColisStandard',compact('colisStandard'));
+        $colisStandard = ColisStandard::where('nature', 'Colis Normal')->get();
+        $colisStandardVoiture = ColisStandard::where('nature', 'Colis Voiture')->get();
+        $colisStandardCamion = ColisStandard::where('nature', 'Colis Camion')->get();
+        return view('front.colis.ListeColisStandard',compact('colisStandard','colisStandardVoiture','colisStandardCamion'));
     }
+
     public function editerColisStandard($id)
     {
         $colisStandardEdit = ColisStandard::find($id);
         return view('front.colis.editColisStandard',compact('colisStandardEdit'));
+    }
+
+    public function editerColisStandardVoiture($id)
+    {
+        $colisStandardEditVoiture = ColisStandard::find($id);
+        return view('front.colis.editColisStandardVoiture',compact('colisStandardEditVoiture'));
+    }
+
+    public function editerColisStandardCamion($id)
+    {
+        $colisStandardEditCamion = ColisStandard::find($id);
+        return view('front.colis.editColisStandardCamion',compact('colisStandardEditCamion'));
     }
 
 
@@ -71,6 +86,18 @@ class ColisController extends Controller
     {
         return view('front.colis.createColisStandard');
     }
+
+    public function createColisStandardVoiture()
+    {
+        return view('front.colis.createColisStandardVoiture');
+    }
+
+    public function createColisStandardCamion()
+    {
+        return view('front.colis.createColisStandardCamion');
+    }
+
+    
 
     public function updateColisStandard(Request $request,$id)
     {
@@ -80,12 +107,39 @@ class ColisController extends Controller
         $colis -> largeur = $request->largeur;
         $colis -> hauteur = $request->hauteur;
         $colis -> prix = $request->prix;
-        // $colis -> poids = $request->poids;
         $colis -> description = $request->description;
         $colis->save();
          return redirect()->route('colis.listes')->with('message','Data update successfully...');
        
     }
+
+    public function updateColisStandardVoiture(Request $request,$id)
+    {
+        $colis = ColisStandard::find($id);
+        $colis -> titre = $request->titre;
+        $colis -> type = $request->type;
+        $colis -> capacite = $request->capacite;
+        $colis -> prix = $request->prix;
+        $colis -> description = $request->description;
+        $colis->save();
+         return redirect()->route('colis.listes')->with('message','Data update successfully...');
+       
+    }
+
+    public function updateColisStandardCamion(Request $request,$id)
+    {
+        $colis = ColisStandard::find($id);
+        $colis -> titre = $request->titre;
+        $colis -> type = $request->type;
+        $colis -> longueur = $request->longueur;
+        $colis -> capacite = $request->capacite;
+        $colis -> prix = $request->prix;
+        $colis -> description = $request->description;
+        $colis->save();
+         return redirect()->route('colis.listes')->with('message','Data update successfully...');
+       
+    }
+
     public function storeColisStandard(Request $request)
     {
           
@@ -94,9 +148,41 @@ class ColisController extends Controller
             $colis->longueur=$request->longueur;
             $colis->largeur=$request->largeur;
             $colis->hauteur=$request->hauteur;
-            $colis->poids=$request->poids;
-            $colis->description=$request->description;
             $colis->prix=$request->prix;
+            $colis->description=$request->description;
+            $colis->nature = "Colis Normal";
+            $colis->save();
+          return redirect()->route('colis.listes')->with('message','Data saved successfully...');
+       
+    }
+
+    public function storeColisStandardVoiture(Request $request)
+    {
+          
+            $colis = new ColisStandard();
+            $colis->titre=$request->titre;
+            $colis->type=$request->type;
+            $colis->capacite=$request->capacite;
+            $colis->prix=$request->prix;
+            $colis->description=$request->description;
+            $colis->nature = "Colis Voiture";
+            $colis->save();
+          return redirect()->route('colis.listes')->with('message','Data saved successfully...');
+       
+    }
+
+
+    public function storeColisStandardCamion(Request $request)
+    {
+          
+            $colis = new ColisStandard();
+            $colis->titre=$request->titre;
+            $colis->type=$request->type;
+            $colis->capacite=$request->capacite;
+            $colis->longueur=$request->longueur;
+            $colis->prix=$request->prix;
+            $colis->description=$request->description;
+            $colis->nature = "Colis Camion";
             $colis->save();
           return redirect()->route('colis.listes')->with('message','Data saved successfully...');
        

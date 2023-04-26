@@ -16,6 +16,7 @@ use App\Models\ColisDimension;
 use App\Models\PayementDetail;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Entrepot;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 
@@ -31,9 +32,10 @@ class InvoiceController extends Controller
         // $colis = ColisDimension::where('status',0)->get();
         //   dd($colis);
         $data['countries'] = Country::all();
-        $data['units'] = Unit::all();
+        // $data['units'] = Unit::all();
         $data['customers'] = Customer::all(); 
         $data['receives'] = Customer::all(); 
+        $data['entrepots'] = Entrepot::all(); 
         $data['date'] = date('Y-m-d');
         $invoice_data = Invoice::orderBy('id','desc')->first();
         
@@ -89,38 +91,28 @@ class InvoiceController extends Controller
                $invoice->created_by = Auth::user()->id;
                DB::transaction(function() use($request,$invoice) {
                 if ($invoice->save()) {
-                    $count_model_marque = count($request->model_marque);
-                    // foreach ($request->model_marque as $key => $items) {
-                        
-                    //    $input['date'] = date('Y-m-d',strtotime($request->date[$key]));
-                    //    $input['invoice_id'] = $invoice->id;
-                    //    $input['model_marque'] = $items;
-                    //    $input['description_colis'] = $request->description_colis[$key];
-                    //    $input['chassis'] = $request->chassis[$key];
-                    //    $input['longueur'] = $request->longueur[$key];
-                    //    $input['largeur'] = $request->largeur[$key];
-                    //    $input['hauteur'] = $request->hauteur[$key];
-                    //    $input['qty'] = $request->qty[$key];
-                    //    $input['unit_price'] = $request->unit_price[$key];
-                    //    $input['item_total'] = $request->item_total[$key];
-                    //    $input['status'] = '0';
-                    //    InvoiceDetail::create($input);
-                    // }
-                    for ($i=0; $i < $count_model_marque; $i++) { 
-                        $invoice_details = new InvoiceDetail();
-                        $invoice_details ->date = date('Y-m-d',strtotime($request->date));
-                        $invoice_details ->invoice_id = $invoice->id;
-                        $invoice_details ->model_marque = $request->model_marque[$i];
-                        $invoice_details ->chassis = $request->chassis[$i];
-                        $invoice_details ->longueur = $request->longueur[$i];
-                        $invoice_details ->largeur = $request->largeur[$i];
-                        $invoice_details ->hauteur = $request->hauteur[$i];
-                        $invoice_details ->qty = $request->qty[$i];
-                        $invoice_details ->unit_price = $request->unit_price[$i];
-                        $invoice_details ->item_total = $request->item_total[$i];
-                        $invoice_details ->status = '0';
-                        $invoice_details ->save();
+
+                   // STORE COLIS
+                    $colisDimVerifie = ColisDimension::where('status', 0)->get();
+
+                    if ($colisDimVerifie) {
+                        for($i = 0; $i < count($colisDimVerifie); $i++) {
+                            // ::::::::::::
+                              $today = date(format:'Ymd');
+                              $codesZip = ColisDimension::where('code_zip','like',$today.'%')->pluck('code_zip');
+                              do {
+                                  $codeZip= $today . rand(100000, 999999);
+                              } while ($codesZip->contains($codeZip));
+                            //::::::::::::::
+                            $colisDimVerifie[$i]->invoice_id = $invoice->id;
+                            $colisDimVerifie[$i]->status = 1;
+                            $colisDimVerifie[$i]->entrepot_id = $request->entrepot_id;
+                            $colisDimVerifie[$i]->code_zip = $codeZip;
+                            $colisDimVerifie[$i]->save();            
+                          }
                     }
+                    // END STORE COLIS
+                    
                     if ($request->customer_id == '0') {
                         $customer = new Customer();
                         $customer -> nom = $request->nom;
@@ -133,15 +125,7 @@ class InvoiceController extends Controller
                     }else {
                         $customer_id= $request->customer_id;
                     }
-                    if ($request->receive_id == '0') {
-                        
-                        // $receive = new Receive();
-                        // $receive -> nomr = $request->nomr;
-                        // $receive -> prenomr = $request->prenomr;
-                        // $receive -> emailr = $request->emailr;
-                        // $receive -> addressr = $request->addressr;
-                        // $receive -> phoner = $request->phoner;
-                        // $receive->save();
+                    if ($request->receive_id == '0') {                                                
                         $receive = new Customer();
                         $receive -> nom = $request->nomr;
                         $receive -> prenom = $request->prenomr;
@@ -185,34 +169,7 @@ class InvoiceController extends Controller
                     $payement_detail->invoice_id = $invoice->id;
                     $payement_detail->date = date('Y-m-d',strtotime($request->date));
                     $payement_detail->save();
-
-                    //COLIS STORE 
-                    // ::::::::::::
-                        // $today = date(format:'Ymd');
-                        // $codesZip = ColisDimension::where('code_zip','like',$today.'%')->pluck('code_zip');
-                        // do {
-                        //     $codeZip= $today . rand(100000, 999999);
-                        // } while ($codesZip->contains($codeZip));
-                    //::::::::::::::
-
-                    $colisDimVerifie = ColisDimension::where('status', 0)->get();
-
-                    for($i = 0; $i < count($colisDimVerifie); $i++) {
-                      // ::::::::::::
-                        $today = date(format:'Ymd');
-                        $codesZip = ColisDimension::where('code_zip','like',$today.'%')->pluck('code_zip');
-                        do {
-                            $codeZip= $today . rand(100000, 999999);
-                        } while ($codesZip->contains($codeZip));
-                      //::::::::::::::
-                      $colisDimVerifie[$i]->invoice_id = $invoice->id;
-                      $colisDimVerifie[$i]->status = 1;
-                      $colisDimVerifie[$i]->code_zip = $codeZip;
-                      $colisDimVerifie[$i]->save();            
-                    }
                    
-                   
-                    // END COLIS
                 }
                });
             }
@@ -566,6 +523,7 @@ class InvoiceController extends Controller
         $colis_dim->longueur = $request->input('longueur');
         $colis_dim->hauteur = $request->input('hauteur');
         $colis_dim->type = "colis dimension";
+        $colis_dim->charge = 0;
         $colis_dim->prix_kilo = $request->input('prix_kilo');
         $colis_dim->poids = $request->input('poids');
         $colis_dim->prix_vol = $request->input('prix_vol');
@@ -600,7 +558,9 @@ class InvoiceController extends Controller
             $colis_dim = new ColisDimension();
             $colis_dim->titre = $request->input('titre');
             $colis_dim-> description= $request->input('description');
+            $colis_dim-> poids= $request->input('poids');
             $colis_dim-> type= "colis a prix";
+            $colis_dim-> charge= 0;
             $colis_dim-> prix= $request->input('prix');
             $colis_dim->save();
       
@@ -634,8 +594,7 @@ class InvoiceController extends Controller
         $colis_standard-> longueur= $request->input('longueur');
         $colis_standard-> hauteur= $request->input('hauteur');       
         $colis_standard-> description= $request->input('description');
-        $colis_standard-> nature= $request->input('nature');
-        $colis_standard-> poids= $request->input('poids');
+        $colis_standard-> nature = "Colis Normal";
         $colis_standard-> prix= $request->input('prix');
         $colis_standard->save();
 
@@ -661,6 +620,7 @@ class InvoiceController extends Controller
         $details->hauteur = $data->hauteur;
         $details->poids = $data->poids;
         $details->type = "colis standard";
+        $details->charge = 0;
         $details->description = $data->description;
         $details->prix = $data->prix;
         $details->save();

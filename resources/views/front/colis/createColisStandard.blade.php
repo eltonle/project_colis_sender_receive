@@ -29,7 +29,7 @@
                     {{-- custom tabs --}}
                     <div class="card">
                         <div class="card-header">
-                            <h3> Ajouter Colis Standard
+                            <h3> Ajouter Colis Standard de Type Normal
                                 <a href="{{ route('colis.listes') }}" class="btn float-right btn-sm"
                                     style="background: #563DEA;color: #fff">
                                     <i class="fa fa-list"></i> LISTES DES COLIS STANDARDS 
@@ -44,39 +44,39 @@
                                     @csrf
                                     <div class="form-row">
 
-                                        <div class="form-group col-md-4">
+                                        {{-- <div class="form-group col-md-6">
+                                            <label for="nature">Nature du colis</label>
+                                            <input type="text" id="nature" name="nature" class="form-control">
+                                        </div> --}}
+                                        <div class="form-group col-md-12">
                                             <label for="name">Titre</label>
-                                            <input type="text" id="titre" name="titre" class="form-control">
+                                            <input type="text" id="titre" name="titre" class="form-control" placeholder="Saisir un titre">
                                         </div>
+                                                                                                               
 
-                                        <div class="form-group col-md-4">
-                                            <label for="numero_id">PRIX</label>
-                                            <input type="number" id="numero_id" name="prix"  class="form-control">
-                                        </div>
-
-                                        <div class="form-group col-md-4">
-                                            <label for="numero_id">Poids</label>
-                                            <input type="number" id="numero_id" name="poids" value="35" class="form-control"> 
-                                        </div>
-
-                                        <div class="form-group col-md-4">
-                                            <label for="numero_id">Longueur</label>
-                                            <input type="number" id="numero_id" name="longeur" class="form-control">
+                                        <div class="form-group col-md-6">
+                                            <label for="long">Longueur (m)</label>
+                                            <input type="number" id="long" name="longueur" class="form-control" placeholder="Saisir une longueur">
                                         </div>
                                        
-                                        <div class="form-group col-md-4">
-                                            <label for="numero_id">Largeur</label>
-                                            <input type="number" id="numero_id" name="largeur"  class="form-control">
+                                        <div class="form-group col-md-6">
+                                            <label for="largeur">Largeur (m)</label>
+                                            <input type="number" id="largeur" name="largeur"  class="form-control" placeholder="Saisir une largeur">
                                         </div>
 
-                                        <div class="form-group col-md-4">
-                                            <label for="numero_id">Hauteur</label>
-                                            <input type="number" id="numero_id" name="hauteur" class="form-control">
+                                        <div class="form-group col-md-6">
+                                            <label for="prix">Prix</label>
+                                            <input type="number" id="prix" name="prix"  class="form-control" placeholder="Saisir un prix">
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="hauteur">Hauteur (m)</label>
+                                            <input type="number" id="hauteur" name="hauteur" class="form-control" placeholder="Saisir une hauteur">
                                         </div>
                                         
                                         <div class="form-group col-md-12">
-                                            <label for="numero_id">Description</label>
-                                            <textarea name="description" class="form-control" ></textarea>
+                                            <label >Description</label>
+                                            <textarea name="description" class="form-control" placeholder="Saisir une description"></textarea>
                                         </div>
 
                                         <div class="form-group col-md-6">

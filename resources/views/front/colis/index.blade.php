@@ -37,7 +37,7 @@
                                 </a> --}}
                             </h3>
                         </div><!-- /.card-header -->
-                        <div class="card-body">
+                        
                             <!-- /.card-header -->
                             <div class="card-body">
                                 <!-- Default box -->
@@ -49,11 +49,7 @@
                                             <button type="button" class="btn btn-tool" data-card-widget="collapse"
                                                 title="Collapse">
                                                 <i class="fas fa-minus"></i>
-                                            </button>
-                                            {{-- <button type="button" class="btn btn-tool" data-card-widget="remove"
-                                                title="Remove">
-                                                <i class="fas fa-times"></i>
-                                            </button> --}}
+                                            </button>                                           
                                         </div>
                                     </div>
                                     <div class="card-body">
@@ -64,7 +60,8 @@
                                                     <th>Nom de l'Expediteur</th>
                                                     <th>Date</th>
                                                     <th>Montant Colis</th>
-                                                    <th>Status</th>
+                                                    <th>Etat Chargement</th>
+                                                    
                                                     <th>Actions</th>
                                                 </tr>
                                             </thead>
@@ -76,20 +73,26 @@
 
                                                     <td>{{ date('d-M-Y',strtotime($ul->invoice->date)) }}</td>
                                                     <td>{{ number_format($ul->prix ,0,' ',',')}} FCFA</td>
+                                                   
                                                     <td>
-                                                        @if ($ul->status== 1)
-                                                        <span class="badge"
+                                                        {{-- <span class="badge {{ $ul->status == '1' ? 'bg-info' : 
+                                                            ($ul->status == '0' ? 'bg-warning' :  
+                                                            ($ul->status == 'Decharge' ? 'bg-secondary' : 'bg-dark')) }}">
+
+                                                            {{ $ul->status }}
+                                                        </span> --}}
+                                                        @if ($ul->charge== 1)
+                                                           <span class="badge"
                                                             style="background: #2962FF;color:white; padding: 3px;">
-                                                            <i class="fa fa-ship"></i> En Embarcation</span>
-                                                        @elseif ($ul->status == "en cours d'expedition")
-                                                        <span class="badge"
-                                                            style="background: #010742; color:white; padding: 3px;">
-                                                            <i class="fa fa-globe-americas"></i> En Cours
-                                                            d'Expedition</span>
-                                                        @elseif ($ul->status == 'livre')
-                                                        <span class="badge"
+                                                            <i class="fas fa-truck"></i> Colis Chargé</span>
+                                                        @elseif (($ul->charge == 2) && ($ul->decharge == 1))
+                                                         <span class="badge "
+                                                            style="background:  #fa03d1; color:white; padding: 3px;">
+                                                            <i class="fas fa-check"></i> Colis Dechargé</span>                                               
+                                                        @else
+                                                            <span class="badge "
                                                             style="background:  #B61418; color:white; padding: 3px;">
-                                                            <i class="fa fa-check"></i> Livré</span>
+                                                            <i class="fas fa-times"></i> Colis Non Chargé</span> 
                                                         @endif
                                                     </td>
                                                     <td>
@@ -126,13 +129,7 @@
                                                                             class="fa fa-print"></i> Imprimer
                                                                         l'Etiquette</span>
                                                                 </a>
-                                                                <a href="{{ route('invoices.etiquette',$ul->id) }}"
-                                                                    target="_blank" title="imprimer l'étiquette"
-                                                                    class="dropdown-item">
-                                                                    <span class="text-xs text-dark font-weight-bold"><i
-                                                                            class="fa fa-print"></i> Imprimer
-                                                                        l'Etiquette</span>
-                                                                </a>
+                                                               
                                                             </div>
                                                         </div>
                                                     </td>
@@ -147,63 +144,22 @@
                                                     <th>Nom de l'Expediteur</th>
                                                     <th>Date</th>
                                                     <th>Montant Colis</th>
-                                                    <th>Status</th>
+                                                    <th>Etat Chargement</th>
+                                                   
                                                     <th>Actions</th>
                                                 </tr>
                                             </tfoot>
                                         </table>
                                     </div>
                                     <!-- /.card-body -->
-                                    <div class="card-footer">Footer</div>
+                                    <div class="card-footer text-center">Fin Listes</div>
                                     <!-- /.card-footer-->
                                 </div>
                                 <!-- /.card -->
-                                {{-- <table id="example1" class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Nom Pays</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($colis as $country)
-                                        <tr>
-                                            <td>{{ $country->titre }}</td>
-                                            <td>
-                                                <div style="display: flex; align-items: center">
-
-
-                                                    <a href="{{ route('countries.edit',$country->id) }}" title="edit"
-                                                        class="btn btn-sm btn-primary mr-1">
-                                                        <i class="fa fa-edit"></i>
-                                                    </a>
-
-                                                    <form method="POST"
-                                                        action="{{ route('countries.delete', $country->id) }}">
-                                                        @csrf
-                                                        <input name="_method" type="hidden" value="DELETE">
-                                                        <button type="submit"
-                                                            class="btn btn-sm rounded btn-danger btn-flat show_confirm"
-                                                            data-toggle="tooltip" title='Delete'><i
-                                                                class="fa fa-trash"></i></button>
-                                                    </form>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-
-
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Nom Pays</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </tfoot>
-                                </table> --}}
+                                
                             </div>
                             <!-- /.card-body -->
-                        </div>
+                        
                     </div>
                 </section>
             </div>

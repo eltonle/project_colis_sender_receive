@@ -23,10 +23,9 @@ return new class extends Migration
             $table->integer('decharge')->nullable();
             $table->integer('vehicule_id')->nullable();
             $table->integer('entrepot_id')->nullable();
-            $table->integer('conteneur_id')->nullable();
+            $table->integer('unit_id')->nullable();
             
             $table->string('titre');
-            // $table->integer('quantite');
             $table->double('largeur')->nullable();
             $table->double('conversion')->nullable();
             $table->double('longueur')->nullable();
@@ -36,7 +35,6 @@ return new class extends Migration
             $table->double('prix_vol')->nullable();
             $table->string('type');
             $table->integer('prix');
-            // $table->integer('total');
             $table->string('description')->nullable();
             $table->timestamps();
         });

@@ -7,12 +7,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h3 class="m-0 font-weight-bold">Gestions de Conteneurs</h3>
+                    <h3 class="m-0 font-weight-bold">Gestions de Colis Standards</h3>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Tableau de Bord</a></li>
-                        <li class="breadcrumb-item active">Conteneurs</li>
+                        <li class="breadcrumb-item active">Colis Standard</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -29,52 +29,45 @@
                     {{-- custom tabs --}}
                     <div class="card">
                         <div class="card-header">
-                            <h3> Editer un Conteneur
-                                <a href="{{ route('units.index') }}" class="btn float-right btn-sm"
+                            <h3> Mise à jour du Colis-Standard de Type Voiture
+                                <a href="{{ route('colis.listes') }}" class="btn float-right btn-sm"
                                     style="background: #563DEA;color: #fff">
-                                    <i class="fa fa-list"></i> LISTES DES CONTENEURS
+                                    <i class="fa fa-list"></i> LISTES DES COLIS STANDARDS 
                                 </a>
                             </h3>
                         </div><!-- /.card-header -->
                         <div class="card-body">
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <form action="{{ route('units.update',$edit->id) }}" method="POST" id="myForm"
+                                <form action="{{ route('colis.updateStandardVoiture', $colisStandardEditVoiture->id) }}" method="POST" id="myForm"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-row">
+
                                         <div class="form-group col-md-12">
-                                            <label for="name">Nom du Conteneur</label>
-                                            <input type="text" id="name" name="name" class="form-control"
-                                                placeholder="entrer un nom" value="{{ $edit->name }}" required>
+                                            <label for="name">Titre</label>
+                                            <input type="text" id="titre" name="titre" class="form-control" value="{{ $colisStandardEditVoiture->titre }}">
                                         </div>
-                                        <div class="form-group col-md-4">
-                                            <label for="name">Identifiant ou Numero Conteneur</label>
-                                            <input type="text" id="name" name="numero_id" class="form-control"
-                                                placeholder="entrer un nom" value="{{ $edit->numero_id }}" required>
+                                                                                                               
+
+                                        <div class="form-group col-md-6">
+                                            <label for="type">Type Voiture</label>
+                                            <input type="text" id="type" name="type" class="form-control" value="{{ $colisStandardEditVoiture->type }}">
                                         </div>
-                                        <div class="form-group col-md-4">
-                                            <label for="numero_id">Date Chargement Conteneur </label>
-                                            <input type="date" id="numero_id" name="date_chargement" value="{{ $edit->date_chargement }}" class="form-control"
-                                                required>
+                                       
+                                        <div class="form-group col-md-6">
+                                            <label for="capacite">Capacité</label>
+                                            <input type="text" id="capacite" name="capacite"  class="form-control" value="{{ $colisStandardEditVoiture->capacite }}">
                                         </div>
-                                        <div class="form-group col-md-4">
-                                            <label for="numero_id">Statut</label>                                            
-                                                <select name="statut" class="form-control" id="">
-                                                    <option value="" >Inscrit</option>
-                                                    <option value="Charge">Charge</option>
-                                                    <option value="En cours de Chargement">En cours de Chargement</option>
-                                                    <option value="En transit">En transit</option>
-                                                    <option value="Arrivee">Arrivee</option>
-                                                    <option value="En cours de Dechargement">En cours de Dechargement</option>
-                                                    <option value="Decharge">Dechargé</option>
-                                                </select>
-                                        </div>
+
                                         <div class="form-group col-md-12">
-                                            <label for="numero_id">Description Du Conteneur</label>
-                                            <textarea id="numero_id" name="description" class="form-control">
-                                                {{ $edit->description }}
-                                           </textarea>
+                                            <label for="prix">Prix (en FCFA)</label>
+                                            <input type="number" id="prix" name="prix"  class="form-control" value="{{ $colisStandardEditVoiture->prix }}">
+                                        </div>                                        
+                                        
+                                        <div class="form-group col-md-12">
+                                            <label >Description</label>
+                                            <textarea name="description" class="form-control" >{{ $colisStandardEditVoiture->description }}</textarea>
                                         </div>
 
                                         <div class="form-group col-md-6">

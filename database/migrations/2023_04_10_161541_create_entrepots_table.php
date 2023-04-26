@@ -13,16 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('units', function (Blueprint $table) {
+        Schema::create('entrepots', function (Blueprint $table) {
             $table->id();
-            $table->string('numero_id');
             $table->string('name');
-            // $table->decimal('max_capacity', 10, 2);
-            $table->date('date_chargement');
-            $table->string('statut');
-            $table->string('description');
-            $table->integer('created_by')->nullable();
-            $table->integer('updated_by')->nullable();
+            $table->string('address');
+            $table->string('ville');
             $table->timestamps();
         });
     }
@@ -34,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('units');
+        Schema::dropIfExists('entrepots');
     }
 };

@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\ColisDimension;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class vehicule extends Model
 {
@@ -21,4 +22,9 @@ class vehicule extends Model
    {
       return $this->hasMany(Affectation::class,'affectation_id','id');
    }
+
+   public function colis()
+    {
+        return $this->hasMany(ColisDimension::class);
+    }
 }

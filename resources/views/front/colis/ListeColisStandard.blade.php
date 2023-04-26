@@ -30,7 +30,7 @@
                     {{-- custom tabs --}}
                     <div class="card">
                         <div class="card-header">
-                            <h3> Lists des Colis Standards
+                            <h3> Listes Colis Type Normal
                                 <a href="{{ route('colis.createStandard') }}" class="btn  float-right btn-sm"
                                     style="background: #563DEA;color: #fff">
                                     <i class="fa fa-plus-circle"></i> AJOUTER UN COLIS STANDARD
@@ -38,70 +38,273 @@
                             </h3>
                         </div><!-- /.card-header -->
                         <div class="card-body">
-                            <!-- /.card-header -->
-                            <div class="card-body">
-                                <table id="example1" class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Titre </th>
-                                            <th>Prix </th>
-                                            <th>Longueur</th>
-                                            <th>Largeur</th>
-                                            <th>Hauteur</th>
-                                            <th>Poids</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($colisStandard as $unit)
-                                        <tr>
-                                            <td> {{ strtoupper($unit->titre) }}</td>
-                                            <td> {{ number_format($unit->prix,0,' ',',')}}  FCFA</td>
-                                            <td>{{ $unit->longueur }} Cm</td>
-                                            <td>{{ $unit->largeur }} Cm</td>
-                                            <td>{{ $unit->hauteur }} Cm</td>
-                                            <td> {{ $unit->poids }}Kg</td>
-                                            <td> 
-                                                <div style="display: flex; align-items: center">
 
 
-                                                    <a href="{{ route('colis.editStandard',$unit->id) }}" title="edit"
-                                                        class="btn btn-sm btn-primary mr-1">
-                                                        <i class="fa fa-edit"></i>
-                                                    </a>
-                                                    {{-- <a href="#" title="delete" id="delete"
-                                                        class="btn btn-sm btn-danger">
-                                                        <i class="fa fa-trash"></i>
-                                                    </a> --}}
-                                                    <form method="POST" action="{{ route('colis.deleteStandard', $unit->id) }}">
-                                                        @csrf
-                                                        <input name="_method" type="hidden" value="DELETE">
-                                                        <button type="submit"
-                                                            class="btn btn-sm rounded btn-danger btn-flat show_confirm"
-                                                            data-toggle="tooltip" title='Delete'><i
-                                                                class="fa fa-trash"></i></button>
-                                                    </form>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforeach
+                            <!-- Default box -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Liste des colis Enregistrés</h3>
+
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse"
+                                            title="Collapse">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <table id="example1" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Titre </th>
+                                                <th>Prix </th>
+                                                <th>Longueur (m)</th>
+                                                <th>Largeur (m)</th>
+                                                <th>Hauteur (m)</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($colisStandard as $unit)
+                                            <tr>
+                                                <td> {{ strtoupper($unit->titre) }}</td>
+                                                <td> {{ number_format($unit->prix,0,' ',',')}} FCFA</td>
+                                                <td>{{ $unit->longueur }} m</td>
+                                                <td>{{ $unit->largeur }} m</td>
+                                                <td>{{ $unit->hauteur }} m</td>
+                                                <td>
+                                                    <div style="display: flex; align-items: center">
 
 
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Titre </th>
-                                            <th>Prix </th>
-                                            <th>Longueur</th>
-                                            <th>Largeur</th>
-                                            <th>Hauteur</th>
-                                            <th>Poids</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
+                                                        <a href="{{ route('colis.editStandard',$unit->id) }}"
+                                                            title="edit" class="btn btn-sm btn-primary mr-1">
+                                                            <i class="fa fa-edit"></i>
+                                                        </a>
+                                                        {{-- <a href="#" title="delete" id="delete"
+                                                            class="btn btn-sm btn-danger">
+                                                            <i class="fa fa-trash"></i>
+                                                        </a> --}}
+                                                        <form method="POST"
+                                                            action="{{ route('colis.deleteStandard', $unit->id) }}">
+                                                            @csrf
+                                                            <input name="_method" type="hidden" value="DELETE">
+                                                            <button type="submit"
+                                                                class="btn btn-sm rounded btn-danger btn-flat show_confirm"
+                                                                data-toggle="tooltip" title='Delete'><i
+                                                                    class="fa fa-trash"></i></button>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+
+
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Titre </th>
+                                                <th>Prix </th>
+                                                <th>Longueur (m)</th>
+                                                <th>Largeur (m)</th>
+                                                <th>Hauteur (m)</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                                <!-- /.card-body -->
+                                <div class="card-footer text-center">Fin Listes Colis Standards Normal</div>
+                                <!-- /.card-footer-->
                             </div>
-                            <!-- /.card-body -->
+                        </div>
+                    </div>
+                </section>
+
+                <section class="col-md-12">
+                    {{-- custom tabs --}}
+                    <div class="card">
+                        <div class="card-header">
+                            <h3> Listes Colis Type Voiture
+                                <a href="{{ route('colis.createStandardVoiture') }}" class="btn  float-right btn-sm"
+                                    style="background: #563DEA;color: #fff">
+                                    <i class="fa fa-plus-circle"></i> AJOUTER UN COLIS STANDARD
+                                </a>
+                            </h3>
+                        </div><!-- /.card-header -->
+                        <div class="card-body">
+
+
+                            <!-- Default box -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Liste des colis Enregistrés</h3>
+
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse"
+                                            title="Collapse">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <table id="example1" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Titre </th>
+                                                <th>Prix </th>
+                                                <th>Type</th>
+                                                <th>Capacite</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($colisStandardVoiture as $unit)
+                                            <tr>
+                                                <td> {{ strtoupper($unit->titre) }}</td>
+                                                <td> {{ number_format($unit->prix,0,' ',',')}} FCFA</td>
+                                                <td>{{ $unit->type }} </td>
+                                                <td>{{ $unit->capacite }} </td>
+                                                <td>
+                                                    <div style="display: flex; align-items: center">
+
+
+                                                        <a href="{{ route('colis.editStandardVoiture',$unit->id) }}"
+                                                            title="edit" class="btn btn-sm btn-primary mr-1">
+                                                            <i class="fa fa-edit"></i>
+                                                        </a>
+                                                        {{-- <a href="#" title="delete" id="delete"
+                                                            class="btn btn-sm btn-danger">
+                                                            <i class="fa fa-trash"></i>
+                                                        </a> --}}
+                                                        <form method="POST"
+                                                            action="{{ route('colis.deleteStandard', $unit->id) }}">
+                                                            @csrf
+                                                            <input name="_method" type="hidden" value="DELETE">
+                                                            <button type="submit"
+                                                                class="btn btn-sm rounded btn-danger btn-flat show_confirm"
+                                                                data-toggle="tooltip" title='Delete'><i
+                                                                    class="fa fa-trash"></i></button>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+
+
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Titre </th>
+                                                <th>Prix </th>
+                                                <th>Type</th>
+                                                <th>Capacite</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                                <!-- /.card-body -->
+                                <div class="card-footer text-center">Fin Listes Colis Standards Normal</div>
+                                <!-- /.card-footer-->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+                <section class="col-md-12">
+                    {{-- custom tabs --}}
+                    <div class="card">
+                        <div class="card-header">
+                            <h3> Lists Colis Type Camion
+                                <a href="{{ route('colis.createStandardCamion') }}" class="btn  float-right btn-sm"
+                                    style="background: #563DEA;color: #fff">
+                                    <i class="fa fa-plus-circle"></i> AJOUTER UN COLIS STANDARD
+                                </a>
+                            </h3>
+                        </div><!-- /.card-header -->
+                        <div class="card-body">
+
+
+                            <!-- Default box -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Liste des colis Enregistrés</h3>
+
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse"
+                                            title="Collapse">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <table id="example1" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Titre </th>
+                                                <th>Prix </th>
+                                                <th>Type</th>
+                                                <th>Longueur (m)</th>
+                                                <th>Capacite</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($colisStandardCamion as $unit)
+                                            <tr>
+                                                <td> {{ strtoupper($unit->titre) }}</td>
+                                                <td> {{ number_format($unit->prix,0,' ',',')}} FCFA</td>
+                                                <td>{{ $unit->type }} </td>
+                                                <td>{{ $unit->longueur }} m</td>
+                                                <td>{{ $unit->capacite }} </td>
+                                                <td>
+                                                    <div style="display: flex; align-items: center">
+
+
+                                                        <a href="{{ route('colis.editStandardCamion',$unit->id) }}"
+                                                            title="edit" class="btn btn-sm btn-primary mr-1">
+                                                            <i class="fa fa-edit"></i>
+                                                        </a>
+                                                        {{-- <a href="#" title="delete" id="delete"
+                                                            class="btn btn-sm btn-danger">
+                                                            <i class="fa fa-trash"></i>
+                                                        </a> --}}
+                                                        <form method="POST"
+                                                            action="{{ route('colis.deleteStandard', $unit->id) }}">
+                                                            @csrf
+                                                            <input name="_method" type="hidden" value="DELETE">
+                                                            <button type="submit"
+                                                                class="btn btn-sm rounded btn-danger btn-flat show_confirm"
+                                                                data-toggle="tooltip" title='Delete'><i
+                                                                    class="fa fa-trash"></i></button>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+
+
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Titre </th>
+                                                <th>Prix </th>
+                                                <th>Type</th>
+                                                <th>Longueur (m)</th>
+                                                <th>Capacite</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                                <!-- /.card-body -->
+                                <div class="card-footer text-center">Fin Listes Colis Standards Normal</div>
+                                <!-- /.card-footer-->
+                            </div>
                         </div>
                     </div>
                 </section>

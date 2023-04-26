@@ -11,6 +11,7 @@ use App\Http\Controllers\Backend\ColisController;
 use App\Http\Controllers\Backend\CountryController;
 use App\Http\Controllers\Backend\CustomerController;
 use App\Http\Controllers\Backend\DropdownController;
+use App\Http\Controllers\Backend\EntrepotController;
 use App\Http\Controllers\Backend\InvoiceController;
 use App\Http\Controllers\Backend\ReceiveController;
 use App\Http\Controllers\Backend\StateController;
@@ -61,17 +62,49 @@ Route::group(['middleware' => 'auth'], function () {
         
     });
 
+    Route::prefix('entrepots')->group(function(){
+        Route::get('/Listes-entrepots',[EntrepotController::class,'index'])->name('entrepots.index');
+        Route::get('/Creer-entrepot',[EntrepotController::class,'create'])->name('entrepots.create');
+        Route::post('/store-entrepot',[EntrepotController::class,'store'])->name('entrepots.store');
+        Route::post('/update-entrepot/{id}',[EntrepotController::class,'update'])->name('entrepots.update');
+        Route::get('/store-entrepot/{id}',[EntrepotController::class,'edit'])->name('entrepots.edit');
+        Route::get('/voir_entrepot/{entrepot}',[EntrepotController::class,'showEntrepot'])->name('entrepots.show');
+        Route::delete('/delete-entrepot/{id}',[EntrepotController::class,'delete'])->name('entrepots.delete');
+
+        Route::get('/entrepots/listes_colis/{entrepot}/pdf',[EntrepotController::class,'entrepotlistesColisPdf'])->name('entrepotListes.pdf');
+    });
     
     Route::prefix('units')->group(function(){
-        Route::get('/Listes-units',[UnitController::class,'index'])->name('units.index');
-        Route::get('/add_unit',[UnitController::class,'create'])->name('units.create');
-        Route::get('/chargement',[UnitController::class,'chargementConteneur'])->name('units.chargement');
+        Route::get('/Listes-conteneurs',[UnitController::class,'index'])->name('units.index');
+        Route::get('/ajouter_conteneur',[UnitController::class,'create'])->name('units.create');
+        Route::get('/chargement_conteneur/{unit}',[UnitController::class,'voirConteneur'])->name('units.show');
+        Route::get('/chargement_conteneur_scan/{unit}',[UnitController::class,'voirConteneurScan'])->name('units.showScan');
+        Route::get('/chargement',[UnitController::class,'chargementMix'])->name('units.chargementMix');
+        Route::post('/chargementSubmit',[UnitController::class,'chargementMixSubmit'])->name('units.chargementMixSubmit');
+        Route::get('/dechargement',[UnitController::class,'dechargement'])->name('units.dechargement');
+        Route::post('/dechargementSubmit',[UnitController::class,'dechargementSubmit'])->name('units.dechargementSubmit');
+        Route::get('/dechargement_conteneur/{id}',[UnitController::class,'voirConteneurDecharge'])->name('units.showDecharge');
+        Route::post('/conteneur/{id}/colis',[UnitController::class,'chargementConteneur'])->name('unitsColis.update');
+        Route::post('/conteneur_dechargement/{id}/colis',[UnitController::class,'dechargementConteneur'])->name('unitsColisDecharge.update');
+
+        Route::post('/vehicule-scanner/{id}/colis',[UnitController::class,'chargementScannerConteneur'])->name('unitsColisScanner.update');
+        // Route::post('/conteneurs/{conteneur}/chargement', [ChargementController::class, 'enregistrerChargement'])->name('conteneurs.chargement');
+
         // Route::get('/', function () {return view('front.units.chargement');})->name('');
+        Route::post('/vehicules/{id}/colis', [VehiculeController::class, 'ajouterColis'])->name('vehicules.colis.ajouter');
 
         Route::post('/store_unit',[UnitController::class,'store'])->name('units.store');
-        Route::get('/edit_unit/{id}',[UnitController::class,'edit'])->name('units.edit');
+        Route::get('/edit_conteneur/{id}',[UnitController::class,'edit'])->name('units.edit');
         Route::post('/update_unit/{id}',[UnitController::class,'update'])->name('units.update');
         Route::delete('/delete_unit/{id}',[UnitController::class,'delete'])->name('units.delete');
+
+        // AJAX changer-statut-conteneur
+        // Route::post('/changer-statut-conteneur', [UnitController::class,'changerStatutConteneur'])->name('changer_statut_conteneur');
+        // Route::post('/conteneurs/{id}/changerStatut',  [UnitController::class,'changerStatutConteneur'])->name('conteneurs.changerStatut');
+        // Route::post('/conteneurs/{id}/modifier-statut', [UnitController::class,'changerStatutConteneur'])->name('conteneurs.modifierStatut');
+        Route::post('/conteneurs/{id}/modifier-statut', [UnitController::class,'changerStatutConteneur'])->name('conteneurs.modifierStatut');
+
+
 
     });
 
@@ -81,9 +114,19 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/print_colis/{id}',[ColisController::class,'printColis'])->name('colis.print');
         Route::get('/Listes_colis_standard',[ColisController::class,'listeColisStandard'])->name('colis.listes');
         Route::get('/editer_colis_standard/{id}',[ColisController::class,'editerColisStandard'])->name('colis.editStandard');
+        Route::get('/editer_colis_standard_voiture/{id}',[ColisController::class,'editerColisStandardVoiture'])->name('colis.editStandardVoiture');
+        Route::get('/editer_colis_standard_camion/{id}',[ColisController::class,'editerColisStandardCamion'])->name('colis.editStandardCamion');
+
         Route::post('/update_colis_standard/{id}',[ColisController::class,'updateColisStandard'])->name('colis.updateStandard');
-        Route::get('/creer_colis_standard',[ColisController::class,'createColisStandard'])->name('colis.createStandard');
-        Route::post('/store_colis_standard',[ColisController::class,'storeColisStandard'])->name('colis.storeStandard');
+        Route::post('/update_colis_standardVoiture/{id}',[ColisController::class,'updateColisStandardVoiture'])->name('colis.updateStandardVoiture');
+        Route::post('/update_colis_standardCamioon/{id}',[ColisController::class,'updateColisStandardCamion'])->name('colis.updateStandardCamion');
+
+        Route::get('/creer_colis_standard/type_normal',[ColisController::class,'createColisStandard'])->name('colis.createStandard');
+        Route::get('/creer_colis_standard/type_voiture',[ColisController::class,'createColisStandardVoiture'])->name('colis.createStandardVoiture');
+        Route::get('/creer_colis_standard/type_camion',[ColisController::class,'createColisStandardCamion'])->name('colis.createStandardCamion');
+        Route::post('/store_colis_standard',[ColisController::class,'storeColisStandard'])->name('colis.storeStandard'); 
+        Route::post('/store_colis_standard_voiture',[ColisController::class,'storeColisStandardVoiture'])->name('colis.storeStandardVoiture');
+        Route::post('/store_colis_standard_camion',[ColisController::class,'storeColisStandardCamion'])->name('colis.storeStandardCamion');
         
         Route::delete('/delete_colisStandard/{id}',[ColisController::class,'deleteColisStandard'])->name('colis.deleteStandard');
         

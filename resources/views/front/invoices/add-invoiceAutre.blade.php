@@ -251,9 +251,67 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>                                
-                                      
-                                      
+                                        </div>
+
+                                        {{-- package --}}
+                                        <div class="card-header">
+                                            <h3><i class="	fas fa-file-alt" style="color: #2c3e50"></i> Information
+                                                sur le Colis type Vehicule
+                                                :
+                                            </h3>
+                                        </div><!-- /.card-header -->
+
+                                        <table class="table table-hover table-bordered" id="tableEstimate">
+                                            <thead class="table-secondary">
+                                                <tr>
+                                                    <th scope="col" class="text-center">Marque&Model</th>
+                                                    <th scope="col" class="text-center">Description</th>
+                                                    <th scope="col" class="text-center">Nº châssis</th>
+                                                    <th scope="col" class="text-center">Longueur(cm)</th>
+                                                    <th scope="col" class="text-center">Largeur(cm)</th>
+                                                    <th scope="col" class="text-center">Hauteur(cm)</th>
+                                                    <th scope="col" class="text-center">Prix U.</th>
+                                                    <th scope="col" class="text-center">Qty</th>
+                                                    <th scope="col" class="text-center">Total</th>
+                                                    <th scope="col" class="NoPrint text-right">
+                                                        <button type="button" class="btn btn-sm"
+                                                            style="background: #563DEA; color: #fff"
+                                                            onclick="BtnAdd()"><i class="fa fa-plus"></i></button>
+
+                                                    </th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody id="TBody">
+                                                <tr id="TRow">
+                                                    <td><input name="model_marque[]" type="text"
+                                                            class="form-control form-control-sm"
+                                                            placeholder="Model&Marque">
+                                                    </td>
+                                                    <td><input name="description_colis[]" type="text"
+                                                            class="form-control form-control-sm"
+                                                            placeholder="Description Colis"></td>
+                                                    <td><input name="chassis[]" type="text"
+                                                            class="form-control-sm form-control" value="0"></td>
+                                                    <td><input name="longueur[]" style="width: 50px" type="number"
+                                                            class="form-control form-control-sm" value="0"></td>
+                                                    <td><input name="largeur[]" style="width: 50px" type="number"
+                                                            class="form-control form-control-sm" value="0"></td>
+                                                    <td><input name="hauteur[]" style="width: 50px" type="number"
+                                                            class="form-control form-control-sm" value="0"></td>
+                                                    <td><input type="number"
+                                                            class="form-control form-control-sm text-end"
+                                                            name="unit_price[]" onchange="Calc(this);" value="0">
+                                                    </td>
+                                                    <td><input type="number" style="width: 50px" value="1"
+                                                            class="form-control form-control-sm text-end" name="qty[]"
+                                                            onchange="Calc(this);"></td>
+                                                    <td><input type="number"
+                                                            class="form-control form-control-sm text-end"
+                                                            name="item_total[]" value="0" readonly></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                         {{-- DISPLAY COLIS --}}
                                         <div class="row">
                                             <div class="col-md-12">
@@ -326,7 +384,7 @@
                                         <div class="card  card-tabs">
                                             <div class="card-header" style="margin-bottom: 10px">
                                                 <h3><i class="	fas fa-file-alt" style="color: #2c3e50"></i>
-                                                    Ajouter Colis
+                                                    Associer Colis
                                                     :
                                                 </h3>
                                             </div>
@@ -342,7 +400,7 @@
                                                 </button>
                                                 <button type="button" class="btn btn-dark" data-toggle="modal"
                                                     data-target="#modal-lg-standard">
-                                                    Ajouter un Colis Standard
+                                                    Ajouter un Colis Dimensionne
                                                 </button>
                                             </div>
 
@@ -379,21 +437,21 @@
                                             <option value="livre">Livree</option>
                                         </select>
                                     </div>
-                                    <div class="form-group col-md-4">
-                                        <label for="package_id" style="font-weight:bold ">Selectionner Entrepot
+                                    {{-- <div class="form-group col-md-4">
+                                        <label for="package_id" style="font-weight:bold ">Type Conteneur
                                             <i class="fas fa-truck text-danger"></i></label>
-                                        <select name="entrepot_id"
+                                        <select name="unit_id"
                                             class="form-control select2 select2-danger form-control-sm"
                                             data-dropdown-css-class="select2-danger" id="package_id">
                                             <option value="">Selectionner un Conteneur</option>
-                                            @foreach ($entrepots as $entrepot )
-                                            <option value="{{ $entrepot->id }}">{{ $entrepot->name }}-({{
-                                                $entrepot->address
-                                                }} - {{ $entrepot->ville }})
+                                            @foreach ($units as $unit )
+                                            <option value="{{ $unit->id }}">{{ $unit->name }}-({{
+                                                $unit->numero_id
+                                                }})
                                             </option>
                                             @endforeach
                                         </select>
-                                    </div>
+                                    </div> --}}
                                     <div class="form-group">
                                         <label for="package_id" style="font-weight:bold ">
                                             Description</label>
@@ -865,6 +923,93 @@
 @section('scripts')
 <!-- ADD IN INVOICE -->
 <script>
+    function BtnAdd() {
+        // var v = $('#TRow').clone().appendTo('#TBody');
+        // $(v).find('input').val('');
+        // $(v).removeClass('d-none')
+
+        $("#tableEstimate tbody").append(`<tr>
+            <td><input name="model_marque[]" type="text"
+                                                                    class="form-control form-control-sm"></td>
+                                                                    
+                                                            <td><input name="description_colis[]" type="text"
+                                                                    class="form-control form-control-sm"></td>
+                                                            <td><input name="chassis[]" type="text"
+                                                                    class="form-control form-control-sm"></td>
+                                                            <td><input name="longueur[]" 
+                                                                    type="number" class="form-control form-control-sm" style="width: 50px"></td>
+                                                            <td><input name="largeur[]"                                                                      type="number" class="form-control form-control-sm" style="width: 50px"></td>
+                                                            <td><input name="hauteur[]"                                                                      type="number" class="form-control form-control-sm" style="width: 50px"></td>
+                                                            <td><input type="number" class="form-control form-control-sm text-end"
+                                                                    name="unit_price[]" onchange="Calc(this);"></td>
+                                                            <td><input type="number" style="width: 50px"
+                                                                    class="form-control form-control-sm text-end" name="qty[]"
+                                                                    onchange="Calc(this);"></td>
+                                                            <td><input type="number" class="form-control form-control-sm text-end"
+                                                                    name="item_total[]" value="0" readonly></td>
+                                                            <td class="NoPrint"><button type="button"
+                                                                    class="btn btn-sm btn-danger" style=""
+                                                                    onclick="BtnDel(this)"><i
+                                                                        class="fa fa-trash"></i></button></td>
+                     </tr>`);
+        // });
+    }
+
+    function BtnDel(v) {
+        $(v).parent().parent().remove();
+        sumAjax() 
+        // GetTotal();
+    }
+
+    function Calc(v) {
+        var index = $(v).parent().parent().index();
+        var qty = document.getElementsByName('qty[]')[index].value;
+        var unit_price = document.getElementsByName('unit_price[]')[index].value;
+    //    alert(qty);
+        var total = qty*unit_price
+        document.getElementsByName('item_total[]')[index].value=total;
+        // alert(index);
+         sumAjax() 
+       
+        // GetTotal(totalsum);
+    }
+
+    //   function GetTotal() {
+    //     var sum = 0;
+    //     var amts = document.getElementsByName('amt');
+
+    //     for (let index = 0; index < amts.length; index++) {
+    //         var amt = amts[index].value;
+    //         sum = +(sum) +  +(amt);
+    //     }
+    //     document.getElementById('FTotal').value = sum;
+
+    //     var gst = document.getElementById('FGST').value;
+        
+
+
+    //     var net = +(sum) + +(gst);
+    //     document.getElementById('FNet').value = net;
+    //   }
+
+
+     // getData
+    //  $.ajax({
+    //     url: "{{ route('sommeTotal') }}",
+    //     type: 'GET',
+    //     dataType: 'json',
+    //     success: function(data) {
+    //         console.log(data);
+    //         var totalsum = 0;
+    //    $.each(data, function(i,elt){
+    //       console.log(elt);
+    //       totalsum += parseInt(elt);
+    //     })
+    //     console.log(totalsum);
+    //     // GetTotal(totalsum);
+    //      return totalsum;
+    //     }
+    // });
 
    function sumAjax() {
     $.ajax({
@@ -885,9 +1030,26 @@
     });
    }
 
+
     function GetTotal(t) {
-       
-        var net =  t;
+        var sum = 0;
+        var  unit_prices = document.getElementsByName('item_total[]');
+
+        for (let index = 0; index < unit_prices.length; index++) {
+            var amt = unit_prices[index].value;
+            sum = +(sum) +  +(amt);
+        }
+        // document.getElementById('FTotal').value = sum;
+        // var sum1 = sum;
+        // var tva =  document.getElementById('tva').value
+        // var TAX = sum1*(tva/100);
+
+        // var discount = document.getElementById('FGST').value;
+        
+
+
+        // var net = +(sum) + +(TAX) - (discount) + t;
+        var net = +(sum) + + t;
         document.getElementById('FNet').value = net;
     }
 </script>

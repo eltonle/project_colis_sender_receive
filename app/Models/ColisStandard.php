@@ -11,13 +11,14 @@ class ColisStandard extends Model
 
     protected $fillable = [
         'titre',
-        'quantite',
-        'largeur',
         'longueur',
+        'largeur',
         'hauteur',
         'nature',
-        'description',
-        'poids',
+        'type',
+        'capacite',
         'prix',
+        'description',
+        'status',
      ];
 }

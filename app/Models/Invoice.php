@@ -14,6 +14,7 @@ class Invoice extends Model
     { 
        return $this->belongsTo(Payement::class,'id','invoice_id');
     }
+
    //  public function colisDimension()
    //  { 
    //     return $this->belongsTo(ColisDimension::class,'invoice_id','id');
@@ -22,6 +23,11 @@ class Invoice extends Model
     public function invoice_details()
     {
         return $this->hasMany(InvoiceDetail::class,'invoice_id','id');
+    }
+
+    public function colis_dimensions()
+    {
+        return $this->hasMany(ColisDimension::class,'invoice_id','id');
     }
 
 

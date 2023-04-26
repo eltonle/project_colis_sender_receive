@@ -35,7 +35,7 @@ return new class extends Migration
             $table->double('qty')->nullable();
             $table->double('unit_price')->nullable();
             $table->double('item_total')->nullable();
-            $table->tinyInteger('status')->default(1);
+            // $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
     }

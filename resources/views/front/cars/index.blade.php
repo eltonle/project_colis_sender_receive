@@ -191,10 +191,7 @@
                                         data-dropdown-css-class="select2-gray" id="country_id" name="status" required>
                                         <option value="">Selectionner un statut</option>
 
-                                        <option>EN FONCTIONNEMENT </option>
-                                        <option>EN DÉPANNAGE </option>
-
-
+                                        <option>Non Charge</option>
                                     </select>
 
                                 </div>
@@ -298,11 +295,7 @@
                                         <option >
                                             
                                         </option>
-
-                                        <option >EN FONCTIONNEMENT </option>
-                                        <option >EN DÉPANNAGE </option>
-
-
+                                        <option >Non charge </option>
                                         </select>
 
                                 </div>

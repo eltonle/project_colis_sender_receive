@@ -7,12 +7,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h3 class="m-0 font-weight-bold">Gestions des Conteneurs</h3>
+                    <h3 class="m-0 font-weight-bold">Gestions des Entrepôts</h3>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Tableau de Bord</a></li>
-                        <li class="breadcrumb-item active">Conteneurs</li>
+                        <li class="breadcrumb-item active">Entrepôt</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -29,46 +29,38 @@
                     {{-- custom tabs --}}
                     <div class="card">
                         <div class="card-header">
-                            <h3> Ajouter un Conteneur
-                                <a href="{{ route('units.index') }}" class="btn float-right btn-sm"
+                            <h3> AJOUTER UN ENTREPOT
+                                <a href="{{ route('entrepots.index') }}" class="btn float-right btn-sm"
                                     style="background: #563DEA;color: #fff">
-                                    <i class="fa fa-list"></i> LISTES DES CONTENEURS
+                                    <i class="fa fa-list"></i> LISTES DES ENTREPOTS
                                 </a>
                             </h3>
                         </div><!-- /.card-heade-->
                         <div class="card-body">
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <form action="{{ route('units.store') }}" method="POST" id="myForm"
+                                <form action="{{ route('entrepots.store') }}" method="POST" id="myForm"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-row">
                                         <div class="form-group col-md-12">
-                                            <label for="name">Nom du Conteneur</label>
+                                            <label for="name">Nom de l'Entrepot</label>
                                             <input type="text" id="name" name="name" class="form-control"
-                                                placeholder="entrer un nom" required>
+                                                placeholder="entrer un nom" >
                                         </div>
-                                        <div class="form-group col-md-4">
-                                            <label for="name">Identifiant ou Numero Conteneur</label>
-                                            <input type="text" id="name" name="numero_id" class="form-control"
-                                                placeholder="entrer un identifiant du conteneur" required>
-                                        </div> 
+                                        
+                                        <div class="form-group col-md-6">
+                                            <label for="addresse"> Addresse</label>
+                                            <input type="text" id="addresse" name="addresse" class="form-control"
+                                                placeholder="entrer une addresse" >
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="ville">Ville </label>
+                                            <input type="text" id="ville" name="ville" class="form-control" placeholder="entrer une ville"
+                                                >
+                                        </div>
+                                        
                                        
-                                        <div class="form-group col-md-4">
-                                            <label for="date">Date De Chargement Du Conteneur </label>
-                                            <input type="date" id="date" name="date_chargement" class="form-control"
-                                                required>
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <label for="status">Statut</label>
-                                            <input type="text" id="status" name="statut" class="form-control"
-                                                value="Non Charge"  disabled>
-                                        </div>
-                                        <div class="form-group col-md-12">
-                                            <label for="descriptio">Description Du Conteneur</label>
-                                            <textarea id="descriptio" name="description" class="form-control">
-                                            </textarea>
-                                        </div>
 
                                         <div class="form-group col-md-6">
                                             <input type="submit" value="Enregistrer les Informations" class="btn"
@@ -101,7 +93,11 @@
                 required: true,
                 rangelength: [3, 30]
             },
-            numero_id: {
+            addresse: {
+                required: true,
+                rangelength: [3, 30]
+            },
+            ville: {
                 required: true,
                 rangelength: [3, 30]
             },

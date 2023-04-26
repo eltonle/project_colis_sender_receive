@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h3 class="m-0 font-weight-bold"> Chargement Conteneur</h3>
+                    <h3 class="m-0 font-weight-bold"> Dechargement Conteneur</h3>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -30,7 +30,7 @@
                     {{-- custom tabs --}}
                     <div class="card">
                         <div class="card-header text-center">
-                            <h3> Listes des Colis a Charges
+                            <h3> Listes des Colis a Decharges
                                 {{-- <a href="{{ route('units.create') }}" class="btn  float-right btn-sm"
                                     style="background: #563DEA;color: #fff">
                                     <i class="fa fa-plus-circle"></i> AJOUTER UN CONTENEUR
@@ -40,25 +40,21 @@
                         </div>
                         <div class="card-header">
                             <h4 class="text-center mb-3">
-                                {{ strtoupper($unit->name) }} - № :({{ strtoupper($unit->numero_id) }}) && statut: ({{
-                                strtoupper($unit->statut) }})
+                                {{ strtoupper($conteneur->name) }} - № :({{ strtoupper($conteneur->numero_id) }}) && statut: ({{
+                                strtoupper($conteneur->statut) }})
                             </h4>
 
-                           @if ($unit->statut !== 'Non Charge')                                                         
-                            <div class="float-right">
-                                <form id="form-modifier-statut" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="conteneur_id" value="{{ $unit->id }}">
-                                    <input id="btn-modifier-statut" class="btn btn-danger" type="submit" value="Fermer le Conteneur (fin de Chargement)">
-                                  </form>
-                            </div>
-                            @endif
+                            {{-- <div style="display:flex; justify-content: space-between; align-items: center">
+                                <p><strong>Poids du Conteneur :</strong> <span class="badge badge-dark text-sm">{{ $unit->max_capacity }}</span> kg</p>
+                                <p><strong>Poids total des Colis :</strong> <span class="badge badge-secondary text-sm">{{ $totalWeight }}</span> kg</p>
+                                <p><strong>Capacité restante du Conteneur :</strong> <span class="badge badge-danger text-sm">{{ $restePoids }}</span> kg</p>
+                            </div> --}}
 
                         </div>
                         <div class="card-body" style="margin-top: -20px;">
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <form method="POST" action="{{ route('unitsColis.update', $unit) }}">
+                                <form method="POST" action="{{ route('unitsColisDecharge.update', $conteneur) }}">
                                     @csrf
                                     @method('POST')
                                     <table id="example1" class="table table-bordered table-striped">
@@ -68,14 +64,19 @@
                                                 tous les colis</button>
                                             <button type="button" class="btn btn-secondary"
                                                 id="deselect-all">Désélectionner tous les colis</button>
-                                            <div class="float-end"> 
-                                                {{-- <form id="form-modifier-statut" method="POST">
-                                                    @csrf
-                                                    <input type="hidden" name="conteneur_id" value="{{ $unit->id }}">
-                                                    <button id="btn-modifier-statut" class="btn btn-danger" type="submit">Modifier le statut</button>
-                                                  </form> --}}
-                                                {{-- <button id="btn-changer-statut" data-conteneur-id="{{ $conteneur->id }}">Changer le statut</button>                                              --}}
-                                                {{-- <button id="btn-changer-statut" data-conteneur-id="{{ $unit->id }}" class="btn btn-info"> <i class="fas fa-times text-danger"></i> Fermer le Conteneur</button> --}}
+                                            <div class="float-end d-flex items-center">
+                                                <label for="entrepot_id"> Entrepot de Dechargement :</label>
+                                             <select name="entrepot_id"
+                                                class="form-control select2 select2-cyan"
+                                                data-dropdown-css-class="select2-cyan" id="entrepot_id">
+                                                <option value="">Selectionner Entrepot </option>
+                                                @foreach ($entrepots as $entrepot )
+                                                <option value="{{ $entrepot->id }}">{{ $entrepot->name }}-({{
+                                                    $entrepot->address
+                                                    }} - {{ $entrepot->ville }})
+                                                </option>
+                                                @endforeach
+                                             </select>
                                             </div>
                                         </div>
                                         <thead style="margin-top: -30px">
@@ -84,7 +85,7 @@
                                                 <th>Titre Colis</th>
                                                 <th>Nom de l'Expediteur</th>
                                                 <th>Date</th>
-                                                <th>Montant Colis</th>
+                                                <th>Code Colis</th>
                                                 <th>Etat Chargement</th>
                                              
                                                 <th>Actions</th>
@@ -98,20 +99,20 @@
                                                     <div class="form-check">
                                                         <input type="checkbox" class="form-check-input"
                                                             id="colis-{{ $ul->id }}" name="colis[]"
-                                                            value="{{ $ul->id }}" @if ($ul->unit_id == $unit->id)
-                                                        checked @endif>
+                                                            value="{{ $ul->id }}">
                                                     </div>
                                                 </td>
                                                 <td>{{ strtoupper($ul->titre)}}</td>
                                                 <td>{{ strtoupper( $ul->invoice->payement->customer->nom)}}</td>
 
                                                 <td>{{ date('d-M-Y',strtotime($ul->invoice->date)) }}</td>
-                                                <td>{{ number_format($ul->prix ,0,' ',',')}} FCFA</td>
+                                                {{-- <td>{{ number_format($ul->prix ,0,' ',',')}} FCFA</td> --}}
+                                                <td>Code_zip № : {{$ul->code_zip}} </td>
                                                 <td>
                                                     @if ($ul->charge == 1)
                                                     <span class="badge"
                                                         style="background: #2962FF;color:white; padding: 3px;">
-                                                        <i class="fa fa-ship"></i> Charge</span>
+                                                        <i class="fas fa-truck-moving"></i> Chargé</span>
                                                     @else 
                                                     <span class="badge"
                                                         style="background:  #B61418; color:white; padding: 3px;">
@@ -133,25 +134,17 @@
                                                 <th>Titre Colis</th>
                                                 <th>Nom de l'Expediteur</th>
                                                 <th>Date</th>
-                                                <th>Montant Colis</th>
+                                                <th>Code Colis</th>
                                                 <th>Etat Chargement</th>
                                                                                            
                                                 <th>Actions</th>
                                             </tr>
                                         </tfoot>
                                     </table>
-                                    @if ($unit->statut == 'Ferme')
-                                    <div class="text-center bg-indigo">
-
-                                       <p><strong>Le Conteneur est fermé vous ne pouvez par effectuer de Chargement</strong></p>
-                                    </div>
-                                    @else
                                     <div class="text-center">
 
-                                        <button type="submit" class="btn btn-primary">Charger Le Conteneur</button>
+                                        <button type="submit" class="btn btn-primary">Decharger Le Conteneur</button>
                                     </div>
-                                    @endif
-                                   
                                 </form>
                             </div>
                             <!-- /.card-body -->
@@ -206,38 +199,6 @@
  
 </script>
 
-
-<script>
-    $(document).ready(function() {
-    $('#form-modifier-statut').submit(function(event) {
-      event.preventDefault();
-      var conteneurId = $('input[name="conteneur_id"]').val();
-      
-      $.ajax({
-        type: 'POST',
-        // url: '{{ route("conteneurs.modifierStatut", $unit->id) }}',
-        url: '/units/conteneurs/' + conteneurId + '/modifier-statut',
-        data: {
-          _token: '{{ csrf_token() }}',
-          conteneur_id: conteneurId
-        },
-        success: function(data) {
-          if (data.success) {
-            location.reload();
-          } else {
-            // Il y a eu une erreur lors de la mise à jour du statut du conteneur
-          }
-        },
-        error: function() {
-          // Il y a eu une erreur lors de l'envoi de la requête AJAX
-        }
-          });
-      });
-      });
-  
-</script>
-
-
 {{-- BOUTON SELECTIONNE ET DESELECTIONNE --}}
 <script>
     $(document).ready(function() {
@@ -266,7 +227,12 @@
         });
     });
 </script>
-
-
-
+<script>
+    $(function () {
+      //Initialize Select2 Elements
+      $('.select2').select2()
+    })
+    //Initialize Select2 Elements
+   
+</script>
 @endsection

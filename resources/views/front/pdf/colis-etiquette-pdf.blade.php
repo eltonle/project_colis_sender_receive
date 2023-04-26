@@ -17,7 +17,7 @@
             border: 2px solid black;
             padding: 20px;
             width: 400px;
-            margin: 20px auto;
+            /* margin: 20px auto; */
         }
 
         h1,
@@ -38,6 +38,7 @@
             /* Alignement des éléments sur l'axe transversal */
         }
 
+       
         .sender h2,
         .recipient h2,
         .package h2 {
@@ -69,33 +70,46 @@
 </head>
 
 <body>
+    
     <div class="container">
-        <div class="sender">
-            <h2>Expéditeur</h2>
-            <p>Nom: {{ $colis->invoice->payement->customer->nom }}</p>
-            <p>Adresse: {{ $colis->invoice->payement->customer->address }}</p>
-            {{-- <p>Ville: Montréal</p>
-            <p>Province: Québec</p>
-            <p>Code postal: H2X 1K1</p> --}}
-            <p>Téléphone: {{ $colis->invoice->payement->customer->phone }}</p>
-        </div>
-        <div class="recipient">
-            <h2>Destinataire</h2>
-            <p>Nom: {{ $colis->invoice->payement->receive->nom }}</p>
-            <p>Adresse: {{ $colis->invoice->payement->receive->address }}</p>
-            {{-- <p>Ville: Montréal</p>
-            <p>Province: Québec</p>
-            <p>Code postal: H2X 1K1</p> --}}
-            <p>Téléphone: {{ $colis->invoice->payement->receive->phone }}</p>
-        </div>
-        <div class="package">
+        <div class="flex">        
+            <div class="sender">
+                <h2>Expéditeur</h2>
+                <p>Nom: {{ $colis->invoice->payement->customer->nom }}</p>
+                <p>Adresse: {{ $colis->invoice->payement->customer->address }}</p>
+                {{-- <p>Ville: Montréal</p>
+                <p>Province: Québec</p>
+                <p>Code postal: H2X 1K1</p> --}}
+                <p>Téléphone: {{ $colis->invoice->payement->customer->phone }}</p>
+            </div>
+            <div class="recipient">
+                <h2>Destinataire</h2>
+                <p>Nom: {{ $colis->invoice->payement->receive->nom }}</p>
+                <p>Adresse: {{ $colis->invoice->payement->receive->address }}</p>
+                {{-- <p>Ville: Montréal</p>
+                <p>Province: Québec</p>
+                <p>Code postal: H2X 1K1</p> --}}
+                <p>Téléphone: {{ $colis->invoice->payement->receive->phone }}</p>
+            </div>
+         </div>
+        {{-- <div class="package">
             <h2>Colis</h2>
             <p>Poids: 2.5 kg</p>
             <p>Dimensions: 30 cm x 20 cm x 10 cm</p>
             <p>Type de contenu: Livres</p>
             <p>Valeur déclarée: 50 $</p>
-        </div>
+        </div> --}}
+        <table width="100%" style="text-align: center">
+            <tr>
+                <td width="10%"></td>
+                <td style="font-weight: bold; text-align: center">
+                    {{ $colis->invoice->country->name }}-{{ $colis->invoice->countryr->name }}
+                </td>
+                <td width="10%"></td>
+            </tr>
+        </table>
         <div class="qr-code">
+           
             <table width="100%" style="text-align: center">
                 <tr>
                     <td width="10%"></td>

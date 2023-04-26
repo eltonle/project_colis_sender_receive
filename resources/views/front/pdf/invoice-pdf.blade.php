@@ -27,8 +27,8 @@
                         </td>
                         <td width="40%" align="center">
                             <strong style="font-size: 16px">Mat:008976785R768 </strong><br>
-                            <span style="font-size: 16px">Phone: (+237) 698-767-655</span><br>
-                            <span style="font-size: 16px">Email: john.doe@example.com</span><br>
+                            <span style="font-size: 16px">Phone: (+237) 690-700-600</span><br>
+                            <span style="font-size: 16px">Email: express.colis@example.com</span><br>
                             <span style="font-size: 16px">Lieu: 2023 E Bp-site CMR-Douala</span><br>
 
                         </td>
@@ -49,12 +49,15 @@
                         <tr>
                             <td>
                                 <strong>Bordereau de</strong><br> <br>
-                                <strong>MARIA BELEN</strong> Douala-Cameroun|ange rapheal<br>
-                                Phone: (555) 539-1037<br>
-                                Email: john.doe@example.com
+                                <strong>{{ $invoice->payement->customer->nom }}-{{ $invoice->payement->customer->prenom }}</strong> {{ $invoice->country->name }}|{{ $invoice->state->name }}<br>
+                                Phone: (555) {{ $invoice->payement->customer->phone }}<br>
+                                Email: {{ $invoice->payement->customer->email }}
                             </td>
                             <td align="right">
                                 <table style="border-collapse: collapse">
+                                    @php
+                                     $payment = App\Models\Payement::where('invoice_id',$invoice->id)->first();
+                                    @endphp
                                     <tbody>
                                         <tr>
                                             <td align="left"
@@ -62,27 +65,29 @@
                                                 Récépissé
                                             </td>
                                             <td style="border: 1px solid black" style="border: 1px solid black"
-                                                align="right">№: 1</td>
+                                                align="right">№: {{ $invoice->invoice_no }}</td>
                                         </tr>
                                         <tr>
                                             <td align="left"
                                                 style="border:1px solid black; background: #34495e;color:#fff">
                                                 Date</td>
-                                            <td style="border: 1px solid black" align="right">22-jan-2023</td>
+                                            <td style="border: 1px solid black" align="right">{{ date('d-M-Y',strtotime($invoice->date )) }}</td>
                                         </tr>
                                         <tr>
                                             <td align="left"
                                                 style="border:1px solid black; background: #34495e;color:#fff">
                                                 Montant paye
                                             </td>
-                                            <td style="border: 1px solid black" align="right">12,000,000,00 Fcfa</td>
+                                            <td style="border: 1px solid black" align="right">{{
+                                                number_format($payment->paid_amount,0,' ',',')}} Fcfa</td>
                                         </tr>
                                         <tr>
                                             <td align="left"
                                                 style="border:1px solid black; background: #34495e;color:#fff">
                                                 Montant du
                                             </td>
-                                            <td style="border: 1px solid black" align="right">2,000,000,00 Fcfa</td>
+                                            <td style="border: 1px solid black" align="right">{{
+                                                number_format($payment->due_amount,0,' ',',')}} Fcfa</td>
                                         </tr>
                                     </tbody>
 
@@ -181,70 +186,68 @@
                 $payment = App\Models\Payement::where('invoice_id',$invoice->id)->first();
                 @endphp
 
-                <table border="1" width='100%' style="margin-bottom: 10px;">
+                <table border="1" width='100%' style="margin-bottom: 4px;" cellspacing="0">
                     <thead>
                         <tr class="text-center">
-                            <th class="font-size: 18px; text-center"
-                                style="font-size: 18px; background:rgb(13, 8, 63); color:#fff; padding:5px;">#ID</th>
-                            <th style="font-size: 18px; background: #34495e; color:#fff; padding: 5px">Model&Marque</th>
-                            <th style="font-size: 18px; background: #34495e; color:#fff; padding: 5px">Chassis</th>
-                            <th style="font-size: 18px; background: #34495e; color:#fff; padding: 5px">Longueur</th>
-                            <th style="font-size: 18px; background: #34495e; color:#fff; padding: 5px">Largeur</th>
-                            <th style="font-size: 18px; background: #34495e; color:#fff; padding: 5px">Hauteur</th>
-                            <th style="font-size: 18px; background: #34495e; color:#fff; padding: 5px">Prix u.</th>
-                            <th style="font-size: 18px; background: #34495e; color:#fff; padding: 5px">Qty</th>
-                            <th style="font-size: 18px; background: #34495e; color:#fff; padding: 5px">Total prix</th>
+                            <th class="font-size: 12px; text-center"
+                                style="font-size: 12px; background:rgb(13, 8, 63); color:#fff; padding:5px;">#ID</th>
+                            <th style="font-size: 12px; background: #34495e; color:#fff; padding: 5px">Type</th>
+                            <th style="font-size: 12px; background: #34495e; color:#fff; padding: 5px">Titre</th>
+                            <th style="font-size: 12px; background: #34495e; color:#fff; padding: 5px">Code</th>
+                            <th style="font-size: 12px; background: #34495e; color:#fff; padding: 5px">Total prix</th>
                         </tr>
                     </thead>
                     <tbody>
                         @php
                         $total_sum = '0';
                         @endphp
-                        @foreach ($invoice['invoice_details'] as $key =>$details )
+                        @foreach ($invoice['colis_dimensions'] as $key =>$details )
                         <tr class="text-center">
-                            <input type="hidden" name="qty[{{ $details->id }}]" value="{{ $details->qty }}">
-                            <td class="text-center" style="font-size: 18px;background:#ddd; padding:1px;">{{ $key+1 }}
+                            {{-- <input type="hidden" name="qty[{{ $details->id }}]" value="{{ $details->qty }}"> --}}
+                            <td class="text-center" style="font-size: 16px;background:#ddd; padding:1px;">{{ $key+1 }}
                             </td>
-                            <td style="font-size: 18px">{{
-                                $details->model_marque }}</td>
-                            <td style="font-size: 18px">{{ $details->chassis }}</td>
-                            <td style="font-size: 18px">{{ $details->longueur }}</td>
-                            <td style="font-size: 18px">{{ $details->largeur }}</td>
-                            <td style="font-size: 18px">{{ $details->hauteur}}</td>
-                            <td style="font-size: 18px">{{ number_format($details->unit_price ,0,' ',',')}}</td>
-                            <td style="font-size: 18px">{{ $details->qty }}</td>
-                            <td style="font-size: 18px">{{ number_format($details->item_total,0,' ',',')}}</td>
+                            <td style="font-size: 16px">{{
+                                $details->type }}</td>
+                            <td style="font-size: 16px">{{ $details->titre }}</td>
+                            <td style="font-size: 16px">№: {{ $details->code_zip }}</td>
+                            <td style="font-size: 16px">{{ number_format($details->prix ,0,'
+                                ',',')}} Fcfa</td>
+                            {{-- <td style="font-size: 18px">{{ $details->largeur }}</td> --}}
+                            {{-- <td style="font-size: 18px">{{ $details->hauteur}}</td> --}}
+                            {{-- <td style="font-size: 18px">{{ number_format($details->unit_price ,0,' ',',')}}</td> --}}
+                            {{-- <td style="font-size: 18px">{{ $details->qty }}</td> --}}
+                            {{-- <td style="font-size: 18px">{{ number_format($details->item_total,0,' ',',')}}</td> --}}
                             @php
-                            $total_sum += $details->item_total
+                            $total_sum += $details->prix
                             @endphp
                         </tr>
                         @endforeach
                         <tr>
-                            <td colspan="8" style="font-size: 18px; text-align: right"><strong>Sub Total</strong>
+                            <td colspan="4" style="font-size: 16px; text-align: right"><strong>Sub Total</strong>
                             </td>
-                            <td style="font-size: 18px" class="text-center"> <span>{{ number_format($total_sum,0,'
+                            <td style="font-size: 16px" class="text-center"> <span>{{ number_format($total_sum,0,'
                                     ',',')}}</span>Fcfa</td>
                         </tr>
                         <tr>
-                            <td colspan="8" style="font-size: 18px; text-align: right"><span>Discount</span> </td>
-                            <td style="font-size: 18px" class="text-center"> <span>{{
+                            <td colspan="4" style="font-size: 16px; text-align: right"><span>Discount</span> </td>
+                            <td style="font-size: 16px" class="text-center"> <span>{{
                                     number_format($payment->discount_amount,0,' ',',')
                                     }}</span>Fcfa</td>
                         </tr>
                         <tr>
-                            <td colspan="8" style="font-size: 18px; text-align: right"><span>Montant Paye</span> </td>
-                            <td style="font-size: 18px" class="text-center"> <span style="background-color: #0be881">{{
+                            <td colspan="4" style="font-size: 16px; text-align: right"><span>Montant Paye</span> </td>
+                            <td style="font-size: 16px" class="text-center"> <span style="background-color: #0be881">{{
                                     number_format($payment->paid_amount,0,' ',',')}}</span>Fcfa</td>
                         </tr>
                         <tr>
-                            <td colspan="8" style="font-size: 18px; text-align: right"><span>Montant du</span> </td>
-                            <td style="font-size: 18px" class="text-center"> <span style="background-color: #ff5e57">{{
+                            <td colspan="4" style="font-size: 16px; text-align: right"><span>Montant du</span> </td>
+                            <td style="font-size: 16px" class="text-center"> <span style="background-color: #ff5e57">{{
                                     number_format($payment->due_amount,0,' ',',')}}</span>Fcfa</td>
                         </tr>
                         <tr>
-                            <td colspan="8" style="font-size: 18px; text-align: right"><strong>Grand total</strong>
+                            <td colspan="4" style="font-size: 16px; text-align: right"><strong>Grand total</strong>
                             </td>
-                            <td style="font-size: 18px" class="text-center"> <strong>{{
+                            <td style="font-size: 16px" class="text-center"> <strong>{{
                                     number_format($payment->total_amount,0,'
                                     ',',')}}</strong>Fcfa</td>
                         </tr>
@@ -256,7 +259,7 @@
                 <table width="100%" style="margin-bottom: -13px">
                     <tr>
                         <td width="45%"></td>
-                        <td width="20%" style="font-weight: bold; font-size: 18px">Termes</td>
+                        <td width="20%" style="font-weight: bold; font-size: 16px">Termes</td>
                         <td width="35%"></td>
                     </tr>
                 </table>

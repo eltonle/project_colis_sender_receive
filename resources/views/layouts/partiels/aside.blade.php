@@ -198,8 +198,8 @@
                                 <i class="far fas fa-long-arrow-alt-right"></i>
                                 <p>Ajouter un Colis</p>
                             </a> --}}
-                        <li class="nav-item {{ request()->is('colis*') ? 'menu-open' : '' }}">
-                            <a href="#" class="nav-link {{ request()->is('units*') ? 'active' : '' }}">
+                        <li class="nav-item {{ request()->is('colis*') || request()->is('colis.listes') || request()->is('colis.createStandard') ? 'menu-open' : '' }}">
+                            <a href="#" class="nav-link ">
                                 {{-- <i class="nav-icon 	fas fa-folder"></i> --}}
                                 <i class="far fas fa-long-arrow-alt-right"></i>
                                 <p>
@@ -218,9 +218,23 @@
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('colis.createStandard') }}"
-                                        class="nav-link {{ request()->routeIs('colis.createStandard') ? 'active' : '' }}">
-                                        <i class="fas fa-plus-circle"></i>
-                                        <p>Ajouter </p>
+                                        class="nav-link {{ request()->routeIs('colis.createStandard')|| request()->routeIs('colis.editStandard') ? 'active' : '' }}">
+                                        <i class="fas fa-plus-circle text-info"></i>
+                                        <p>Type Normal </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('colis.createStandardVoiture') }}"
+                                        class="nav-link {{ request()->routeIs('colis.createStandardVoiture')|| request()->routeIs('colis.editStandardVoiture') ? 'active' : '' }}">                                        
+                                        <i class="fas fa-car text-info"></i>
+                                        <p>Type Voiture </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('colis.createStandardCamion') }}"
+                                        class="nav-link {{ request()->routeIs('colis.createStandardCamion')|| request()->routeIs('colis.editStandardCamion') ? 'active' : '' }}">                            
+                                        <i class="fas fa-truck text-info"></i>
+                                        <p>Type Camion </p>
                                     </a>
                                 </li>
                             </ul>
@@ -230,31 +244,34 @@
             </li>
 
 
-            <li class="nav-item {{ request()->is('finances*') ? 'menu-open' : '' }}">
-                <a href="#" class="nav-link {{ request()->is('finances*') ? 'active' : '' }}">
+            
+            <li class="nav-item {{ request()->is('entrepots*') ? 'menu-open' : '' }}">
+                <a href="#" class="nav-link {{ request()->is('entrepots*') ? 'active' : '' }}">
                     <i class="nav-icon 	fas fa-folder"></i>
                     <p>
-                        Gestion des Finances
+                        Gestion des Entrepots
                         <i class="right fas fa-angle-left"></i>
                     </p>
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="{{ route('finances.credit') }}"
-                            class="nav-link {{ request()->routeIs('finances.credit')|| request()->routeIs('customers.edit.invoice')? 'active' : '' }}">
+                        <a href="{{ route('entrepots.index') }}"
+                            class="nav-link {{ request()->routeIs('entrepots.index')||request()->routeIs('entrepots.edit')||request()->routeIs('entrepots.delete') ||request()->routeIs('entrepots.show') ? 'active' : '' }}">
                             <i class="far fas fa-long-arrow-alt-right"></i>
-                            <p>Voir Credit Client</p>
+                            <p>Listes des Entrepots</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('finances.paid') }}"
-                            class="nav-link {{ request()->routeIs('finances.paid')? 'active' : '' }}">
+                        <a href="{{ route('entrepots.create') }}"
+                            class="nav-link {{ request()->routeIs('entrepots.create') ? 'active' : '' }}">
                             <i class="far fas fa-long-arrow-alt-right"></i>
-                            <p> Voir Payement Client</p>
+                            <p>Ajouter un Entrepot</p>
                         </a>
                     </li>
+                    
                 </ul>
             </li>
+            
 
             <li class="nav-item {{ request()->is('units*') ? 'menu-open' : '' }}">
                 <a href="#" class="nav-link {{ request()->is('units*') ? 'active' : '' }}">
@@ -267,7 +284,7 @@
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
                         <a href="{{ route('units.index') }}"
-                            class="nav-link {{ request()->routeIs('units.index')||request()->routeIs('units.edit')||request()->routeIs('units.delete') ? 'active' : '' }}">
+                            class="nav-link {{ request()->routeIs('units.index')||request()->routeIs('units.edit')||request()->routeIs('units.delete') ||request()->routeIs('units.showScan') ||request()->routeIs('units.show') || request()->routeIs('units.showDecharge') ? 'active' : '' }}">
                             <i class="far fas fa-long-arrow-alt-right"></i>
                             <p>Listes des Conteneurs</p>
                         </a>
@@ -280,16 +297,25 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('units.chargement') }}"
-                            class="nav-link {{ request()->routeIs('units.chargement') ? 'active' : '' }}">
-                            <i class="far fas fa-long-arrow-alt-right"></i>
-                            <p>charger un Conteneur</p>
+                        <a href="{{ route('units.chargementMix') }}"
+                            class="nav-link {{ request()->routeIs('units.chargementMix') ? 'active' : '' }}">
+                              <i class="fas fa-download text-info"></i>
+                            <p>Charge un Conteneur</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('units.dechargement') }}"
+                            class="nav-link {{ request()->routeIs('units.dechargement') ? 'active' : '' }}">                          
+                            <i class="fas fa-upload text-info"></i>
+                            <p>Decharger un Conteneur</p>
                         </a>
                     </li>
                 </ul>
             </li>
+
+
             
-        <li class="nav-item {{ request()->is('vehicule*') ? 'menu-open' : '' }}">
+         <li class="nav-item {{ request()->is('vehicule*') ? 'menu-open' : '' }}">
             <a href="#" class="nav-link {{ request()->is('vehicule*') ? 'active' : '' }}">
                 <i class="nav-icon 	fas fa-folder"></i>
                 <p>
@@ -311,11 +337,39 @@
                     <a href="{{ route('vehicule.affectation') }}"
                         class="nav-link {{ request()->routeIs('vehicule.affectation') ? 'active' : '' }}">
                         <i class="far fas fa-long-arrow-alt-right"></i>
-                        <p>Listes des affectation véhicule</p>
+                        <p>Chauffeurs && Véhicules</p>
                     </a>
                 </li>
             </ul>
         </li>
+
+        <li class="nav-item {{ request()->is('finances*') ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link {{ request()->is('finances*') ? 'active' : '' }}">
+                <i class="nav-icon 	fas fa-folder"></i>
+                <p>
+                    Gestion des Finances
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{{ route('finances.credit') }}"
+                        class="nav-link {{ request()->routeIs('finances.credit')|| request()->routeIs('customers.edit.invoice')? 'active' : '' }}">
+                        <i class="far fas fa-long-arrow-alt-right"></i>
+                        <p>Voir Credit Client</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('finances.paid') }}"
+                        class="nav-link {{ request()->routeIs('finances.paid')? 'active' : '' }}">
+                        <i class="far fas fa-long-arrow-alt-right"></i>
+                        <p> Voir Payement Client</p>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+
             <li class="nav-item {{ request()->is('countries*')||request()->is('states*') ? 'menu-open' : '' }}">
                 <a href="#"
                     class="nav-link {{ request()->is('countries*')|| request()->is('states*') ? 'active' : '' }}">
@@ -357,7 +411,7 @@
 
             <li class="nav-item ">
                 <a href="#" class="nav-link ">
-                    <i class="nav-icon fas fa-user-alt"></i>
+                    <i class="nav-icon fas fa-user-alt text-primary"></i>
                     <p>
                         Utilisations
                         <i class="right fas fa-angle-left"></i>
@@ -368,7 +422,7 @@
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link " href="#" role="button" data-bs-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false" v-pre>
-                            <i class="nav-icon fa fa-power-off"></i>
+                            <i class="nav-icon fa fa-power-off text-danger"></i>
                             {{-- {{ Auth::user()->name }} --}}Deconnection
                         </a>
 

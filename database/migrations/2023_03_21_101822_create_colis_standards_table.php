@@ -15,18 +15,14 @@ return new class extends Migration
     {
         Schema::create('colis_standards', function (Blueprint $table) {
             $table->id();
-            // $table->integer('code_zip')->nullable();
-            // $table->integer('charge')->nullable();
-            // $table->integer('decharge')->nullable();
-            // $table->integer('vehicule_id')->nullable();
-            // $table->integer('entrepot_id')->nullable();
-            // $table->integer('conteneur_id')->nullable();
+        
             $table->string('titre');    
             $table->double('longueur')->nullable();    
             $table->double('largeur')->nullable();    
-            $table->double('hauteur')->nullable();    
-            $table->double('poids')->nullable();    
+            $table->double('hauteur')->nullable();     
             $table->string('nature')->nullable();    
+            $table->string('type')->nullable();    
+            $table->string('capacite')->nullable();     
             $table->integer('prix');    
             $table->string('description')->nullable();    
             $table->string('status')->default('0');    

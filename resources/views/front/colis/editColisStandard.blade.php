@@ -29,8 +29,8 @@
                     {{-- custom tabs --}}
                     <div class="card">
                         <div class="card-header">
-                            <h3> Editer Colis 
-                                <a href="{{ route('units.index') }}" class="btn float-right btn-sm"
+                            <h3> Editer Colis Type Normal
+                                <a href="{{ route('colis.listes') }}" class="btn float-right btn-sm"
                                     style="background: #563DEA;color: #fff">
                                     <i class="fa fa-list"></i> LISTES DES COLIS STANDARDS 
                                 </a>
@@ -44,34 +44,29 @@
                                     @csrf
                                     <div class="form-row">
 
-                                        <div class="form-group col-md-4">
+                                        <div class="form-group col-md-12">
                                             <label for="name">Titre</label>
-                                            <input type="text" id="titre" name="name"value="{{ $colisStandardEdit->titre }}" class="form-control">
-                                        </div>
+                                            <input type="text" id="titre" name="titre" value="{{ $colisStandardEdit->titre }}" class="form-control">
+                                        </div>                                                                            
 
-                                        <div class="form-group col-md-4">
-                                            <label for="numero_id">PRIX</label>
-                                            <input type="number" id="numero_id" name="prix" value="{{ $colisStandardEdit->prix }}" class="form-control">
-                                        </div>
-
-                                        <div class="form-group col-md-4">
-                                            <label for="numero_id">Poids</label>
-                                            <input type="number" id="numero_id" name="poids" value="35" class="form-control"> 
-                                        </div>
-
-                                        <div class="form-group col-md-4">
+                                        <div class="form-group col-md-6">
                                             <label for="numero_id">Longueur</label>
                                             <input type="number" id="numero_id" name="longueur"value="{{ $colisStandardEdit->longueur }}" class="form-control">
                                         </div>
                                        
-                                        <div class="form-group col-md-4">
+                                        <div class="form-group col-md-6">
                                             <label for="numero_id">Largeur</label>
                                             <input type="number" id="numero_id" name="largeur" value="{{ $colisStandardEdit->largeur }}" class="form-control">
                                         </div>
 
-                                        <div class="form-group col-md-4">
+                                        <div class="form-group col-md-6">
                                             <label for="numero_id">Hauteur</label>
                                             <input type="number" id="numero_id" name="hauteur"value="{{ $colisStandardEdit->hauteur }}" class="form-control">
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="numero_id">PRIX</label>
+                                            <input type="number" id="numero_id" name="prix" value="{{ $colisStandardEdit->prix }}" class="form-control">
                                         </div>
                                         
                                         <div class="form-group col-md-12">
