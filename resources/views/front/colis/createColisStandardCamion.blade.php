@@ -61,7 +61,7 @@
                                         </div>
 
                                         <div class="form-group col-md-6">
-                                            <label for="long">Longueur (Cm)</label>
+                                            <label for="long">Longueur (m)</label>
                                             <input type="number" id="long" name="longueur" class="form-control" placeholder="Saisir une longueur">
                                         </div>                                        
                                         <div class="form-group col-md-6">
@@ -102,13 +102,24 @@
     $(document).ready(function(){
     $('#myForm').validate({
         rules:{
-            name: {
+            titre: {
                 required:true,
                 rangelength :[3,30]
             },
+            prix: {
+                required:true,
+                rangelength :[3,9]
+            },
         },
             messages: {
-
+                titre: {
+                    required: "Le champ Titre est obligatoire.",
+                    rangelength: "Le champ Titre doit contenir entre 3 et 30 caractères."
+                },
+                prix: {
+                    required: "Le champ Prix est obligatoire.",
+                    rangelength: "Le champ Prix doit contenir entre 3 et 30 caractères."
+                }
             },
             errorElement: 'span',
             errorPlacement:function(error,element){

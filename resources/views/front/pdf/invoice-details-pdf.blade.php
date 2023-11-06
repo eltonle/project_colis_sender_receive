@@ -116,80 +116,67 @@
                     <thead>
                         <tr class="text-center">
                             <th class="text-center" style="background:#ddd; padding:1px;">#ID</th>
-                            <th>Model&Marque</th>
-                            <th>Chassis</th>
-                            <th>Longueur</th>
-                            <th>Largeur</th>
-                            <th>Hauteur</th>
-                            <th>Prix unite</th>
-                            <th>Qty</th>
-                            <th>Total prix</th>
+                            <th>Type Colis</th>
+                            <th>Code_Zip</th>
+                            <th>Titre</th>
+                            <th>Prix</th>
                         </tr>
                     </thead>
                     <tbody>
                         @php
                         $total_sum = '0';
-                        $invoice_details = App\Models\InvoiceDetail::where('invoice_id',$payment->invoice_id)->get();
+                        $colis_details = App\Models\ColisDimension::where('invoice_id',$payment->invoice_id)->get();
                         @endphp
-                        @foreach ($invoice_details as $key =>$details )
-                        <tr class="text-center">
-                            <input type="hidden" name="qty[{{ $details->id }}]" value="{{ $details->qty }}">
+                        @foreach ($colis_details as $key =>$details )
+                        <tr class="text-center" >
                             <td class="text-center" style="background:#ddd; padding:1px;">{{ $key+1 }}
                             </td>
                             <td>{{
-                                $details->model_marque }}</td>
-                            <td>{{ $details->chassis }}</td>
-                            <td>{{ $details->longueur }}</td>
-                            <td>{{ $details->largeur }}</td>
-                            <td>{{ $details->hauteur}}</td>
-                            <td>{{ number_format($details->unit_price,0,' ',',')}}</td>
-                            <td>{{ $details->qty }}</td>
-                            <td>{{ number_format($details->item_total ,0,' ',',')}}</td>
+                                $details->type }}</td>
+                            <td>{{ $details->code_zip }}</td>
+                            <td>{{ $details->titre }}</td>
+                            <td>{{ number_format($details->prix,0,' ',',')}} Fcfa</td>
                             @php
-                            $total_sum += $details->item_total
+                            $total_sum += $details->prix
                             @endphp
                         </tr>
                         @endforeach
                         <tr>
-                            <td colspan="8" style="text-align: right"><strong>Sub Total</strong>
+                            <td colspan="4" style="text-align: right"><strong>Sub Total</strong>
                             </td>
                             <td class="text-center"> <span>{{ number_format($total_sum ,0,' ',',') }}</span>Fcfa</td>
                         </tr>
+                       
                         <tr>
-                            <td colspan="8" style="text-align: right"><span>Discount</span> </td>
-                            <td class="text-center"> <span>{{ number_format($payment->discount_amount,0,'
-                                    ',',')}}</span>Fcfa</td>
-                        </tr>
-                        <tr>
-                            <td colspan="8" style="text-align: right"><span>Montant Paye</span> </td>
+                            <td colspan="4" style="text-align: right"><span>Montant Paye</span> </td>
                             <td class="text-center"> <span style="background-color: #0be881">{{
                                     number_format( $payment->paid_amount,0,' ',',')}}</span>Fcfa</td>
                         </tr>
                         <tr>
-                            <td colspan="8" style="text-align: right"><span>Montant due</span> </td>
+                            <td colspan="4" style="text-align: right"><span>Montant due</span> </td>
                             <td class="text-center"> <span style="background-color: #ff5e57">{{
                                     number_format( $payment->due_amount,0,' ',',')}}</span>Fcfa</td>
                         </tr>
                         <tr>
-                            <td colspan="8" style="text-align: right"><strong>Grand total</strong> </td>
+                            <td colspan="4" style="text-align: right"><strong>Grand total</strong> </td>
                             <td class="text-center"> <strong>{{ number_format( $payment->total_amount,0,'
                                     ',',')}}</strong>Fcfa</td>
                         </tr>
                         <tr>
-                            <td colspan="9" style="text-align: center; font-weight: bold"><strong>Sommaire de
+                            <td colspan="5" style="text-align: center; font-weight: bold"><strong>Sommaire de
                                     Paiement</strong></td>
                         </tr>
                         <tr>
-                            <td colspan="4" style="text-align: center;font-weight: bold;">Date </td>
-                            <td colspan="5" style="font-weight: bold;text-align: center">Montant verse</td>
+                            <td colspan="3" style="text-align: center; font-weight: bold;">Date</td>
+                            <td colspan="2" style="text-align: center; font-weight: bold;">Montant versé</td>
                         </tr>
                         @php
                         $payment_details = App\Models\PayementDetail::where('invoice_id', $payment->invoice_id)->get();
                         @endphp
                         @foreach ($payment_details as $dtl )
                         <tr>
-                            <td colspan="4" style="text-align: center;">{{ date('d-M-Y',strtotime($dtl->date)) }}</td>
-                            <td colspan="5" style="text-align: center;">{{ number_format( $dtl->current_paid_amount,0,'
+                            <td colspan="3" style="text-align: center;">{{ date('d-M-Y',strtotime($dtl->date)) }}</td>
+                            <td colspan="2" style="text-align: center;">{{ number_format( $dtl->current_paid_amount,0,'
                                 ',',')}} Fcfa</td>
                         </tr>
                         @endforeach

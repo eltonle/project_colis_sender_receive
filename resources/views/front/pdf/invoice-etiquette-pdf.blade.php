@@ -28,17 +28,12 @@
                         </td>
                         <td width="40%" align="center">
                             <strong style="font-size: 15px">Mat:008976785R768 </strong><br>
-                            <span style="font-size: 15px">Phone: (+237) 698-767-655</span><br>
-                            <span style="font-size: 15px">Email: john.doe@example.com</span><br>
+                            <span style="font-size: 15px">Phone: (+237) 690-000-000</span><br>
+                            <span style="font-size: 15px">Email: expresscolis@example.com</span><br>
                             <span style="font-size: 15px">Lieu: 2023 E Bp-site CMR-Douala</span><br>
 
                         </td>
-                        {{-- <td width="40%" style="font-weight: bold;">
-                            {!! DNS1D::getBarcodeSVG($invoice->invoice_zip, "c39", 1, 80, 'black') !!}
-                        </td> --}}
-                        {{-- <td width="10%">
-                            <h4 class="" style="font-size: 26px">Date:{{ date('d-M-Y',strtotime($invoice->date)) }}</h4>
-                        </td> --}}
+                       
                     </tr>
                 </table>
                 <table width="100%" style="text-align: center">
@@ -69,9 +64,9 @@
                         <tr>
                             <td>
                                 <strong>Référence :</strong><br> <br>
-                                <strong>MARIA BELEN</strong><br>
-                                Address: Douala-Cameroun|ange rapheal<br>
-                                Phone: (555) 539-1037<br>
+                                <strong> {{strtoupper($invoice->payement->customer->nom)}}-{{strtoupper($invoice->payement->customer->prenom)}} </strong> to <strong> {{strtoupper($invoice->payement->receive->nom)}}-{{strtoupper($invoice->payement->receive->prenom)}}</strong><br>
+                                <!-- Address: {{$invoice->payement->customer->address}}<br>
+                                Phone: {{$invoice->payement->customer->phone}}<br> -->
                             </td>
                             <td align="right">
                                 <table style="border-collapse: collapse">
@@ -82,13 +77,13 @@
                                                 Récépissé
                                             </td>
                                             <td style="border: 1px solid black" style="border: 1px solid black"
-                                                align="right">№: 1</td>
+                                                align="right">№: {{$invoice->invoice_no}}</td>
                                         </tr>
                                         <tr>
                                             <td align="left"
                                                 style="border:1px solid black; background: #222f3e; font-weight: bold; color:#fff">
                                                 Date</td>
-                                            <td style="border: 1px solid black" align="right">22-jan-2023</td>
+                                            <td style="border: 1px solid black" align="right">{{$invoice->date}}</td>
                                         </tr>
 
                                     </tbody>
@@ -111,7 +106,7 @@
                                     <tbody>
                                         <tr>
                                             <td>
-                                                <h3>CAMEROUN - TCHAD</h3>
+                                                <h3>{{strtoupper($invoice->country->name)}} - {{strtoupper($invoice->countryr->name)}}</h3>
                                             </td>
                                         </tr>
 

@@ -66,8 +66,7 @@
                                         </div>
                                         <div class="form-group col-md-12">
                                             <label for="descriptio">Description Du Conteneur</label>
-                                            <textarea id="descriptio" name="description" class="form-control">
-                                            </textarea>
+                                            <textarea id="descriptio" name="description" class="form-control"></textarea>
                                         </div>
 
                                         <div class="form-group col-md-6">

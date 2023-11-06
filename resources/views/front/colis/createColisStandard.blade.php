@@ -44,10 +44,7 @@
                                     @csrf
                                     <div class="form-row">
 
-                                        {{-- <div class="form-group col-md-6">
-                                            <label for="nature">Nature du colis</label>
-                                            <input type="text" id="nature" name="nature" class="form-control">
-                                        </div> --}}
+                                        
                                         <div class="form-group col-md-12">
                                             <label for="name">Titre</label>
                                             <input type="text" id="titre" name="titre" class="form-control" placeholder="Saisir un titre">
@@ -107,13 +104,24 @@
     $(document).ready(function(){
     $('#myForm').validate({
         rules:{
-            name: {
+            titre: {
+                required:true,
+                rangelength :[3,30]
+            },
+            prix: {
                 required:true,
                 rangelength :[3,30]
             },
         },
             messages: {
-
+                titre: {
+                    required: "Le champ Titre est obligatoire.",
+                    rangelength: "Le champ Titre doit contenir entre 3 et 30 caractères."
+                },
+                prix: {
+                    required: "Le champ Prix est obligatoire.",
+                    rangelength: "Le champ Prix doit contenir entre 3 et 30 caractères."
+                }
             },
             errorElement: 'span',
             errorPlacement:function(error,element){

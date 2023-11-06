@@ -16,7 +16,7 @@ class Payement extends Model
       'paid_status',
       'paid_amount',
       'due_amount',
-      'discount_amount',
+      // 'discount_amount',
     ];
     public function customer()
     {

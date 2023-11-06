@@ -1442,7 +1442,8 @@
                 console.log(id);
                 // Envoyer une requête AJAX à votre route de suppression avec l'ID récupéré
                 $.ajax({
-                    url: '/invoices/delet/' + id,
+                    url: '/expeditions/delet/' + id,
+                    // url: '/invoices/delet/' + id,
                 type: 'POST',
                 success: function(data) {
                     console.log('delete');
@@ -1679,7 +1680,8 @@
                 console.log(id);
                 // Envoyer une requête AJAX pour enregistrer
                 $.ajax({
-                    url: '/invoices/storeStand/' + id,
+                    url: '/expeditions/storeStand/' + id,  
+                    // url: '/invoices/storeStand/' + id,  
                     type: 'GET',
                     dataType: "json",
                     success: function(data) {

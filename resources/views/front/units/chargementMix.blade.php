@@ -15,6 +15,11 @@
         /* Couleur pour le premier champ de saisie */
         color: white;
     }
+   
+        .red-border {
+            border: 1px solid red;
+        }
+   
 </style>
 @endsection
 
@@ -55,14 +60,52 @@
                                 </a>
                             </h3>
                         </div><!-- /.card-heade-->
+                        <div id="messageErreur" style="display: none; text-align: center;color: red;font-weight: bold;"></div>
                         <div class="card-body">
+                              <!-- partir pour telecharge le fichier text -->
+
+                              <div class="row">
+                             <form  method="POST" action="{{ route('upload.file') }}" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="form-group row">
+                                    <div class="col-md-6 ">
+                                        <label for="fichier" class="text-center ">{{ __('telecharger le fichier') }}</label>
+            
+                                        <input type="file" name="fichier" id="fichier" class="form-control" readonly>
+                                    </div>
+                                        <div class="col-md-6 " style="margin-top: 30px;">
+                                            <button type="submit" class="btn btn-primary">
+                                                {{ __(' telecharger') }}
+                                            </button>
+                                        </div>
+                                    </div>
+            
+                                </form>
+                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                {{-- <div class="container"> --}}
+                                    <div class="">
+                                        <div id="messageContainerTrouve" style="display: none;">
+                                                <div style="display: flex; justify-content: space-between;align-items: center;">
+                                                    <p id="codeTrouveMessage" style="color:darkgreen; font-weight: bold;"></p>
+                                                    
+                                                    <p style="margin-left: 30px;"><i id="closeMessageTrouve"  class='far fa-window-close' style='font-size: medium; color:red'></i></p>
+                                                </div>
+                                               
+                                            </div>
+                                            <div id="messageContainer" style="display: none;">
+                                                <div style="display: flex; justify-content: space-between;align-items: center;">
+                                                    <p id="codeNonTrouveMessage" style="color: #D50000;font-weight: bold;"></p>
+                                                    <!-- <button id="closeMessage" class="" style="width: 70px;height: 30px; margin-left: 10px; margin-top: -10px;">Fermer</button> -->
+                                                    <p style="margin-left: 30px;"><i id="closeMessage"  class='far fa-window-close' style='font-size: medium; color:red'></i></p>
+                                                </div>
+                                               
+                                            </div>
+                                    </div>
                                     <form id="update-form" method="post">
                                         @csrf
                                         <div class="form-row">
-
+                                             
                                             <div class="form-group col-md-12">
                                                 <select class="form-control" id="unit_id" name="unit_id"
                                                     style="font-size: 22px;">
@@ -73,25 +116,31 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-
-                                            <div class="form-group col-md-12 mt-4">
+                                            <div  style="text-align: center;">
+                                           
+                                               <span id="error-message_champ" style="color: red;"></span>
+                                          
+                                            </div>
+                                            
+                                            <div class="form-group col-md-12 mt-4"> 
                                                 <div class="text-center">
-                                                    <strong for="multiple-packages">SCAN Multiples Colis
+                                                    <strong for="multiple-packages">SCAN Multiples des Codes-barres des colis
                                                         (séparés par une
-                                                        virgule)</strong>
+                                                        virgule les differents codes )</strong>
                                                 </div>
-                                                <input type="text" class="form-control bg-primary c" id="multiple-codes"
-                                                    name="multiple-codes" style="height: 110px"
-                                                    placeholder="Exemple: 45364637537,5765378353,3434323433....">
+                                               
+                                                    <input type="text" id="fileContents" name="codes_scannes" class="form-control">
+                                                   
                                             </div>
 
                                             <div class="form-group col-md-12">
                                                 <div class="text-center">
-                                                    <strong for="multiple-packages">Scanner un Colis</strong>
+                                                    <strong for="multiple-packages">Scan d'un Code-barre d'un colis (veuillez saisir un seul code.)</strong>
                                                 </div>
-                                                <input type="text" class="form-control bg-primary b" id="single-code"
+                                                <input type="text" class="form-control b " id="single-code"
                                                     name="single-code" style="height: 60px "
                                                     placeholder="Saisir un Code ">
+                                                    <div id="error-message"></div>
                                             </div>
 
                                             <div class="d-flex justify-center items-center mx-auto">
@@ -101,8 +150,7 @@
 
                                         </div>
                                     </form>
-                                    {{--
-                                </div> --}}
+                                   
                             </div>
                             <!-- /.card-body -->
                         </div>
@@ -150,50 +198,115 @@
     })
 </script>
 
+
+
 <script>
     $(document).ready(function() {
     $('#update-form').submit(function(event) {
         event.preventDefault(); // Empêche la soumission normale du formulaire
         
+        $('#error-message').text('');
+        $('#error-message_champ').text('');
+          // Récupérer la valeur de l'input
+          var inputValue = $('#single-code').val();
+        //..................................................
+        var input1Value = $('#fileContents').val();
+
+            if (input1Value !== '' && inputValue !== '') {
+                // Les deux champs sont remplis, afficher le message d'erreur
+                $('#error-message_champ').text('🛑 Veuillez remplir un champ 🛑.');
+                return false;
+            } 
+
+        //..................................................
+        // Vérifier s'il y a des espaces ou des virgules
+        if (inputValue.includes(' ') || inputValue.includes(',')) {
+            // Afficher le message d'erreur
+            $('#error-message').text('Veuillez saisir un seul code : espace et virgule non conseillé 📛.');
+            $('#error-message').css('color', 'red');
+            return false;
+
+        } 
+
+
         var form = $(this).closest('form');
         var data = form.serialize();
 
         // Envoie une requête AJAX pour mettre à jour le statut
         $.ajax({
-        url: "{{ route('units.chargementMixSubmit') }}",
+        url: "{{ route('units.chargementMixSubmit') }}", 
         method: 'POST',
         data: data,
        
          success: function(response) {
+
+               
                var codesNonTrouve = response.codes_non_trouves;
                var codeTrouve = response.codes
                 // Afficher le message de mise à jour
-                var message = 'Nombre de colis mis à jour : ' + response.count + '\n';
+                var message = 'Nombre de colis charges : ' + response.count + '\n';
                 var codeNonTrouveMessage = 'Codes des colis non trouvés : ' + codesNonTrouve.join(', ');
-                message += 'Codes des colis mis à jour : ' + response.codes.join(', ');
+                // message += 'Codes des colis mis à jour : ' + response.codes.join(', ');
                  
                 if (codeTrouve.length > 0) {                
-                    alert(message);
+                    // alert(message);
+                  
+                    $('#codeTrouveMessage').text(message);
+                    $('#messageContainerTrouve').show(); // Affiche la div
                 }
                 
                  // Afficher le message des codes non trouvés
                 if (codesNonTrouve.length > 0) {
-                    alert(codeNonTrouveMessage);
+                    $('#codeNonTrouveMessage').text(codeNonTrouveMessage);
+                    $('#messageContainer').show(); // Affiche la div
+                    // alert(codeNonTrouveMessage);
                 }
+               
                 // alert('Statut mis à jour avec succès !');
                 // Réinitialise les champs du formulaire
                
                 $('#unit_id').val('');
-                $('#multiple-codes').val('');
+                $('#fileContents').val('');
                 $('#single-code').val('');
+
+                // if (response.success==='false') {
+                //     alert('response.success');
+                // }
             },
-            error: function(xhr) {
-             alert('Une erreur est survenue lors de la mise à jour du statut.');
+            error: function(xhr,error) {
+                var errorMessage = JSON.parse(xhr.responseText).error;
+                    // alert('Erreur lors du chargement de la vue : ' + errorMessage);
+                    // alert('Une erreur est survenue lors de la mise à jour du statut.');
+                    $('#messageErreur').text(errorMessage).show();
+
+                    // Cachez le message d'erreur après 3 secondes
+                    setTimeout(function () {
+                        $('#messageErreur').hide();
+                    }, 3000);
             }
 
          });
 
         });
+
+        $('#closeMessage').click(function () {
+            $('#messageContainer').hide(); // Cache la div lorsque l'utilisateur clique sur "Fermer"
+        });
+        $('#closeMessageTrouve').click(function () {
+            $('#messageContainerTrouve').hide(); // Cache la div lorsque l'utilisateur clique sur "Fermer"
+        });
+    });
+</script>
+
+
+
+<script>
+    $(document).ready(function() {
+        var fileContents = @json(session('fileContents'));
+
+        if (fileContents) {
+            $('#fileContents').val(fileContents);
+        }
     });
 </script>
 @endsection

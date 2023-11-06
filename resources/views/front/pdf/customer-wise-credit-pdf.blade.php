@@ -67,7 +67,17 @@
                             ( {{ $payment['customer']['phone'] }})
                         </td>
                         <td>{{ date('d-m-Y',strtotime($payment['invoice']['date'])) }}</td>
-                        <td>{{ $payment->paid_status}}</td>
+                        <td>
+                         @if ($payment['paid_status'] === 'full_paid')
+                                 <span style="color: green;">Payé</span>
+                                @elseif ($payment['paid_status'] === 'partial_paid')
+                                <span style="color:#7CB342;">partielement payé</span> 
+                                @elseif ($payment['paid_status'] === 'full_due')
+                                <span style="color: #B00020;">non payé</span>
+                                @else
+                                <span>Statut inconnu</span>
+                            @endif
+                        </td>
                         <td>{{ number_format($payment->due_amount ,0,' ',',')}} fcfa</td>
                         @php
                         $total_due += $payment ->due_amount;

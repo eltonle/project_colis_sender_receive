@@ -67,10 +67,10 @@
                                                         class="btn btn-sm btn-primary mr-1">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
-                                                    {{-- <a href="#" title="delete" id="delete"
-                                                        class="btn btn-sm btn-danger">
-                                                        <i class="fa fa-trash"></i>
-                                                    </a> --}}
+                                                  @php
+                                                    $customerExist = App\Models\Payement::where('customer_id', $customer->id)->exists();
+                                                  @endphp
+                                                  @if(!$customerExist)                                                  
                                                     <form method="POST"
                                                         action="{{ route('customers.delete', $customer->id) }}">
                                                         @csrf
@@ -80,6 +80,7 @@
                                                             data-toggle="tooltip" title='Delete'><i
                                                                 class="fa fa-trash"></i></button>
                                                     </form>
+                                                    @endif
                                                 </div>
                                             </td>
                                         </tr>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\ColisDimension;
 use App\Models\Entrepot;
+use App\Models\HistoriqueColisEntrepot;
 use App\Models\Unit;
 use App\Models\vehicule;
 use Illuminate\Http\Request;
@@ -64,47 +65,39 @@ class UnitController extends Controller
     }
 
 
-    // public function CapacityRestante(Unit $unit)
-    // {
-    //     $totalWeight = $unit->colisDimensions->sum('weight');
-    //     $resteCapacity = $unit->max_capacity - $totalWeight;
-    //     return $resteCapacity;
-    // }
+    public function showColiste($id)
+    {
+        $unit = Unit::find($id);
+        return view('front.units.showcolis',compact('unit'));
+    }
 
 
     public function dechargement()
     {
-        $vehicules = vehicule::all();
-        return view('front.units.dechargement', compact('vehicules'));
+        $entrepots = Entrepot::all();
+        $units = Unit::all();
+        return view('front.units.dechargement', compact('entrepots','units'));
     }
 
-   // dechargement multiple
+   // DECHARGEMENT MULTIPLE AVEC FICHIER TEXT
     public function dechargementSubmit(Request $request)
     {
         // Récupère les valeurs des champs
-        $conteneurBarcode = $request->input('conteneur-barcode');
-        $vehiculeId = $request->input('vehicule_id');
-        $multipleCodes = $request->input('multiple-codes');
+        $conteneur_id = $request->input('conteneur_id');
+        $entrepotId = $request->input('entrepot_id');
+        $multipleCodes = $request->input('codes_scannes');
         $singlePackage = $request->input('single-code');
-        // dd($conteneurBarcode, $vehiculeId, $multipleCodes, $singlePackage);
 
         // Recherche le conteneur par code-barres
-        $conteneur = Unit::where('numero_id', $conteneurBarcode)->first();
+        $conteneur = Unit::where('id', $conteneur_id)->first();
         
         // Vérifie si le conteneur existe
-        if ($conteneur) {
-            // Met à jour le statut du conteneur
-            $conteneur->statut = 'En cours de Dechargement';          
-            $conteneur->save();
+        if ($conteneur&&$multipleCodes&&$entrepotId || $conteneur&&$singlePackage&&$entrepotId ) {
             
-            // Recherche le véhicule par ID
-            $vehicule = vehicule::find($vehiculeId);
             
-            // Vérifie si le véhicule existe
-            if ($vehicule) {
-                // Met à jour le statut du véhicule
-                $vehicule->status = 'En cours de Dechargement';
-                $vehicule->save();
+            $count = 0;
+            $codes = [];
+            $codes_non_trouves = [];
                 
                 // Traite les colis multiples
                 if ($multipleCodes) {
@@ -113,13 +106,36 @@ class UnitController extends Controller
                         // Recherche le colis par code-barres
                         $package = ColisDimension::where('code_zip', $packageBarcode)->first();
                         if ($package) {
+                            $colisId= $package->id;
+
+                            $conteneur->colis_historiques()->attach($colisId, [
+                                'status' => 'Dechargé',
+                                'date_action' => now(),
+                            ]);
+
+                             // Enregistrez l'historique du mouvement
+                            HistoriqueColisEntrepot::create([
+                                'colis_id' =>$colisId,
+                                'entrepot_depart_id' => 0,
+                                'entrepot_arrive_id' => $entrepotId,
+                                'date_action' => now(),
+                            ]);
+
+                            $conteneur->colis()->detach($colisId);
                             // Met à jour le statut du colis
-                            $package->status = '2';
-                            $package->vehicule_id = $vehicule->id;
-                            $package->decharge = '1';
-                            $package->unit_id = '0';
+                            $package->status = '1';
+                            $package->entrepot_id = $entrepotId;
+                            $package->charge = 2;
+                            $package->decharge = 1;
                             $package->save();
-                        }
+                           
+
+                            $count++;
+                            $codes[] = $packageBarcode;
+                            
+                       }else {
+                        $codes_non_trouves[] = $packageBarcode;
+                       }
                     }
                 }
                 
@@ -128,22 +144,50 @@ class UnitController extends Controller
                     // Recherche le colis par code-barres
                     $package = ColisDimension::where('code_zip', $singlePackage)->first();
                     if ($package) {
+                        $colisId = $package->id;
+
+                        $conteneur->colis_historiques()->attach($colisId, [
+                            'status' => 'Dechargé',
+                            'date_action' => now(),
+                        ]);
+                        
+                         // Enregistrez l'historique du mouvement
+                         HistoriqueColisEntrepot::create([
+                            'colis_id' =>$colisId,
+                            'entrepot_depart_id' => 0,
+                            'entrepot_arrive_id' => $entrepotId,
+                            'date_action' => now(),
+                        ]);
+
+                        $conteneur->colis()->detach($colisId);
                         // Met à jour le statut du colis
-                        $package->status = '2';
-                        $package->vehicule_id = $vehicule->id;
-                        $package->unit_id = '0';
-                        $package->decharge = '1';
+                        $package->status = '1';
+                        $package->entrepot_id = $entrepotId;                       
+                        $package->charge = 2;
+                        $package->decharge = 1;
                         $package->save();
+                        $count++;
+                        $codes[] = $packageBarcode;
+                    }else {
+                     $codes_non_trouves[] = $singlePackage;
                     }
                 }
-                
+                // Met à jour le statut du conteneur
+                $conteneur->statut = 'En cours de Dechargement';          
+                $conteneur->save();
                 // Retourne une réponse JSON pour indiquer que la mise à jour a réussi
-                return response()->json(['success' => true]);
-            }
+               return response()->json([
+                                 'count' => $count,
+                                  'codes' => $codes,
+                                  'codes_non_trouves' => $codes_non_trouves
+                                ],200);
+            
+        }else{
+          // Retourne une réponse JSON pour indiquer que la mise à jour a échoué
+        return response()->json(['error' => 'Veuillez remplir les bonnes informations'],400);
         }
         
-        // Retourne une réponse JSON pour indiquer que la mise à jour a échoué
-        return response()->json(['success' => false]);
+        
     }
 
 
@@ -151,30 +195,25 @@ class UnitController extends Controller
    {
     $units = Unit::all();
     return view('front.units.chargementMix', compact('units'));
-   }
+   } 
 
    // chargement multiple
    public function chargementMixSubmit(Request $request)
    {
        // Récupère les valeurs des champs
        $unitId = $request->input('unit_id');
-       $multipleCodes = $request->input('multiple-codes');
+       $multipleCodes = $request->input('codes_scannes');
        $singlePackage = $request->input('single-code');
 
        // Recherche le conteneur par code-barres
        $conteneur = Unit::where('id', $unitId)->first();
        
        // Vérifie si le conteneur existe
-       if ($conteneur) {
-           // Met à jour le statut du conteneur
-           $conteneur->statut = 'En cours de Dechargement';          
-           $conteneur->save();
-           
-           
+       if ($conteneur&&$multipleCodes&&$unitId || $conteneur&&$singlePackage&&$unitId) {
+                          
            // Vérifie si le conteneur existe
            if ($conteneur) {
                          
-
                 $count = 0;
                 $codes = [];
                 $codes_non_trouves = [];
@@ -185,10 +224,25 @@ class UnitController extends Controller
                    foreach ($packageBarcodes as $packageBarcode) {
                        // Recherche le colis par code-barres
                        $package = ColisDimension::where('code_zip', $packageBarcode)->first();
+                       
                        if ($package) {
-                            $package->unit_id = $conteneur->id;
-                            $package->charge = 1;
-                           $package->save();
+                           $colisId = $package->id;
+
+                        $conteneur->colis_historiques()->attach($colisId, [
+                            'status' => 'Chargé',
+                            'date_action' => now(),
+                        ]);
+
+                        $conteneur->colis()->attach($colisId, [
+                            'date' => now(),
+                        ]);
+                       
+                        $colis = ColisDimension::find($colisId);
+                        if ($colis) {
+                            $colis->charge = 1;
+                            $colis->status = '1';
+                            $colis->save();
+                        }
 
                            $count++;
                             $codes[] = $packageBarcode;
@@ -204,10 +258,22 @@ class UnitController extends Controller
                    // Recherche le colis par code-barres
                    $package = ColisDimension::where('code_zip', $singlePackage)->first();
                    if ($package) {
-                       // Met à jour le statut du colis
-                       $package->unit_id = $conteneur->id;
-                       $package->charge = 1;
-                       $package->save();
+                       $colisId = $package->id;
+
+                    $conteneur->colis_historiques()->attach($colisId, [
+                        'status' => 'Chargé',
+                        'date_action' => now(),
+                    ]);
+                    $conteneur->colis()->attach($colisId, [
+                        'date' => now(),
+                    ]);
+                
+                    $colis = ColisDimension::find($colisId);
+                    if ($colis) {
+                        $colis->charge = 1;
+                        $colis->status = '1';
+                        $colis->save();
+                    }
 
                        $count++;
                        $codes[] = $singlePackage;
@@ -215,24 +281,28 @@ class UnitController extends Controller
                     $codes_non_trouves[] = $singlePackage;
                    }
                }
-               
+               // Met à jour le statut du conteneur
+                $conteneur->statut = 'En cours de chargement';          
+                $conteneur->save();
                // Retourne une réponse JSON pour indiquer que la mise à jour a réussi
                return response()->json([
                                  'count' => $count,
                                   'codes' => $codes,
                                   'codes_non_trouves' => $codes_non_trouves
-                                ]);
+                                ],200);
            }
+       }else{
+          // Retourne une réponse JSON pour indiquer que la mise à jour a échoué
+          return response()->json(['error' => 'Veuillez remplir les bonnes informations'],400);
        }
        
-       // Retourne une réponse JSON pour indiquer que la mise à jour a échoué
-       return response()->json(['success' => false]);
+       
    }
     
-    public function voirConteneur(Unit $unit)
+    public function voirConteneur(Unit $unit) 
     {
         
-        $colis = ColisDimension::with('invoice')->where('status', '1')->where('unit_id', null)->where('decharge', null)->get();
+        $colis = ColisDimension::with('invoice')->where('status', '1')->where('charge', 0)->where('decharge', null)->get();
        
         return view('front.units.chargement', compact('colis','unit'));
     }
@@ -240,103 +310,226 @@ class UnitController extends Controller
     public function voirConteneurScan(Unit $unit)
     {
        
-        $colis = ColisDimension::with('invoice')->where('status', '1')->where('unit_id', null)->get();
+        // $colis = ColisDimension::with('invoice')->where('status', '1')->where('unit_id', null)->get();
        
         return view('front.units.chargementScan', compact('unit'));
     }
 
-
+ 
     public function voirConteneurDecharge($id)
     {
         
         $conteneur = Unit::findOrFail($id);
         $entrepots = Entrepot::all();
-        $colis = $conteneur->colisDimensions;
-      
+        $colis = $conteneur->colis;
        
         return view('front.units.dechargementView', compact('colis','conteneur','entrepots'));
-    }
+    }// END METHOD
+
+    public function voirConteneurDechargeScan($id)
+    {
+        
+        $unit = Unit::findOrFail($id);
+        $entrepots = Entrepot::all();
+        $colis = $unit->colis;
+       
+        return view('front.units.dechargementViewScan', compact('colis','unit','entrepots'));
+    } //END METHOD
 
 
    
 
-
-    public function chargementConteneur(Request $request, $id)
-    {
+    //  CHARGEMENT AVEC CHECKBOX
+    public function chargementConteneur(Request $request, $id) 
+    { 
+        // dd($request->all());
         $unit = Unit::findOrFail($id);
-        $unit -> statut = "En cours de Chargement";
-
-        $unit -> save();
-        $colis = ColisDimension::whereIn('id', $request->input('colis'))->get();
-      
-        foreach ($colis as $colisItem) {
-            $colisItem->unit_id = $unit->id;
-            $colisItem->charge = 1;
-            $colisItem->save();
+        if (!$unit) {
+            return redirect()->back()->with('error', 'Conteneur non trouvé.');
         }
 
+       
+
+        $colisId = $request->input('colis');
+      
+        foreach ($colisId as $colisItem) {
+            $unit->colis()->attach($colisItem, [
+                'date' => now(),
+            ]);
+            $unit->colis_historiques()->attach($colisItem, [
+                'status' => 'Chargé',
+                'date_action' => now(),
+            ]);
+            // $colisItem->unit_id = $unit->id;
+            $colis = ColisDimension::find($colisItem);
+            if ($colis) {
+                $colis->charge = 1;
+                $colis->status = '1';
+                $colis->save();
+            }
+            
+        }
+        $unit -> statut = "En cours de Chargement";
+        $unit -> save();
         return redirect()->route('units.index', $unit)->with('message','Colis charge avec success....');
 
     }
-
-
+   
+    //  DECHARGEMENT AVEC CHECKBOX
     public function dechargementConteneur(Request $request, $id)
     {
-        $unit = Unit::findOrFail($id);
-        $unit -> statut = "En cours de Dechargement";
-        
-        $colis = ColisDimension::whereIn('id', $request->input('colis'))->get();
-        
-        $unit -> save();
-      
-        foreach ($colis as $colisItem) {
-            $colisItem->unit_id = null;
-            $colisItem->charge = 2;
-            $colisItem->decharge = 1;
-            $colisItem->entrepot_id = $request->entrepot_id;
-            $colisItem->save();
+        $unit = Unit::findOrFail($id); 
+        if (!$unit) {
+            return redirect()->back()->with('error', 'Conteneur non trouvé.');
         }
+       
+        // Obtenez les ID des colis à détacher à partir du formulaire
+        $colisIds = $request->input('colis', []);
+        // Détachez les colis du conteneur
+        $unit->colis()->detach($colisIds);
+
+      // Mettez à jour le statut des colis si nécessaire
+      foreach ($colisIds as $colisItem) {
+        $colis = ColisDimension::find($colisItem);
+
+        $unit->colis_historiques()->attach($colisItem, [
+            'status' => 'Dechargé',
+            'date_action' => now(),
+        ]);
+
+            if ($colis) {
+                $colis->status = '1'; // Ou tout autre statut approprié
+                $colis->charge = 2;
+                $colis->decharge = 1;
+                $colis->entrepot_id = $request->entrepot_id;
+                $colis->save();
+            }
+            // Enregistrez l'historique du mouvement
+            HistoriqueColisEntrepot::create([
+                'colis_id' => $colisItem,
+                'entrepot_depart_id' => 0,
+                'entrepot_arrive_id' => $request->entrepot_id,
+                'date_action' => now(),
+            ]);
+        }
+        $unit -> statut = "En cours de Dechargement";                
+        $unit -> save();
 
         return redirect()->route('units.index', $unit)->with('message','Colis Decharge avec success....');
 
     }
 
+    // ICI TELECHARGER FICHIER TEXT
+    public function uploadFile(Request $request)
+    {
+        if ($request->hasFile('fichier')) {
+            $file = $request->file('fichier');
+            $contents = file_get_contents($file->getRealPath());
+            
+            // Traitez les données du fichier ici
+           // Stockez les données du fichier dans une variable de session
+          $request->session()->flash('fileContents', $contents);
 
+        return redirect()->back()->with('message', 'Fichier téléchargé avec succès.');
+        
+        } else {
+            return redirect()->back()->with('error', 'Aucun fichier sélectionné.');
+        }
+    } //END METHOD
 
+    
+    // ICI CHARGEMENT A TRAVERS CODE FICHIERS
     public function chargementScannerConteneur(Request $request, $id)
     {
-        $conteneur = Unit::findOrFail($id);
-
-        // Valider le formulaire
-        $request->validate([
-            'codes_scannes' => 'required',
-        ]);
-
+        $unit = Unit::findOrFail($id);
+       
         // Récupérer les codes scannés depuis le champ de formulaire
-        $codesScannes = explode(PHP_EOL, $request->input('codes_scannes'));
-        // dd($codesScannes);
+        $codesScannes = explode(',', $request->input('codes_scannes'));
+        
         // Parcourir les codes scannés et vérifier s'ils existent dans la base de données
         foreach ($codesScannes as $codeScan) {
             $colis = ColisDimension::where('code_zip', $codeScan)->first();
+            $colisItem = $colis->id;
 
+            $unit->colis_historiques()->attach($colisItem, [
+                'status' => 'Chargé',
+                'date_action' => now(),
+            ]);
             if (!$colis) {
                 return redirect()->back()->with(['warning' => 'Le code-barre ' . $codeScan . ' n\'existe pas dans la base de données.'])->withInput();
             }
 
-            // Vérifier si le colis est déjà chargé dans un autre conteneur
-            if ($colis->unit_id && $colis->unit_id != $id) {
-                return redirect()->back()->with(['info' => 'Le colis ' . $colis->code_zip . ' est déjà chargé dans le conteneur ' . $colis->conteneur->name . ' № ' . $colis->conteneur->numero_id. '.'])->withInput();
+            
+            $unit->colis()->attach($colisItem, [
+                'date' => now(),
+            ]);
+            
+            $colis = ColisDimension::find($colisItem);
+            if ($colis) {
+                $colis->charge = 1;
+                $colis->status = '1';
+                $colis->save();
             }
 
-            // Mettre à jour le statut du colis et l'associer au conteneur
-            $colis->charge = 1;
-            $colis->unit_id = $conteneur->id;
-            $colis->save();
-        }
 
+        }
+        $unit -> statut = "En cours de chargement";                
+        $unit -> save();
         // Rediriger vers la page de détail du conteneur  ['unit' => $unit->id]
-        return redirect()->route('units.showScan', ['unit' => $conteneur->id])->with('message', 'Le chargement des colis a été enregistré avec succès.');
-    }
+        return redirect()->route('units.showScan', ['unit' => $unit->id])->with('message', 'Le chargement des colis effectues ✅');
+    }//END METHOD
+
+    
+    
+
+    // ICI DECHARGEMENT A TRAVERS CODE FICHIERS
+    public function dechargementScannerConteneur(Request $request, $id)
+    {
+        $unit = Unit::findOrFail($id);
+        if (!$unit) {
+            return redirect()->back()->with('error', 'Conteneur non trouvé.');
+        }
+        
+        // Récupérer les codes scannés depuis le champ de formulaire
+        $codesScannes = explode(',', $request->input('codes_scannes'));
+        // Parcourir les codes scannés et vérifier s'ils existent dans la base de données
+        foreach ($codesScannes as $codeScan) {
+            $colis = ColisDimension::where('code_zip', $codeScan)->first();
+            if (!$colis) {
+                return redirect()->back()->with(['warning' => ' Code-barre inexistant 📛'])->withInput();
+            }
+            $colisItem = $colis->id;
+
+            $unit->colis_historiques()->attach($colisItem, [
+                'status' => 'Decharge',
+                'date_action' => now(),
+            ]);
+
+            $unit->colis()->detach($colisItem); //ICIC
+            
+            $colis = ColisDimension::find($colisItem);
+            if ($colis) {
+                $colis->status = '1'; // Ou tout autre statut approprié            
+                $colis->charge = 2;
+                $colis->decharge = 1;
+                $colis->entrepot_id = $request->entrepot_id;
+                $colis->save();
+            }
+             // Enregistrez l'historique du mouvement
+             HistoriqueColisEntrepot::create([
+                'colis_id' => $colis->colisItem,
+                'entrepot_depart_id' => 0,
+                'entrepot_arrive_id' => $request->entrepot_id,
+                'date_action' => now(),
+            ]);
+
+
+        }
+        $unit -> statut = "En cours de Dechargement";                
+        $unit -> save();
+
+        return redirect()->route('units.showDechargeScan', ['unit' => $id])->with('message', 'Le dechargement des colis effectues ✅');
+    }//END METHOD
 
 
 
@@ -359,6 +552,21 @@ class UnitController extends Controller
         $conteneur->save();
 
         return response()->json(['success' => true]);
+    }
+
+// a supprimer
+    public function updateUnitStatus(Request $request)
+    {
+        $unit = Unit::find($request->input('unit_id'));
+
+        if ($unit) {
+            $unit->statut = $request->input('status');
+            $unit->updated_by = auth()->user()->id;
+            $unit->save();
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['success' => false, 'error' => 'Container not found']);
+        }
     }
 
 }

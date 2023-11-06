@@ -85,7 +85,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="d-flex mb-4 align-items-center">
+                                <!-- <div class="d-flex mb-4 align-items-center">
                                     <label class="control control--checkbox mb-0"><span class="caption">Se souvenir de
                                             moi
                                         </span>
@@ -93,7 +93,7 @@
                                         <div class="control__indicator"></div>
                                     </label>
                                     <span class="ml-auto"><a href="#" class="forgot-pass">Mot de passe oublié</a></span>
-                                </div>
+                                </div> -->
 
                                 <input type="submit" value="Log In" class="btn btn-block btn-danger">
 

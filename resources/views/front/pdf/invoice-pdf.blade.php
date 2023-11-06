@@ -27,20 +27,17 @@
                         </td>
                         <td width="40%" align="center">
                             <strong style="font-size: 16px">Mat:008976785R768 </strong><br>
-                            <span style="font-size: 16px">Phone: (+237) 690-700-600</span><br>
+                            <span style="font-size: 16px">Phone: (+237) 690-000-000</span><br>
                             <span style="font-size: 16px">Email: express.colis@example.com</span><br>
                             <span style="font-size: 16px">Lieu: 2023 E Bp-site CMR-Douala</span><br>
 
                         </td>
                         <td width="40%" style="font-weight: bold; text-align: center">
-                            {{-- {!! DNS1D::getBarcodeSVG($invoice->invoice_zip, "c39", 1, 80, 'black') !!} --}}
                             <img src="data:image/png;base64,{{DNS1D::getBarcodePNG($invoice->invoice_zip, 'C39+')}}"
                                 width="50%" height="100px" />
                             <span>CMR{{ $invoice->invoice_zip }}</span>
                         </td>
-                        {{-- <td width="10%">
-                            <h4 class="" style="font-size: 26px">Date:{{ date('d-M-Y',strtotime($invoice->date)) }}</h4>
-                        </td> --}}
+                      
                     </tr>
                 </table>
                 <br><br>
@@ -49,8 +46,8 @@
                         <tr>
                             <td>
                                 <strong>Bordereau de</strong><br> <br>
-                                <strong>{{ $invoice->payement->customer->nom }}-{{ $invoice->payement->customer->prenom }}</strong> {{ $invoice->country->name }}|{{ $invoice->state->name }}<br>
-                                Phone: (555) {{ $invoice->payement->customer->phone }}<br>
+                                <strong>{{strtoupper( $invoice->payement->customer->nom )}}-{{strtoupper($invoice->payement->customer->prenom )}}</strong> {{ $invoice->country->name }}|{{ $invoice->state->name }}<br>
+                                Phone:  {{ $invoice->payement->customer->phone }}<br>
                                 Email: {{ $invoice->payement->customer->email }}
                             </td>
                             <td align="right">
@@ -99,87 +96,12 @@
             </div>
         </div>
         <br>
-        {{-- <table style="border: 1px solid #333;" width="100%">
-            <thead>
-                <tr>
-                    <th colspan="2"><span style="font-size: 23px">Reçu d'Expedition</span></th>
-                </tr>
-            </thead>
-        </table> --}}
+        
         <br>
-        {{-- <div class="row">
-            <div class="col-md-6">
-                <table width="100%">
-                    <tr>
-                        @php
-                        $payment = App\Models\Payement::where('invoice_id',$invoice->id)->first();
-                        @endphp
-                        <td width="40%">
-                            <strong>
-                                <div class="col-sm-4 ">
-                                    <span class="" style="font-size: 18px">Expedition</span>
-                                    <address>
-                                        <strong>{{ $payment['customer']['nom'] }}, {{ $payment['customer']['prenom']
-                                            }}.</strong><br>
-                                        {{ $payment['customer']['address'] }}<br>
-                                        <b>{{ $payment['invoice']['country']['name'] }}</b>, <b>{{
-                                            $payment['invoice']['state']['name'] }}</b><br>
-                                        Phone: {{ $payment['customer']['phone'] }}<br>
-                                        Email: {{ $payment['customer']['email'] }}
-                                    </address>
-                                </div>
-                            </strong>
-                        </td>
-                        <td width="40%">
-                            <strong>
-                                <div class="col-sm-4 ">
-                                    <span class="" style="font-size: 18px">Destination</span>
-                                    <address>
-                                        <strong>{{ $payment['receive']['nom'] }}, {{ $payment['receive']['prenom']
-                                            }}.</strong><br>
-                                        {{ $payment['receive']['address'] }}<br>
-                                        <b>{{ $payment['invoice']['countryr']['name'] }}</b>, <b>{{
-                                            $payment['invoice']['stater']['name'] }}</b><br>
-                                        Phone: {{ $payment['receive']['phone'] }}<br>
-                                        Email: {{ $payment['receive']['email'] }}
-                                    </address>
-                                </div>
-                            </strong>
-                        </td>
-                        <td width="20%">
-                            <strong>
-                                <div class="col-sm-4">
-                                    <b style="font-size: 17px">Récépissé №:<strong class="text-primary">#{{
-                                            $invoice->invoice_no }}</strong> </b><br>
-                                    <br>
-                                    <b style="font-size: 13px;">Bordereau №:</b> #{{ $invoice->invoice_zip }}<br>
-
-
-                                    <b>Montant Du :</b> <b class="" style="color: red">{{
-                                        number_format($payment->due_amount,0,' ',',')}}
-                                    </b>FCFA<br>
-                                    <b>Montant Paye :</b> <b style="color: blue">{{
-                                        number_format($payment->paid_amount,0,' ',',')}}</b> FCFA
-                                </div>
-                            </strong>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div> --}}
+      
     </div>
 
     <div>
-
-        <br>
-        {{-- <table style="border: 1px solid #333;" width="100%">
-            <thead>
-                <tr>
-                    <th colspan="2">INFORMATION COlIS</th>
-                </tr>
-            </thead>
-        </table> --}}
-        <br>
         <div class="">
             <div class="card-body">
                 @php
@@ -223,17 +145,17 @@
                         </tr>
                         @endforeach
                         <tr>
-                            <td colspan="4" style="font-size: 16px; text-align: right"><strong>Sub Total</strong>
+                            <td colspan="4" style="font-size: 16px; text-align: right"><strong> Total</strong>
                             </td>
                             <td style="font-size: 16px" class="text-center"> <span>{{ number_format($total_sum,0,'
                                     ',',')}}</span>Fcfa</td>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                             <td colspan="4" style="font-size: 16px; text-align: right"><span>Discount</span> </td>
                             <td style="font-size: 16px" class="text-center"> <span>{{
                                     number_format($payment->discount_amount,0,' ',',')
                                     }}</span>Fcfa</td>
-                        </tr>
+                        </tr> -->
                         <tr>
                             <td colspan="4" style="font-size: 16px; text-align: right"><span>Montant Paye</span> </td>
                             <td style="font-size: 16px" class="text-center"> <span style="background-color: #0be881">{{

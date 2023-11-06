@@ -15,7 +15,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h3 class="m-0 font-weight-bold"> Chargement Conteneur</h3>
+                    <h3 class="m-0 font-weight-bold"> Dechargement Conteneur</h3>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -29,6 +29,7 @@
     <!-- /.content-header -->
 
  
+
     
       <!-- Main content -->
       <div class="content" id="contenu2">
@@ -72,13 +73,25 @@
                              </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <form id="myForm" method="POST" action="{{ route('unitsColisScanner.update',  $unit->id) }}">
+                                <form id="myForm" method="POST" action="{{ route('unitsColisScannerDecharge.update',  $unit->id) }}">
                                     @csrf
+
+                                    <div class="mb-5">
+                                        <select name="entrepot_id" id="entrepot_id" class="form-control">
+                                            <option value="">Selectionner un entrepot</option>
+                                            @foreach($entrepots as $entrepot)
+                                            <option value="{{$entrepot->id}}">{{$entrepot->name}}_{{$entrepot->address}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                     <div class="form-group row">
-                                        <label for="codes_scannes" class="text-center ">{{ __('Codes scannés') }}</label>
+
+                                        <label for="codes_scannes" class="text-center ">{{ __('SCAN Multiples des Codes-barres des colis
+                                                (séparés par une
+                                                        virgule les differents codes )') }}</label>
             
                                         <div class="col-md-12">                                           
-                                            <input type="text" id="fileContents" name="codes_scannes" class="form-control" readonly>                                                                                   
+                                            <input type="text" id="fileContents" name="codes_scannes" class="form-control" >                                                                                   
                                         </div>
 
                                     </div>
@@ -86,7 +99,7 @@
                                     <div class="form-group row mb-0">
                                         <div class="col-md-6 offset-md-4">
                                             <button type="submit" class="btn btn-primary">
-                                                {{ __(' le chargement des colis') }}
+                                                {{ __(' Dechargement des colis') }}
                                             </button>
                                         </div>
                                     </div>
@@ -124,6 +137,9 @@
     $('#myForm').validate({
         rules: {
             codes_scannes: {
+                required: true,
+            },
+            entrepot_id: {
                 required: true,
             },
         },

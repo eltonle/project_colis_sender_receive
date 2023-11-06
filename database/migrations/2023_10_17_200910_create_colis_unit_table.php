@@ -13,15 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('units', function (Blueprint $table) {
+        Schema::create('colis_unit', function (Blueprint $table) {
             $table->id();
-            $table->string('numero_id');
-            $table->string('name');
-            $table->date('date_chargement');
-            $table->string('statut');
-            $table->string('description')->nullable();
-            $table->integer('created_by')->nullable();
-            $table->integer('updated_by')->nullable();
+            $table->string('colis_id');
+            $table->string('unit_id');
+            $table->date('date');
             $table->timestamps();
         });
     }
@@ -33,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('units');
+        Schema::dropIfExists('colis_unit');
     }
 };

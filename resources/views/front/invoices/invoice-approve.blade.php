@@ -54,7 +54,7 @@
                                     </h4>
                                 </div>
                                 <!-- /.col -->
-                            </div>
+                            </div> 
                             <!-- info row -->
                             <div class="row invoice-info">
                                 <div class="col-sm-4 invoice-col">
@@ -117,68 +117,70 @@
                                     <thead>
                                         <tr class="text-center">
                                             <th class="text-center" style="background:#ddd; padding:1px;">#ID</th>
-                                            <th>Model&Marque</th>
-                                            <th>Chassis</th>
-                                            <th>Longueur</th>
-                                            <th>Largeur</th>
-                                            <th>Hauteur</th>
-                                            <th>Prix unit</th>
-                                            <th>Qty</th>
-                                            <th>Total prix</th>
+                                            <th>Code_zip</th>
+                                            <th>Type</th>
+                                            <th>Titre</th>
+                                            <th>Prix</th>
+                                            <!-- <th>Hauteur</th> -->
+                                            <!-- <th>Prix unit</th> -->
+                                            <!-- <th>Qty</th> -->
+                                            <!-- <th>Total prix</th> -->
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @php
-                                        $total_sum = '0';
+                                        $total_sum = '0'; 
                                         @endphp
-                                        @foreach ($invoice['invoice_details'] as $key =>$details )
+                                        @foreach ($invoice['colis_dimensions'] as $key =>$details )
                                         <tr class="text-center">
                                             <input type="hidden" name="qty[{{ $details->id }}]"
                                                 value="{{ $details->qty }}">
                                             <td class="text-center" style="background:#ddd; padding:1px;">{{ $key+1 }}
                                             </td>
+                                            <td>№: {{
+                                                $details->code_zip }}</td>
                                             <td>{{
-                                                $details->model_marque }}</td>
-                                            <td>{{ $details->chassis }}</td>
-                                            <td>{{ $details->longueur }}</td>
+                                                $details->type }}</td>
+                                            <td>{{ $details->titre }}</td>
+                                            <!-- <td>{{ $details->longueur }}</td>
                                             <td>{{ $details->largeur }}</td>
-                                            <td>{{ $details->hauteur}}</td>
-                                            <td>{{ number_format($details->unit_price,0,' ',',')}}</td>
-                                            <td>{{ $details->qty }}</td>
-                                            <td>{{ number_format($details->item_total,0,' ',',')}} Fcfa</td>
+                                            <td>{{ $details->hauteur}}</td> -->
+                                            <td>{{ number_format($details->prix,0,' ',',')}} Fcfa</td>
+                                            <!-- <td>{{ $details->qty }}</td> -->
+                                            <!-- <td>{{ number_format($details->item_total,0,' ',',')}} Fcfa</td> -->
                                             @php
-                                            $total_sum += $details->item_total
+                                            $total_sum += $details->prix
                                             @endphp
                                         </tr>
                                         @endforeach
                                         <tr>
-                                            <td colspan="8" class="text-right"><span>Sub Total</span> </td>
+                                            <td colspan="4" class="text-right font-weight-bold"><span>Grand total</span> </td>
                                             <td class="text-center"> <span class="font-weight-bold">{{
                                                     number_format($total_sum,0,' ',',') }}</span>
                                                 Fcfa</td>
                                         </tr>
-                                        <tr>
-                                            <td colspan="8" class="text-right"><span>Discount</span> </td>
+                                        <!-- <tr>
+                                            <td colspan="4" class="text-right"><span>Remise</span> </td>
                                             <td class="text-center"> <span class="font-weight-bold">{{
                                                     number_format($payment->discount_amount,0,' ',',') }}</span> Fcfa
-                                            </td>
-                                        </tr>
+                                            </td> 
+                                        </tr> -->
                                         <tr>
-                                            <td colspan="8" class="text-right"><span>Montant Paye</span> </td>
-                                            <td class="text-center"> <span class="font-weight-bold">{{
+                                            <td colspan="4" class="text-right text-green font-weight-bold"><span>Montant Paye</span> </td>
+                                            <td class="text-center text-green"> <span class="font-weight-bold ">{{
                                                     number_format($payment->paid_amount,0,' ',',') }}</span> Fcfa</td>
                                         </tr>
                                         <tr>
-                                            <td colspan="8" class="text-right"><span>Montant due</span> </td>
-                                            <td class="text-center"> <span class="font-weight-bold">{{
+                                            <td colspan="4" class="text-right text-danger font-weight-bold"><span>Montant due</span> </td>
+                                            <td class="text-center text-danger font-weight-bold"> <span class="font-weight-bold">{{
                                                     number_format($payment->due_amount,0,' ',',') }}</span> Fcfa</td>
                                         </tr>
-                                        <tr>
-                                            <td colspan="8" class="text-right"><strong>Grand total</strong> </td>
+                                        <!-- <tr>
+                                            <td colspan="4" class="text-right"><strong>Grand total</strong> </td>
                                             <td class="text-center"> <strong>{{ number_format($payment->total_amount,0,'
                                                     ',',')}}</strong> Fcfa
                                             </td>
-                                        </tr>
+                                        </tr> -->
                                     </tbody>
                                 </table>
 

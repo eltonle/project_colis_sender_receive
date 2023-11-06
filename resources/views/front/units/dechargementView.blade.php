@@ -30,56 +30,54 @@
                     {{-- custom tabs --}}
                     <div class="card">
                         <div class="card-header text-center">
-                            <h3> Listes des Colis a Decharges
-                                {{-- <a href="{{ route('units.create') }}" class="btn  float-right btn-sm"
-                                    style="background: #563DEA;color: #fff">
-                                    <i class="fa fa-plus-circle"></i> AJOUTER UN CONTENEUR
-                                </a> --}}
+                            <h3> Listes des Colis a Dechargés
+                            
                             </h3>
 
                         </div>
                         <div class="card-header">
-                            <h4 class="text-center mb-3">
-                                {{ strtoupper($conteneur->name) }} - № :({{ strtoupper($conteneur->numero_id) }}) && statut: ({{
-                                strtoupper($conteneur->statut) }})
+                            <h4 class="text-center">
+                                {{ strtoupper($conteneur->name) }} - № :({{ strtoupper($conteneur->numero_id) }})
                             </h4>
 
-                            {{-- <div style="display:flex; justify-content: space-between; align-items: center">
-                                <p><strong>Poids du Conteneur :</strong> <span class="badge badge-dark text-sm">{{ $unit->max_capacity }}</span> kg</p>
-                                <p><strong>Poids total des Colis :</strong> <span class="badge badge-secondary text-sm">{{ $totalWeight }}</span> kg</p>
-                                <p><strong>Capacité restante du Conteneur :</strong> <span class="badge badge-danger text-sm">{{ $restePoids }}</span> kg</p>
-                            </div> --}}
+                        
 
                         </div>
                         <div class="card-body" style="margin-top: -20px;">
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <form method="POST" action="{{ route('unitsColisDecharge.update', $conteneur) }}">
+                                <form id="myForm" method="POST" action="{{ route('unitsColisDecharge.update', $conteneur) }}">
                                     @csrf
-                                    @method('POST')
-                                    <table id="example1" class="table table-bordered table-striped">
-
-                                        <div class="form-group">
+                                    @method('POST') 
+                                    <div class="form-group" style="margin-bottom: 30px;">
                                             <button type="button" class="btn btn-primary" id="select-all">Sélectionner
                                                 tous les colis</button>
                                             <button type="button" class="btn btn-secondary"
                                                 id="deselect-all">Désélectionner tous les colis</button>
-                                            <div class="float-end d-flex items-center">
-                                                <label for="entrepot_id"> Entrepot de Dechargement :</label>
-                                             <select name="entrepot_id"
-                                                class="form-control select2 select2-cyan"
-                                                data-dropdown-css-class="select2-cyan" id="entrepot_id">
-                                                <option value="">Selectionner Entrepot </option>
-                                                @foreach ($entrepots as $entrepot )
-                                                <option value="{{ $entrepot->id }}">{{ $entrepot->name }}-({{
-                                                    $entrepot->address
-                                                    }} - {{ $entrepot->ville }})
-                                                </option>
-                                                @endforeach
-                                             </select>
+                                            <div class="float-end ">
+                                                <div class="">
+                                                    
+                                                    <!-- <label for="entrepot_id"> Entrepot de Dechargement :</label> -->
+                                                    <select name="entrepot_id"
+                                                        class="form-control select2 select2-cyan"
+                                                        data-dropdown-css-class="select2-cyan" id="entrepot_id">
+                                                        <option value="">Selectionner Entrepot </option>
+                                                        @foreach ($entrepots as $entrepot )
+                                                        <option value="{{ $entrepot->id }}">{{ $entrepot->name }}-({{
+                                                            $entrepot->address
+                                                            }} - {{ $entrepot->ville }})
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
+                                                    <span class="error-message"></span>
+                                                </div>
+                                                
                                             </div>
                                         </div>
-                                        <thead style="margin-top: -30px">
+                                    <table id="example1" class="table table-bordered table-striped">
+
+                                        
+                                        <thead style="margin-top: -10px">
                                             <tr>
                                                 <th style="width: 15px">Case </th>
                                                 <th>Titre Colis</th>
@@ -227,6 +225,7 @@
         });
     });
 </script>
+
 <script>
     $(function () {
       //Initialize Select2 Elements
@@ -235,4 +234,31 @@
     //Initialize Select2 Elements
    
 </script>
+
+<!-- VALIDATION -->
+<script type="text/javascript">
+    $(document).ready(function() {
+    $('#myForm').validate({
+        rules: {
+            entrepot_id: {
+                required: true,
+            },
+        },
+        messages: {
+            entrepot_id: "Veuillez sélectionner un Entrepot.",
+        },
+        errorPlacement: function(error, element) {
+            error.addClass('invalid-feedback');
+            error.appendTo(element.closest('.form-group').find('.error-message'));
+        },
+        highlight: function(element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function(element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
+    })
+});
+</script>
+
 @endsection

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use PDF;
 use App\Models\Unit;
 use App\Models\Country;
+use App\Models\State;
 use App\Models\Invoice;
 use App\Models\Customer;
 use App\Models\Payement;
@@ -17,6 +18,7 @@ use App\Models\PayementDetail;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Entrepot;
+use App\Models\HistoriqueColisEntrepot;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 
@@ -27,11 +29,12 @@ class InvoiceController extends Controller
     //     $allData = Invoice::orderBy('date','desc')->orderBy('id','desc')->where('status', '1')->get();
     //     return view('front.invoices.view',compact('allData'));
     // }
+
     public function create()
     {
         // $colis = ColisDimension::where('status',0)->get();
         //   dd($colis);
-        $data['countries'] = Country::all();
+        $data['countries'] = Country::all(); 
         // $data['units'] = Unit::all();
         $data['customers'] = Customer::all(); 
         $data['receives'] = Customer::all(); 
@@ -49,21 +52,15 @@ class InvoiceController extends Controller
         return view('front.invoices.add-invoice',$data);
     }
 
+    //STORE INVOICE
     public function store(Request $request)
     {
-      
+        
+        if ($request->total_amount=='' || $request->total_amount=='0' ) {
+            return redirect()->back()->with('error','Veuillez renseignez les colis !!! ');
+         }
 
-        // if($request->paid_amount < $request->total_amount && $request->paid_amount != "0"){
-        //     dd('partiel');
-        // }elseif ($request->paid_amount > $request->total_amount) {
-        //     dd('trop');
-        // }
-        // elseif ($request->paid_amount=='0') {
-        //     dd('NON');
-        // }elseif($request->paid_amount == $request->total_amount){
-        //     dd('totzl');
-        // }
-        // dd($request->all());
+        
         $today = date(format:'Ymd');
         $invoiceZips = Invoice::where('invoice_zip','like',$today.'%')->pluck('invoice_zip');
          do {
@@ -92,56 +89,43 @@ class InvoiceController extends Controller
                DB::transaction(function() use($request,$invoice) {
                 if ($invoice->save()) {
 
-                   // STORE COLIS
+                    // STORE COLIS
                     $colisDimVerifie = ColisDimension::where('status', 0)->get();
 
                     if ($colisDimVerifie) {
-                        for($i = 0; $i < count($colisDimVerifie); $i++) {
-                            // ::::::::::::
-                              $today = date(format:'Ymd');
-                              $codesZip = ColisDimension::where('code_zip','like',$today.'%')->pluck('code_zip');
-                              do {
-                                  $codeZip= $today . rand(100000, 999999);
-                              } while ($codesZip->contains($codeZip));
-                            //::::::::::::::
-                            $colisDimVerifie[$i]->invoice_id = $invoice->id;
-                            $colisDimVerifie[$i]->status = 1;
-                            $colisDimVerifie[$i]->entrepot_id = $request->entrepot_id;
-                            $colisDimVerifie[$i]->code_zip = $codeZip;
-                            $colisDimVerifie[$i]->save();            
-                          }
-                    }
-                    // END STORE COLIS
+
+                        foreach ($colisDimVerifie as $colis) {
+                            $today = date('Ymd');
+                            $codesZip = ColisDimension::where('code_zip', 'like', $today . '%')->pluck('code_zip');
                     
-                    if ($request->customer_id == '0') {
-                        $customer = new Customer();
-                        $customer -> nom = $request->nom;
-                        $customer -> prenom = $request->prenom;
-                        $customer -> email = $request->email;
-                        $customer -> address = $request->address;
-                        $customer -> phone = $request->phone;
-                        $customer -> save();
-                        $customer_id = $customer->id;
-                    }else {
-                        $customer_id= $request->customer_id;
+                            do {
+                                $codeZip = $today . rand(100000, 999999);
+                            } while ($codesZip->contains($codeZip));
+                    
+                            $colis->invoice_id = $invoice->id;
+                            $colis->status = 1;
+                            $colis->entrepot_id = $request->entrepot_id;
+                            $colis->code_zip = $codeZip;
+                            $colis->save();
+                      // Enregistrez l'historique du mouvement
+                          HistoriqueColisEntrepot::create([
+                            'colis_id' => $colis->id,
+                            'entrepot_depart_id' => $colis->entrepot_id,
+                            'entrepot_arrive_id' => 0,
+                            'date_action' => now(),
+                        ]);
+                            
+                        }
+
+                        
                     }
-                    if ($request->receive_id == '0') {                                                
-                        $receive = new Customer();
-                        $receive -> nom = $request->nomr;
-                        $receive -> prenom = $request->prenomr;
-                        $receive -> email = $request->emailr;
-                        $receive -> address = $request->addressr;
-                        $receive -> phone = $request->phoner;
-                        $receive->save();
-                        $receive_id = $receive->id;
-                    }else {
-                        $receive_id= $request->receive_id;
-                    }
+                    // END STORE COLIS                                        
+
                     $payement = new Payement();
                     $payement_detail = new PayementDetail();
                     $payement -> invoice_id = $invoice->id;
-                    $payement -> customer_id = $customer_id;
-                    $payement -> receive_id = $receive_id;
+                    $payement -> customer_id = $request->customer_id ;// $customer_id; //$request->customer_id
+                    $payement -> receive_id = $request->receive_id ; //$receive_id;  //$request->receive_id
                     // $payement -> paid_status = $request->paid_status;
                     $payement -> paid_amount = $request->paid_amount;
                     // $payement -> discount_amount = $request->discount_amount;
@@ -175,22 +159,23 @@ class InvoiceController extends Controller
             }
          }
 
-         return redirect()->route('invoices.pending.list')->with('succes', 'enregistrer avec success');
+         return redirect()->route('invoices.pending.list')->with('message', 'enregistrer avec success');
     }
     
-    //    Update Invoice
+        //Update Invoice
     public function update_invoice(Request $request)
     {
-        // dd($request->all());
-        // else{
+            // dd($request->id);
             if ($request->paid_amount > $request->total_amount) {
                 return redirect()->back()->with('error','sorry! la valeur de paie est superieur au total');
             }else {
-            //    $invoice = new Invoice();
+           
                $invoice = Invoice::find($request->id);
-            //    dd($invoice);
+               if (!$invoice) {
+                return redirect()->back()->with('error', 'L\'enregistrement que vous essayez de mettre à jour n\'existe pas.');
+                }
+           
                $invoice->invoice_no = $request->invoice_no;
-               $invoice->invoice_zip =$request->invoiceZip;
                $invoice ->unit_id = $request->unit_id;
                $invoice ->country_id = $request->country_id;
                $invoice ->state_id = $request->state_id;
@@ -203,110 +188,106 @@ class InvoiceController extends Controller
                $invoice->updated_by = Auth::user()->id;
                DB::transaction(function() use($request,$invoice) {
                 if ($invoice->save()) {
-                    // $count_model_marque = count($request->model_marque);
-                    // dd($count_model_marque);
-
-                     /** delete record */
-                    //  foreach ($request->invoice_details as $key => $items) {
-                         DB::table('invoice_details')->where('invoice_id', $invoice->id)->delete();
-                        // }
-                        /** create new record */
-                        // dd($request->model_marque);
-                    foreach ($request->model_marque as $key => $items) {
-                        // $input['id'] = $request->invoice_details[$key];
-                        $invoiceDetail['date'] = $request->date;
-                       $invoiceDetail['invoice_id'] = $invoice->id;
-                       $invoiceDetail['model_marque'] = $request->model_marque[$key];
-                       $invoiceDetail['description_colis'] = $request->description_colis[$key];
-                       $invoiceDetail['chassis'] = $request->chassis[$key];
-                       $invoiceDetail['longueur'] = $request->longueur[$key];
-                       $invoiceDetail['largeur'] = $request->largeur[$key];
-                       $invoiceDetail['hauteur'] = $request->hauteur[$key];
-                       $invoiceDetail['qty'] = $request->qty[$key];
-                       $invoiceDetail['unit_price'] = $request->unit_price[$key];
-                       $invoiceDetail['item_total'] = $request->item_total[$key];
-                       $invoiceDetail['status'] = '0';
-
-                        InvoiceDetail::create($invoiceDetail);
-                     }
-                     DB::commit();
-                    // $invoice_details= InvoiceDetail::where('invoice_id','=', $invoice->id)->get();
-
-                    // dd($request->marque_model[1]);
-                    // for ($i=0; $i <  $count_model_marque ; $i++) { 
-                        
-                    //     // $invoice_details = new InvoiceDetail();
-                    //     $invoice_details['invoice_id'] = $invoice->id;
-                    //     $invoice_details['date'] = date('Y-m-d',strtotime($request->date[$i]));
-                    //     $invoice_details['model_marque'] = $request->model_marque[$i];
-                    //     $invoice_details['chassis']= $request->chassis[$i];
-                    //     $invoice_details['longueur'] = $request->longueur[$i];
-                    //     $invoice_details['largeur'] = $request->largeur[$i];
-                    //     $invoice_details['hauteur'] = $request->hauteur[$i];
-                    //     $invoice_details['qty'] = $request->qty[$i];
-                    //     $invoice_details['unit_price'] = $request->unit_price[$i];
-                    //     $invoice_details['item_total'] = $request->item_total[$i];
-                    //     $invoice_details['status'] = '0';
-
-                    //        DB::table('invoice_details')->where('invoice_id', $invoice->id)->update($invoice_details);
-                    //      }
-                    if ($request->customer_id == '0') {
-                        $customer = new Customer();
-                        $customer -> nom = $request->nom;
-                        $customer -> prenom = $request->prenom;
-                        $customer -> email = $request->email;
-                        $customer -> address = $request->address;
-                        $customer -> phone = $request->phone;
-                        $customer -> save();
-                        $customer_id = $customer->id;
-                    }else {
-                        $customer_id= $request->customer_id;
-                    }
-                    if ($request->receive_id == '0') {
                     
-                        $receive = new Customer();
-                        $receive -> nom = $request->nomr;
-                        $receive -> prenom = $request->prenomr;
-                        $receive -> email = $request->emailr;
-                        $receive -> address = $request->addressr;
-                        $receive -> phone = $request->phoner;
-                        $receive->save();
-                        $receive_id = $receive->id;
-                    }else {
-                        $receive_id= $request->receive_id;
+                    $colisDimVerifie = ColisDimension::where('status', 0)->get();
+                    $colisDimVerifieExist = ColisDimension::where('invoice_id', $invoice->id)->get();
+
+                    if ($colisDimVerifie) {
+
+                        foreach ($colisDimVerifie as $colis) {
+                            $today = date('Ymd');
+                            $codesZip = ColisDimension::where('code_zip', 'like', $today . '%')->pluck('code_zip');
+                    
+                            do {
+                                $codeZip = $today . rand(100000, 999999);
+                            } while ($codesZip->contains($codeZip));
+                    
+                            // Sauvegardez les données du colis
+                            $colis->invoice_id = $invoice->id;
+                            $colis->status = 1;
+                            $colis->entrepot_id = $request->entrepot_id;
+                            $colis->code_zip = $codeZip;
+                            $colis->save();
+                    
+                            // Récupérez l'historique du mouvement existant, s'il existe
+                            $historique = HistoriqueColisEntrepot::where('colis_id', $colis->id)->first();
+                    
+                            if ($historique) {
+                                // Mettez à jour l'historique du mouvement
+                                $historique->entrepot_depart_id = $request->entrepot_id;
+                                $historique->entrepot_arrive_id = 0; 
+                                $historique->date_action = now();
+                                $historique->save();
+                            } else {
+                                // Si l'historique du mouvement n'existe pas, créez-le
+                                HistoriqueColisEntrepot::create([
+                                    'colis_id' => $colis->id,
+                                    'entrepot_depart_id' => $colis->entrepot_id,
+                                    'entrepot_arrive_id' => 0, 
+                                    'date_action' => now(),
+                                ]);
+                            }
+                        }
+                       
                     }
-                    // dd('ok');
-                    // $payement = new Payement();
-                    // $payement_detail = new PayementDetail();
+                    if ($colisDimVerifieExist) {
+
+                        foreach ($colisDimVerifieExist as $colis) {
+                           
+                            $colis->entrepot_id = $request->entrepot_id;
+                            
+                            $colis->save();
+                    
+                            // Récupérez l'historique du mouvement existant, s'il existe
+                            $historique = HistoriqueColisEntrepot::where('colis_id', $colis->id)->first();
+                    
+                            if ($historique) {
+                                // Mettez à jour l'historique du mouvement
+                                $historique->entrepot_depart_id = $request->entrepot_id;
+                                $historique->entrepot_arrive_id = 0; 
+                                $historique->date_action = now();
+                                $historique->save();
+                            } else {
+                                // Si l'historique du mouvement n'existe pas, créez-le
+                                HistoriqueColisEntrepot::create([
+                                    'colis_id' => $colis->id,
+                                    'entrepot_depart_id' => $colis->entrepot_id,
+                                    'entrepot_arrive_id' => 0, 
+                                    'date_action' => now(),
+                                ]);
+                            }
+                        }
+                      
+                    }
+
                     $payement= Payement::where('invoice_id', $invoice->id)->first();
                     $payement_detail= PayementDetail::where('invoice_id', $invoice->id)->first();
+
                     $payement -> invoice_id = $invoice->id;
-                    $payement -> customer_id = $customer_id;
-                    $payement -> receive_id = $receive_id;
-                    // $payement -> paid_status = $request->paid_status;
-                    $payement -> paid_amount = $request->paid_amount;
-                    $payement -> discount_amount = $request->discount_amount;
+                    $payement -> customer_id = $request->customer_id; // $customer_id;
+                    $payement -> receive_id =    $request->receive_id; //$receive_id;            
+                    // $payement -> discount_amount = $request->discount_amount;
                     $payement -> total_amount = $request->total_amount;
-                    // $request->paid_status == 'full_paid'
+                   
                     if ( $request->paid_amount == $request->total_amount) {
                         $payement->paid_amount= $request->total_amount;
                         $payement->due_amount= '0';
                         $payement->paid_status = 'full_paid';
                         $payement_detail->current_paid_amount= $request->total_amount;
-                        // $request->paid_status == 'full_due'
+                        
                     } elseif( $request->paid_amount == '0') {
                         $payement->paid_amount= '0';
                         $payement->due_amount= $request->total_amount;
-                        $payement_detail->current_paid_amount= '0';
                         $payement->paid_status = 'full_due';
-                        // $request->paid_status == 'partial_paid'
+                        $payement_detail->current_paid_amount= '0';
+                  
                     }elseif($request->paid_amount < $request->total_amount) {
                         $payement->paid_amount= $request->paid_amount;
                         $payement->due_amount= $request->total_amount - $request->paid_amount;
-                        $payement_detail->current_paid_amount= $request->paid_amount;                        
                         $payement->paid_status = 'partial_paid';
+                        $payement_detail->current_paid_amount= $request->paid_amount;                        
                     }
-                    // dd('');
+                    
                     $payement->save();
                     $payement_detail->invoice_id = $invoice->id;
                     $payement_detail->date = date('Y-m-d',strtotime($request->date));
@@ -314,8 +295,8 @@ class InvoiceController extends Controller
                 }
                });
             }
-            
-            return redirect()->route('invoices.pending.list')->with('success', 'Expedition Modifier avec success');
+          
+        return redirect()->route('invoices.pending.list')->with('message', 'Expedition Modifier avec success');
     }
 
 
@@ -399,60 +380,47 @@ class InvoiceController extends Controller
             $invoice ->status_livraison = $request->status_livraison;
             $invoice->save();
             
-         return redirect()->route('invoices.pending.list')->with('succes', 'Status modifier avec  success');
+         return redirect()->back()->with('message', 'Status modifier avec  success');
     }
 
     public function pendingList()
     {
-        // $invoices = DB::table('invoices')
-        //  ->join('invoice_details','invoices.id','=','invoice_details.invoice_id')
-        //  ->select('invoices.*', 'invoice_details.*')
-        //  ->get();
-        //  dd($invoices);
+       
          $date  = date('Y-m-d');
-        $allData = Invoice::orderBy('date','desc')->orderBy('id','desc')->get();
+        $allData = Invoice::with('colis_dimensions')->orderBy('date','desc')->orderBy('id','desc')->get(); 
+    
         return view('front.invoices.pendint-invoice-list',compact('allData','date'));
     } 
 
-    public function approve($id)
+    public function approve($id) 
     {
-         $invoice = Invoice::with(['invoice_details'])->find($id);
+         $invoice = Invoice::find($id);
+      
          return view('front.invoices.invoice-approve',compact('invoice'));
     }
     public function edit_invoice($id)
     {
         $data['countries'] = Country::all();
-        $data['units'] = Unit::all();
+        $data['states'] = State::all();
+        $data['entrepots'] = Entrepot::all();
         $data['customers'] = Customer::all(); 
         $data['receives'] = Customer::all(); 
         
-        $invoice= Invoice::with(['invoice_details'])->find($id);
-        $data['invoice'] = Invoice::with(['invoice_details'])->find($id);
+        $invoice= Invoice::with(['colis_dimensions'])->find($id);
+
+        // $data['colis'] = ColisDimension::where('invoice_id', $invoice->id)->get();
+        $data['invoice'] = Invoice::with(['colis_dimensions'])->find($id);
+        // $data['entrepot_id'] = ColisDimension::where('')->find($id);
         $data['invoicesJoin'] = DB::table('invoices')
-        ->join('invoice_details','invoices.id','=','invoice_details.invoice_id')
-        ->select('invoices.*', 'invoice_details.*')
-        ->where('invoice_details.invoice_id', $invoice->id)
+        ->join('colis_dimensions','invoices.id','=','colis_dimensions.invoice_id')
+        ->select('invoices.*', 'colis_dimensions.*')
+        ->where('colis_dimensions.invoice_id', $invoice->id)
         ->get();
-        // $data['date'] = date('Y-m-d');
-        //  dd($data['invoice']->invoice_details);
+        
          return view('front.invoices.invoice-edit',$data);
     }
 
-    // public function approvalStore(Request $request, $id)
-    // {
-    //     $invoice = Invoice::find($id);
-    //     $invoice->updated_by = Auth::user()->id;
-    //     $invoice->status = '1';
-    //     // DB::transaction(function() use($request, $invoice,$id) {
-    //     //       foreach ($request->qty as $key => $val) {
-    //     //         $invoice_details = InvoiceDetail::where('id',$key)->first();
-    //     //         $invoice_details->status = '1';
-    //     //         $invoice_details->save();
-    //     //       }
-    //     // });
-    //     $invoice->save();
-    //     return redirect()->route('invoices.pending.list')->with('success','Facture approuvee avec success');
-    // }
+   
 
     public function printInvoiceList()
     {
@@ -463,14 +431,16 @@ class InvoiceController extends Controller
     public function printInvoice($id)
     {
         // dd('ok');
-        $data['invoice'] = Invoice::with(['invoice_details'])->find($id);
+        $data['invoice'] = Invoice::find($id);
         $pdf = PDF::loadView('front.pdf.invoice-pdf', $data);
         $pdf->SetProtection(['copy','print'], '', 'pass');
         return $pdf->stream('document.pdf');
     }
     public function printInvoiceEtiquette($id)
     {
-        $data['invoice'] = Invoice::with(['invoice_details'])->find($id);
+        
+        $data['invoice'] = Invoice::find($id);
+
         $pdf = PDF::loadView('front.pdf.invoice-etiquette-pdf', $data);
         $pdf->SetProtection(['copy','print'], '', 'pass');
         return $pdf->stream('document.pdf');
@@ -500,12 +470,12 @@ class InvoiceController extends Controller
     {
         $invoice = Invoice::find($id);
         $invoice->delete();
-        InvoiceDetail::where('invoice_id',$invoice->id)->delete();
+        // InvoiceDetail::where('invoice_id',$invoice->id)->delete();
         Payement::where('invoice_id',$invoice->id)->delete();
         PayementDetail::where('invoice_id',$invoice->id)->delete();
         ColisDimension::where('invoice_id',$invoice->id)->delete();
-        ColisPrice::where('invoice_id',$invoice->id)->delete();
-        return redirect()->route('invoices.pending.list')->with('error','facture supprime');
+        // ColisPrice::where('invoice_id',$invoice->id)->delete();
+        return redirect()->route('invoices.pending.list')->with('error','facture supprime avec success...');
     }
 
 
@@ -531,12 +501,18 @@ class InvoiceController extends Controller
         // $colis_dim->total = $request->input('total');
         $colis_dim->save();
 
-        return redirect()->back();
+        return response()->json(['message'=> 'colis enregistré avec success...']);
     }
 
     public function geteDataColisDim ()
     {
         $data = ColisDimension::where('status', 0)->get();
+       return response()->json($data);
+    }
+    public function geteDataColisDimEdit (Request $request)
+    {
+        $inv_id = $request->input('inv_id');
+        $data = ColisDimension::where('invoice_id', $inv_id)->orWhere('status', 0)->get();
        return response()->json($data);
     }
 
@@ -566,7 +542,7 @@ class InvoiceController extends Controller
       
     
 
-       Return response()->json();
+       Return response()->json(['message'=>'colis enregistré avec success...']);
     }
 
     // public function getDataColisPrix ()
@@ -598,7 +574,7 @@ class InvoiceController extends Controller
         $colis_standard-> prix= $request->input('prix');
         $colis_standard->save();
 
-       Return response()->json();
+       Return response()->json(['message'=>'colis enregistré avec success...']);
     }
 
 
@@ -607,6 +583,7 @@ class InvoiceController extends Controller
         $data = ColisStandard::all();
         return response()->json($data);
     }
+
     public function colisStandColisDim($id)
     {
         // recuperer l'element correspondant
@@ -625,7 +602,7 @@ class InvoiceController extends Controller
         $details->prix = $data->prix;
         $details->save();
 
-        return response()->json($data);
+        return response()->json(['message'=>'colis ajouter avec success...']);
     }
 
 
@@ -637,9 +614,22 @@ class InvoiceController extends Controller
     public function getSomme()
     {
         $sumDim = ColisDimension::where('status', '0')->sum('prix');
-        // $sumPrix = ColisPrice::where('status', '0')->sum('prix_total');
+        // $sumPrix = ColisPrice::where('status', '1')->sum('prix_total');
         return response()->json([
-        $sumDim
+        $sumDim,
+        // $sumPrix
+
+        ]);
+    }
+
+    public function getSommeEdit(Request $request)
+    {
+        $inv_id = $request->input('inv_id'); 
+        // $data = ColisDimension::where('invoice_id', $inv_id)->andWhere('status', 0)->get();
+        $sumDim = ColisDimension::where('invoice_id', $inv_id)->orWhere('status', 0)->sum('prix'); 
+        return response()->json([
+        $sumDim,
+        // $sumPrix
 
         ]);
     }

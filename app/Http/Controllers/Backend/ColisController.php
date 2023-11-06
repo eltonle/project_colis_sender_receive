@@ -11,8 +11,19 @@ class ColisController extends Controller
 {
     public function index()
     {
-        $colis = ColisDimension::with('invoice')->where('status', '1')->get();
+        $colis = ColisDimension::with('invoice')->orderBy('created_at', 'desc')
+                                                 ->where('status', '1')
+                                                 ->where('livre','!=', '1')
+                                                 ->get();
         return view("front.colis.index", compact('colis'));
+    }
+    public function indexLivre()
+    {
+        $colis = ColisDimension::with('invoice')->orderBy('created_at', 'desc')
+                                                 ->where('status', '1')
+                                                 ->where('livre', '1')
+                                                 ->get();
+        return view("front.colis.indexLivre", compact('colis'));
     }
   
     public function detailsColis ($id)
@@ -47,11 +58,62 @@ class ColisController extends Controller
         $data['colis'] = ColisDimension::with(['invoice'])->find($id);
        
         $pdf = PDF::loadView('front.pdf.colis-etiquette-pdf', $data);
+       
         $pdf->SetProtection(['copy','print'], '', 'pass');
         return $pdf->stream('document.pdf');
     }
 
+   
+    //HISTORIQUES MOUVEMENTS COLIS
+    public function mouvementColis($colis_id) 
+    { 
+        $colis = ColisDimension::with('historiques_colis.entrepotDepart', 'historiques_colis.entrepotArrive')->find($colis_id);
+        $colis1 = ColisDimension::find($colis_id);
+        $conteneurs = $colis1->conteneurs_historiques;
+       
+        
+        $historiques = [];
+    
+        foreach ($colis->historiques_colis as $historique) {
+            $entrepotDepart = $historique->entrepotDepart;
+            $entrepotArrive = $historique->entrepotArrive;
+    
+            // Ajoutez les entrepôts de départ et d'arrivée à un tableau
+            $historiques[] = [
+                'entrepotDepart' => $entrepotDepart,
+                'entrepotArrive' => $entrepotArrive,
+                'date_action'=> $historique
+            ];
+        }
+    
+        // Renvoyez le tableau des historiques au format JSON
+        return response()->json([['historiques' => $historiques, 'conteneurs' => $conteneurs], 'colis'=> $colis1]);
+        // return response()->json(['historiques' => $historiques]);
+        
+    }
+    // //HISTORIQUES MOUVEMENTS COLIS
+    // public function mouvementColis($colis_id) 
+    // { 
+    //     $colis1 = ColisDimension::with('historiques_colis.entrepotDepart', 'historiques_colis.entrepotArrive')->find($colis_id);
 
+    //     $historiques = [];
+    
+    //     foreach ($colis1->historiques_colis as $historique) {
+    //         $entrepotDepart = $historique->entrepotDepart;
+    //         $entrepotArrive = $historique->entrepotArrive;
+    
+    //         // Ajoutez les entrepôts de départ et d'arrivée à un tableau
+    //         $historiques[] = [
+    //             'entrepotDepart' => $entrepotDepart,
+    //             'entrepotArrive' => $entrepotArrive,
+    //             'date_action'=> $historique
+    //         ];
+    //     }
+    
+    //     // Renvoyez le tableau des historiques au format JSON
+    //     return response()->json(['historiques' => $historiques]);
+        
+    // }
 
 
     // ROUTE COLIS STANDARD

@@ -16,7 +16,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     @include('layouts.partiels.css')
     @yield('css')
+    <style>
+        .swing-animation {
+  animation: swing 1s ease infinite;
+}
 
+@keyframes swing {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(15deg); }
+  100% { transform: rotate(0deg); }
+}
+    </style>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 
@@ -51,9 +61,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
         toastr.options =
         {
             "closeButton" : true,
-            "progressBar" : true
+            "progressBar" : true,
         }
-                toastr.success("{{ session('message') }}");
+                toastr.success("{{ session('message') }}").addClass("swing-animation");
         @endif
 
         @if(Session::has('error'))

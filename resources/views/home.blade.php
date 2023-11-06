@@ -1,29 +1,5 @@
 @extends('layouts.master')
-@section('css')
-<style>
-    .btn,
-    /* .NoPrint {
-        display: none;
-    } */
 
-    .form-control {
-        border: 0px;
-    }
-
-    .input-group-text {
-        border: 0px;
-        background-color: white;
-    }
-
-    table {
-        border: 1px solid black;
-    }
-
-    .input-group-text {
-        width: 85px;
-    }
-</style>
-@endsection
 @section('content')
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -32,246 +8,93 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h4 class="m-0 font-weight-bold">Tableau de Bord</h4>
+                    <h3 class="m-0 font-weight-bold"> Tableau de Bord</h3>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Tableau de Bord</a></li>
-                        {{-- <li class="breadcrumb-item active">dashboard</li> --}}
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Tableau de Bord</a></li>                        
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
-    <hr>
+
     <!-- Main content -->
-    <div class="content">
+    <div class="mb-5">
         <div class="container-fluid">
+        <div class="row">
+            <div>
+                <div class="text-right" style="margin-right: 110px;">
+                    <label for="year">Filtre :</label>
+                    <select id="year">
+                        <!-- Remplacez les années par les années disponibles dans votre base de données -->
+                        <option value="day">aujourd'hui</option>
+                        <option value="7">7 derniers jours</option>
+                        <option value="30">30 derniers jours</option>
+                        <option value="lastMonth">Le mois dernier</option>
+                        <option value="thisMonth">Le mois en cours</option>
+                        <option value="thisYear"> Année en cours</option>
+                        <option value="lastYear">Année derniere</option>
+                    </select>
+                </div>
+            </div>
+
+
             <div class="row">
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-info">
-                        <div class="inner">
-                            <h4>{{ $expeditionCountThisYear }}</h4>
-
-                            <p>Expeditions de l'Année</p>
+                <div class="col-xl-4 col-md-6">
+                    <div class="card bg-primary text-white">
+                        <div class="card-body">
+                            Total versements net
+                            <h5 id="totalPayeDiv"></h5>
                         </div>
+
                     </div>
                 </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-success">
-                        <div class="inner">
-                            <h4>{{ $livraisonCountThisYear }}</h4>
-
-                            <p>Livraisons de l'Année</p>
+                <div class="col-xl-4 col-md-6">
+                    <div class="card bg-success text-white">
+                        <div class="card-body"> 
+                            Total somme perçue
+                            <h5 id="totalNetPayeDiv"></h5>
                         </div>
+
                     </div>
                 </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-warning">
-                        <div class="inner">
-                            <h4>{{ $livraisonCountThisMonth }}</h4>
-
-                            <p>Livraisons du Mois</p>
+                <div class="col-xl-4 col-md-6">
+                    <div class="card bg-danger text-white">
+                        <div class="card-body">
+                            Total somme credit
+                            <h5 id="totalDueDiv"></h5>
                         </div>
+
                     </div>
                 </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-danger">
-                        <div class="inner">
-                            <h4>{{ $nbrConteneur }}</h4>
-
-                            <p>Nombre de Conteneurs </p>
+                <!-- <div class="col-xl-3 col-md-6">
+                    <div class="card bg-info text-white">
+                        <div class="card-body">
+                            Total somme remise
+                            <h5 id="totalDetailsPaiementsDiv"></h5>
                         </div>
+
                     </div>
-                </div>
-                <!-- ./col -->
-                <hr>
-            </div>
-            <div class="card dark-mode">
-                <div class="card-footer">
-                    <div class="row">
-                        <div class="col-sm-4 col-6">
-                            <div class="description-block border-right">
-                                {{-- <span class="description-percentage text-success">
-                                    <i class="fas fa-caret-up"></i>
-                                    17%</span> --}}
-                                <h5 class="description-header">{{ number_format( $thisYearDuSum,0,'
-                                    ',',') }} Fcfa</h5> <br>
-                                <span class="description-text">TOTAL DÛ DE L'ANNEE</span>
-                            </div>
-                            <!-- /.description-block -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-sm-4 col-6">
-                            <div class="description-block border-right">
-                                {{-- <span class="description-percentage text-warning"><i class="fas fa-caret-left"></i>
-                                    0%</span> --}}
-                                <h5 class="description-header">{{ number_format( $thisYearPaidSum,0,'
-                                    ',',') }} Fcfa</h5> <br>
-                                <span class="description-text">TOTAL PAIEMENT DE L'ANNEE</span>
-                            </div>
-                            <!-- /.description-block -->
-                        </div>
-                        <!-- /.col -->
-                        {{-- <div class="col-sm-3 col-6">
-                            <div class="description-block border-right">
+                </div> -->
 
-                                <h5 class="description-header">{{ number_format( $thisYearDiscountSum,0,'
-                                    ',',') }} Fcfa</h5> <br>
-                                <span class="description-text">TOTAL REMISE DE L'ANNEE</span>
-                            </div>
-
-                        </div> --}}
-                        <!-- /.col -->
-                        <div class="col-sm-4 col-6">
-                            <div class="description-block">
-                                {{-- <span class="description-percentage text-danger"><i class="fas fa-caret-down"></i>
-                                    18%</span> --}}
-                                <h5 class="description-header">{{ number_format( $thisYearTotalSum,0,'
-                                    ',',') }} Fcfa</h5> <br>
-                                <span class="description-text">GRAND TOTAL DE L'ANNEE</span>
-                            </div>
-                            <!-- /.description-block -->
-                        </div>
-                    </div>
-                    <!-- /.row -->
-                </div>
-                <!-- /.row -->
-            </div>
-            <hr>
-            <div class="card">
-                <div class="card-footer">
-                    <div class="row">
-                        <div class="col-sm-4 col-6">
-                            <div class="description-block border-right">
-                                {{-- <span class="description-percentage text-success">
-                                    <i class="fas fa-caret-up"></i>
-                                    17%</span> --}}
-                                <h5 class="description-header">{{ number_format( $thisMonthDuSum,0,'
-                                    ',',')}} fcfa</h5><br>
-                                <span class="description-text">TOTAL DÛ DU MOIS</span>
-                            </div>
-                            <!-- /.description-block -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-sm-4 col-6">
-                            <div class="description-block border-right">
-                                {{-- <span class="description-percentage text-warning"><i class="fas fa-caret-left"></i>
-                                    0%</span> --}}
-                                <h5 class="description-header">{{ number_format( $thisMonthPaidSum,0,'
-                                    ',',') }} fcfa</h5><br>
-                                <span class="description-text">TOTAL PAIEMENT DU MOIS</span>
-                            </div>
-                            <!-- /.description-block -->
-                        </div>
-                        <!-- /.col -->
-                        {{-- <div class="col-sm-3 col-6">
-                            <div class="description-block border-right">
-
-                                <h5 class="description-header">{{ number_format( $thisMonthDiscountSum,0,'
-                                    ',',') }} fcfa</h5><br>
-                                <span class="description-text">TOTAL DE REMISE DU MOIS</span>
-                            </div>
-
-                        </div> --}}
-                        <!-- /.col -->
-                        <div class="col-sm-4 col-6">
-                            <div class="description-block">
-                                {{-- <span class="description-percentage text-danger"><i class="fas fa-caret-down"></i>
-                                    18%</span> --}}
-                                <h5 class="description-header">{{ number_format( $thisMonthTotalSum,0,'
-                                    ',',') }} fcfa</h5><br>
-                                <span class="description-text">GRAND TOTAL DU MOIS </span>
-                            </div>
-                            <!-- /.description-block -->
-                        </div>
-                    </div>
-                    <!-- /.row -->
-                </div>
-                <!-- /.row -->
-            </div>
-            <hr>
-
-
-            <div class="card dark-mode">
-                <div class="card-footer">
-                    <div class="row">
-                        <div class="col-sm-4 col-6">
-                            <div class="description-block border-right">
-                                {{-- <span class="description-percentage text-success">
-                                    <i class="fas fa-caret-up"></i>
-                                    17%</span> --}}
-                                <h5 class="description-header">{{ number_format( $thisDayDuSum,0,'
-                                    ',',')}} Fcfa</h5><br>
-                                <span class="description-text">TOTAL DÛ DE LA JOURNEE</span>
-                            </div>
-                            <!-- /.description-block -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-sm-4 col-6">
-                            <div class="description-block border-right">
-                                {{-- <span class="description-percentage text-warning"><i class="fas fa-caret-left"></i>
-                                    0%</span> --}}
-                                <h5 class="description-header">{{ number_format( $thisDayPaidSum,0,'
-                                    ',',') }} Fcfa</h5><br>
-                                <span class="description-text">TOTAL PAIEMENT DE LA JOURNEE</span>
-                            </div>
-                            <!-- /.description-block -->
-                        </div>
-                        <!-- /.col -->
-                        {{-- <div class="col-sm-3 col-6">
-                            <div class="description-block border-right">
-
-                                <h5 class="description-header">{{ number_format( $thisDayDiscountSum,0,'
-                                    ',',') }} Fcfa</h5><br>
-                                <span class="description-text">TOTAL DE REMISE DE LA JOURNEE</span>
-                            </div>
-
-                        </div> --}}
-                        <!-- /.col -->
-                        <div class="col-sm-4 col-6">
-                            <div class="description-block">
-                                {{-- <span class="description-percentage text-danger"><i class="fas fa-caret-down"></i>
-                                    18%</span> --}}
-                                <h5 class="description-header">{{ number_format( $thisDayTotalSum,0,'
-                                    ',',') }} Fcfa</h5><br>
-                                <span class="description-text">GRAND TOTAL DE LA JOURNEE </span>
-                            </div>
-                            <!-- /.description-block -->
-                        </div>
-                    </div>
-                    <!-- /.row -->
-                </div>
-                <!-- /.row -->
-            </div>
-            <hr>
-            <div class="row" style="margin-top: 30px;">
-                <div class="col-md-12">
-                    <div>
-                        <div class="btn-group" role="group" aria-label="basic exemple">
-                            <button type="button" data-group="day" class="btn btn-sm btn-dark">Jour</button>
-                            <button type="button" data-group="week" class="btn btn-sm btn-dark">La semaine</button>
-                            <button type="button" data-group="month" class="btn btn-sm btn-dark">
-                                Mois</button>
-                            <button type="button" data-group="year" class="btn btn-sm btn-dark">Année</button>
-                        </div>
-                    </div>
-                    <canvas id="myChart" w="100%" h="50%"></canvas>
-                </div>
             </div>
 
+        </div>
 
+        <!-- CHARTJS -->
 
-
-
+        <div style="display: flex;">
+            <div style="flex: 2; padding: 10px;width: 100%; height: 300px;">
+                <canvas id="myChart"></canvas>
+            </div>
+            <div style="flex: 1; padding: 10px;">
+                <div style="height: 300px; width: 100%;">
+                    <canvas id="myChartPie"></canvas>
+                </div>
+            </div>
+        </div>      
         </div><!-- /.container-fluid -->
     </div>
     <!-- /.content -->
@@ -280,82 +103,137 @@
 @endsection
 
 @section('scripts')
-
-
-
-{{-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> --}}
+   
 <script>
-    const ctx = document.getElementById('myChart').getContext('2d');
-    const myChart =  new Chart(ctx, {
-      type: 'bar',
-     
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
-    });
-      function displayChart(group= 'month') {
-        fetch("{{ route('charts') }}?group=" + group)
-          .then(response => response.json())
-          .then(json=>{
-                myChart.data.labels= json.labels,
-                myChart.data.datasets= json.datasets,   
-                myChart.update();
-          })
-      }    
-   $('.btn-group .btn').on('click',function(e) {
-     e.preventDefault();
-     displayChart($(this).data('group'));
-   })
-   displayChart();
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var ctxPie = document.getElementById('myChartPie').getContext('2d');
+    var myChart;
+    var myChartPie;
+
+    function updateChart(year) {
+        // Fonction pour mettre à jour le graphique en fonction de l'année sélectionnée
+        fetch(`/home/${year}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(year);
+                console.log(data);
+                // Accédez aux données dans l'objet JSON
+                var transactions = data[0]; // Remplacez 'transactions' par le nom correct de la clé dans votre objet JSON
+                var details = data[1]; // Remplacez 'transactions' par le nom correct de la clé dans votre objet JSON
+
+                // Organisez les données par mois
+                var months = Array.from({
+                    length: 12
+                }, (_, i) => i + 1);
+                var payeData = months.map(month => transactions.filter(item => (new Date(item.created_at).getMonth() + 1) === month).reduce((acc, cur) => acc + cur.paid_amount, 0));
+                var dueData = months.map(month => transactions.filter(item => (new Date(item.created_at).getMonth() + 1) === month).reduce((acc, cur) => acc + cur.due_amount, 0));
+                var netPayeData = months.map(month => transactions.filter(item => (new Date(item.created_at).getMonth() + 1) === month).reduce((acc, cur) => acc + cur.total_amount, 0));
+                // var discounts = months.map(month => transactions.filter(item => (new Date(item.created_at).getMonth() + 1) === month).reduce((acc, cur) => acc + cur.discount_amount, 0));
+                var details_paiements = months.map(month => details.filter(item => (new Date(item.created_at).getMonth() + 1) === month).reduce((acc, cur) => acc + cur.current_paid_amount, 0));
+
+                var totalPaye = payeData.reduce((acc, cur) => acc + cur, 0);
+                var totalDue = dueData.reduce((acc, cur) => acc + cur, 0);
+                var totalNetPaye = netPayeData.reduce((acc, cur) => acc + cur, 0);
+                // var totalDiscounts = discounts.reduce((acc, cur) => acc + cur, 0);
+                var totalDetails = details_paiements.reduce((acc, cur) => acc + cur, 0);
+                console.log(totalPaye);
+
+                // Mettez à jour le graphique Chart.js
+                if (myChart) {
+                    myChart.destroy();
+                }
+                if (myChartPie) {
+                    myChartPie.destroy();
+                }
+
+                // Utilisez jQuery pour mettre à jour le contenu des div
+                $("#totalPayeDiv").text(totalNetPaye.toLocaleString('fr-FR', {
+                    style: 'currency',
+                    currency: 'XAF',
+                    minimumFractionDigits: 0,
+                }));
+                $("#totalDueDiv").text(totalDue.toLocaleString('fr-FR', {
+                    style: 'currency',
+                    currency: 'XAF',
+                    minimumFractionDigits: 0,
+                }));
+                $("#totalNetPayeDiv").text(totalDetails.toLocaleString('fr-FR', {
+                    style: 'currency',
+                    currency: 'XAF',
+                    minimumFractionDigits: 0,
+                }));
+                // $("#totalDetailsPaiementsDiv").text(totalDiscounts.toLocaleString('fr-FR', {
+                //     style: 'currency',
+                //     currency: 'XAF',
+                //     minimumFractionDigits: 0,
+                // }));
+
+                myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                        datasets: [{
+                                label: 'Montant Net',
+                                data: netPayeData,
+                                borderColor: 'rgba(32, 3, 252, 1)',
+                                backgroundColor: 'rgba(732, 3, 252, 0.2)',
+                            },
+                            // {
+                            //     label: 'Montant payé',
+                            //     data: payeData,
+                            //     borderColor: 'rgba(255, 99, 132, 1)',
+                            //     backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            // },
+                            
+                            {
+                                label: 'details Paye',
+                                data: details_paiements,
+                                borderColor: 'rgba(3, 252, 28)',
+                                backgroundColor: 'rgba(3, 252, 28, 0.2)',
+                            },
+                            {
+                                label: 'Montant due ',
+                                data: dueData,
+                                borderColor: 'rgb(252, 3, 3,1)',
+                                backgroundColor: 'rgb(252, 3, 3,1)',
+                            },
+                        ],
+                    },
+                    options: {
+                        // maintainAspectRatio: false, // Désactiver l'ajustement automatique de la taille
+                        // responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                            },
+                        },
+                    },
+                });
+                myChartPie = new Chart(ctxPie, {
+                    type: 'pie',
+                    data: {
+                        labels: ['total', 'recu', 'impayé', ],
+                        datasets: [{
+                            data: [totalNetPaye, totalDetails, totalDue],
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            backgroundColor: [
+                                'rgb(3, 74, 252)',
+                                'rgb(65, 252, 3)',
+                                'rgb(252, 3, 7)',
+                            ],
+                            hoverOffset: 4
+                        }, ],
+                    }
+                });
+            });
+
+        // Écoutez les changements dans la sélection d'année
+        var yearSelect = document.getElementById('year');
+        yearSelect.addEventListener('change', function() {
+            updateChart(this.value);
+        });
+    }
+    // Chargez initialement le graphique pour l'année actuelle
+    updateChart(new Date().getDate());
 </script>
-{{-- <script>
-    const ctx = document.getElementById('myChart');
-  
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-          label: '# of Votes',
-          data: [12, 19, 3, 5, 2, 3],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
-    });
-</script> --}}
 @endsection
-
-{{-- @extends('layouts.app')
-
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
-                    </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection --}}

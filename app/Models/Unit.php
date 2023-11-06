@@ -21,11 +21,21 @@ class Unit extends Model
         'updated_by'
     ];
 
-    public function colisDimensions()
+    public function colisDimensions() 
     {
         return $this->hasMany(ColisDimension::class);
     }
 
-    
+    public function colis()
+    {
+        return $this->belongsToMany(ColisDimension::class, 'colis_unit', 'unit_id', 'colis_id')
+            ->withPivot('date');
+    }
+
+    public function colis_historiques()
+    {
+        return $this->belongsToMany(ColisDimension::class, 'historique_colis_conteneurs', 'unit_id', 'colis_id')
+            ->withPivot('status', 'date_action');
+    }
    
 }

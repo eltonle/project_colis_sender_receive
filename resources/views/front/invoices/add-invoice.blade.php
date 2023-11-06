@@ -27,7 +27,8 @@
 
     .input-group-text {
         border: 0px;
-        color: black font-weight: bold;
+        color: black ;
+        font-weight: bold;
         background-color: white;
         width: 100px;
     }
@@ -99,7 +100,7 @@
                                     </div>
                                     <!-- /.card-body -->
                                 </div>
-                                {{-- <div class="row"> --}}
+                                
                                     {{-- left col --}}
                                     <section class="col-md-12">
 
@@ -117,10 +118,10 @@
                                                 style="background: #563DEA; color: #fff;  margin-bottom: 5px;"><i
                                                     class="fa fa-plus"></i></button>
 
-                                            <select name="customer_id" id="customer_id"
+                                            <select name="customer_id" id="customer_id" required
                                                 class="form-control select2 select2-danger form-control-sm"
                                                 data-dropdown-css-class="select2-gray">
-                                                <option value="0">Selectionner un Expediteur</option>
+                                                <option value="">Selectionner un Expediteur</option>
                                                 @foreach ($customers as $customer)
                                                 <option value="{{ $customer->id }}">
                                                     {{ $customer->nom }}-({{ $customer->email }} - {{
@@ -153,7 +154,7 @@
                                             <select name="receive_id" id="receive_id"
                                                 class="form-control select2 select2-danger form-control-sm"
                                                 data-dropdown-css-class="select2-gray">
-                                                <option value="0">Selectionner un Destinataire</option>
+                                                <option value="">Selectionner un Destinataire</option>
                                                 @foreach ($receives as $receive)
                                                 <option value="{{ $receive->id }}">
                                                     {{ $receive->nom }}-({{ $receive->email }} - {{
@@ -183,7 +184,7 @@
                                                             <label>Pays d'Expedition</label>
                                                             <div class="input-group">
                                                                 <select
-                                                                    class="form-control select2 select2-danger form-control-sm"
+                                                                    class="form-control select2 select2-danger form-control-sm" 
                                                                     data-dropdown-css-class="select2-gray"
                                                                     id="country_id" name="country_id">
                                                                     <option value="">Selectionner un Pays</option>
@@ -317,8 +318,7 @@
 
                                             </div>
                                         </div>
-                                        {{--
-                                </div> --}}
+                                   
 
 
                                 <div class="row">
@@ -367,16 +367,13 @@
                                         </div>
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label for="" style="font-weight:bold ">Status Livraison <i
+                                        <label for="" style="font-weight:bold ">Status de l'expedition <i
                                                 class="fas fa-dolly-flatbed text-danger"></i></label>
                                         <select name="status_livraison"
                                             class="form-control select2 select2-danger form-control-sm"
                                             data-dropdown-css-class="select2-danger" id="status_livraison">
-                                            <option value="">Selectionner le Status de Livraison</option>
-                                            <option value="en embarcation">En Embarcation</option>
-                                            <option value="en cours d'expedition">En cours d'Expedition
-                                            </option>
-                                            <option value="livre">Livree</option>
+                                            <option value="">Selectionner le Status de l'expedition</option>
+                                            <option value="en embarcation">En Embarcation</option>                                            
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">
@@ -397,8 +394,7 @@
                                     <div class="form-group">
                                         <label for="package_id" style="font-weight:bold ">
                                             Description</label>
-                                        <textarea name="description" class="form-control col-md-12">
-                                                  </textarea>
+                                        <textarea name="description" class="form-control col-md-12"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-row">
@@ -555,6 +551,9 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            <div class="text-center mt-5">
+                 <p id="messageDim" style="display: none; color: #2962FF; font-size: 25px;"></p>
+            </div>
             <form id="formDim" action="{{ route('colisDim.store') }}" method="POST">
                 @csrf
                 <div class="modal-body">
@@ -568,7 +567,7 @@
                                     <div class="form-group">
                                         <label>Titre :</label>
                                         <input type="text" id="titre" class="form-control" placeholder="Titre"
-                                            name="titre">
+                                            name="titre" required>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -684,14 +683,7 @@
                     </button>
                 </div>
             </form>
-            {{-- <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">
-                    Close
-                </button>
-                <button type="button" class="btn btn-primary">
-                    Enregistrer le Colis
-                </button>
-            </div> --}}
+           
         </div>
         <!-- /.modal-content -->
 
@@ -710,7 +702,9 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-
+            <div class="text-center mt-5">
+                 <p id="messagePrix" style="display: none; color: #2962FF; font-size: 25px;"></p>
+            </div>
             <form id="formPrice" action="{{ route('colisDim.store') }}" method="POST">
                 @csrf
                 <div class="modal-body">
@@ -787,6 +781,9 @@
                             <strong>Enregistrer un Colis</strong>
                         </h2>
                     </div>
+                    <div class="text-center mt-5">
+                        <p id="messagePrix" style="display: none; color: #2962FF; font-size: 25px;"></p>
+                    </div>
                     <div class="card-body ">
                         <form action="" method="POST" id="formStand">
                             @csrf
@@ -823,7 +820,9 @@
                                 </div>
                             </div>
                         </form>
-
+                        <div class="text-center mt-5">
+                          <p id="messageStand" style="display: none; color: #2962FF; font-size: 25px;"></p>
+                        </div>
                         <table class="table table-bordered mt-3 " id="tableColisStandard">
                             <thead style="background-color:#636e72; color:white;">
                                 <tr>
@@ -840,13 +839,11 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer justify-content-between">
+            <div class="modal-footer float-right">
                 <button type="button" class="btn btn-default" data-dismiss="modal">
-                    Close
+                    Fermer
                 </button>
-                <button type="button" class="btn btn-primary">
-                    Save changes
-                </button>
+                
             </div>
         </div>
         <!-- /.modal-content -->
@@ -1132,7 +1129,7 @@
                 required:true,
             },
             customer_id: {
-                required:true,
+                    required: true, // Ajoutez cette règle pour le champ de sélection
             },
             receive_id: {
                 required:true,
@@ -1149,9 +1146,14 @@
             stater_id: {
                 required:true,
             },
+            entrepot_id: {
+                required:true,
+            },
         },
             messages: {
-
+                customer_id: "Veuillez sélectionner un Expediteur.",
+                receive_id: "Veuillez sélectionner un Destinataire.",
+                entrepot_id: "Veuillez sélectionner un Entrepot.",
             },
             errorElement: 'span',
             errorPlacement:function(error,element){
@@ -1262,6 +1264,10 @@
                 data: formData,
                 success: function(response) {
                     $('#formDim')[0].reset(); // Réinitialiser le formulaire
+                    $('#messageDim').text(response.message).fadeIn();                    
+                    setTimeout(function () {
+                    $('#messageDim').fadeOut();
+                    }, 2000);
                     refreshContent();
                 },
                 error : function (error) {
@@ -1280,9 +1286,10 @@
                 console.log(id);
                 // Envoyer une requête AJAX à votre route de suppression avec l'ID récupéré
                 $.ajax({
-                    url: '/invoices/delet/' + id,
+                    url: '/expeditions/delet/' + id,
+                    // url: '/invoices/delet/' + id,
                 type: 'POST',
-                success: function(data) {
+                success: function(data) { 
                     console.log('delete');
                     $('#element-' + id).remove();
                     sumAjax(); 
@@ -1392,7 +1399,10 @@
                 data: formDataC,
                 success: function(response) {
                     $('#formPrice')[0].reset(); // Réinitialiser le formulaire
-                  
+                    $('#messagePrix').text(response.message).fadeIn();                    
+                    setTimeout(function () {
+                    $('#messagePrix').fadeOut();
+                    }, 2000);
                     refreshContent();
                 },
                 error : function (error) {
@@ -1500,6 +1510,10 @@
                     data: formData,
                     success: function(response) {
                         $('#formStand')[0].reset(); // Réinitialiser le formulaire
+                        $('#messagePrix').text(response.message).fadeIn();                    
+                        setTimeout(function () {
+                        $('#messagePrix').fadeOut();
+                        }, 2000);
                         refreshContentDataColisStandard(); // celui qui va recuperer les donnees
                     },
                     error : function (error) {
@@ -1517,11 +1531,15 @@
                 console.log(id);
                 // Envoyer une requête AJAX pour enregistrer
                 $.ajax({
-                    url: '/invoices/storeStand/' + id,
+                    url: '/expeditions/storeStand/' + id,
+                    // url: '/invoices/storeStand/' + id,
                     type: 'GET',
                     dataType: "json",
-                    success: function(data) {
-                    console.log(data);
+                    success: function(response) {
+                    $('#messageStand').text(response.message).fadeIn();                    
+                    setTimeout(function () {
+                    $('#messageStand').fadeOut();
+                    }, 2000);
                     refreshContent();
                         // sumAjax(); 
                     },

@@ -1,26 +1,27 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4   main-sidebar-custom">
     <!-- Brand Logo -->
-    <a href="#" class="brand-link"
+    <a href="#" class="brand-link bg-primary text-center"
         style="display:flex; justify-content: center; align-items: center; text-decoration: none; color: white; font-weight: bold">
         {{-- <img src="{{ asset('admin/dist/img/tof.png') }}" alt="AdminLTE Logo"
             class="brand-image img-circle elevation-3" style="opacity: .8"> --}}
-        <span class="brand-text font-weight-bold">Express Colis</span>
+        <span class="rand-text font-weight-light font-weight-normal">Express Colis</span>
     </a>
+     
 
     <!-- Sidebar -->
     <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
-        {{-- <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="{{ asset('admin/dist/img/avatar.png') }}" class="img-circle elevation-2" alt="User Image">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMT3-A3BoHLW3BEGarYVhSG3ha0VvGsLbHIw&usqp=CAU" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block font-weight-bold">Alexander Pierce</a>
+                <a href="#" class="d-block font-weight-bold " style="text-decoration: none;">{{Auth::user()->lastname}}</a>
             </div>
             <div>
 
             </div>
-        </div> --}}
+        </div> 
 
         <!-- SidebarSearch Form -->
         {{-- <div class="form-inline">
@@ -63,9 +64,9 @@
                         </li>
                     </ul> --}}
                 </li>
-                <li class="nav-item {{ request()->is('customers*') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link {{ request()->is('customers*') ? 'active' : '' }}">
-                        <i class="nav-icon 	fas fa-folder"></i>
+                <li class="nav-item {{ request()->is('clients*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->is('clients*') ? 'active' : '' }}">
+                        <i class="nav-icon 	fas fa-folder-open"></i>
                         <p>
                             Gestion Clients
                             <i class="right fas fa-angle-left"></i>
@@ -86,27 +87,9 @@
                                 <p>Ajouter un Client </p>
                             </a>
                         </li>
-                        {{-- <li class="nav-item">
-                            <a href="{{ route('customers.credit') }}"
-                                class="nav-link {{ request()->routeIs('customers.credit')|| request()->routeIs('customers.edit.invoice')? 'active' : '' }}">
-                                <i class="far fas fa-long-arrow-alt-right"></i>
-                                <p>Voir Credit Client</p>
-                            </a>
-                        </li> --}}
-                        {{-- <li class="nav-item">
-                            <a href="{{ route('customers.paid') }}"
-                                class="nav-link {{ request()->routeIs('customers.paid')? 'active' : '' }}">
-                                <i class="far fas fa-long-arrow-alt-right"></i>
-                                <p> Voir Payement Client</p>
-                            </a>
-                        </li> --}}
-                        <li class="nav-item">
-                            <a href="{{ route('customers.wise.report') }}"
-                                class="nav-link {{ request()->routeIs('customers.wise.report')? 'active' : '' }}">
-                                <i class="far fas fa-long-arrow-alt-right"></i>
-                                <p>Rapport Client</p>
-                            </a>
-                        </li>
+                        
+                        
+                       
                     </ul>
                 </li>
 
@@ -128,9 +111,9 @@
                     </ul>
                 </li> --}}
 
-                <li class="nav-item {{ request()->is('invoices*') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link {{ request()->is('invoices*') ? 'active' : '' }}">
-                        <i class="nav-icon 	fas fa-folder"></i>
+                <li class="nav-item {{ request()->is('expeditions*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->is('expeditions*') ? 'active' : '' }}">
+                        <i class="nav-icon 	fas fa-folder-open"></i>
                         <p>
                             Gestion des Expeditions
                             <i class="right fas fa-angle-left"></i>
@@ -178,7 +161,7 @@
 
                 <li class="nav-item {{ request()->is('colis*') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ request()->is('colis*') ? 'active' : '' }}">
-                        <i class="nav-icon 	fas fa-folder"></i>
+                        <i class="nav-icon 	fas fa-folder-open"></i>
                         <p>
                             Gestion des Colis
                             <i class="right fas fa-angle-left"></i>
@@ -190,6 +173,13 @@
                                 class="nav-link {{ request()->routeIs('colis.index') ? 'active' : '' }}">
                                 <i class="far fas fa-long-arrow-alt-right"></i>
                                 <p>Listes des Colis</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('colis.index.livre') }}"
+                                class="nav-link {{ request()->routeIs('colis.index.livre') ? 'active' : '' }}">
+                                <i class="far fas fa-long-arrow-alt-right"></i>
+                                <p>Listes des Colis Livrés</p>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -247,7 +237,7 @@
             
             <li class="nav-item {{ request()->is('entrepots*') ? 'menu-open' : '' }}">
                 <a href="#" class="nav-link {{ request()->is('entrepots*') ? 'active' : '' }}">
-                    <i class="nav-icon 	fas fa-folder"></i>
+                    <i class="nav-icon 	fas fa-folder-open"></i>
                     <p>
                         Gestion des Entrepots
                         <i class="right fas fa-angle-left"></i>
@@ -273,9 +263,9 @@
             </li>
             
 
-            <li class="nav-item {{ request()->is('units*') ? 'menu-open' : '' }}">
-                <a href="#" class="nav-link {{ request()->is('units*') ? 'active' : '' }}">
-                    <i class="nav-icon 	fas fa-folder"></i>
+            <li class="nav-item {{ request()->is('conteneurs*') ? 'menu-open' : '' }}">
+                <a href="#" class="nav-link {{ request()->is('conteneurs*') ? 'active' : '' }}">
+                    <i class="nav-icon 	fas fa-folder-open"></i>
                     <p>
                         Gestion des Conteneurs
                         <i class="right fas fa-angle-left"></i>
@@ -284,7 +274,7 @@
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
                         <a href="{{ route('units.index') }}"
-                            class="nav-link {{ request()->routeIs('units.index')||request()->routeIs('units.edit')||request()->routeIs('units.delete') ||request()->routeIs('units.showScan') ||request()->routeIs('units.show') || request()->routeIs('units.showDecharge') ? 'active' : '' }}">
+                            class="nav-link {{ request()->routeIs('units.index')||request()->routeIs('units.edit')||request()->routeIs('units.delete') ||request()->routeIs('units.showScan') ||request()->routeIs('units.show') || request()->routeIs('units.showDecharge') || request()->routeIs('units.showColis') ? 'active' : '' }}">
                             <i class="far fas fa-long-arrow-alt-right"></i>
                             <p>Listes des Conteneurs</p>
                         </a>
@@ -315,9 +305,9 @@
 
 
             
-         <li class="nav-item {{ request()->is('vehicule*') ? 'menu-open' : '' }}">
+         <!-- <li class="nav-item {{ request()->is('vehicule*') ? 'menu-open' : '' }}">
             <a href="#" class="nav-link {{ request()->is('vehicule*') ? 'active' : '' }}">
-                <i class="nav-icon 	fas fa-folder"></i>
+                <i class="nav-icon 	fas fa-folder-open"></i>
                 <p>
                     Gestion des Véhicule
                     <i class="right fas fa-angle-left"></i>
@@ -341,11 +331,11 @@
                     </a>
                 </li>
             </ul>
-        </li>
+        </li> -->
 
         <li class="nav-item {{ request()->is('finances*') ? 'menu-open' : '' }}">
             <a href="#" class="nav-link {{ request()->is('finances*') ? 'active' : '' }}">
-                <i class="nav-icon 	fas fa-folder"></i>
+                <i class="nav-icon 	fas fa-folder-open"></i>
                 <p>
                     Gestion des Finances
                     <i class="right fas fa-angle-left"></i>
@@ -366,6 +356,13 @@
                         <p> Voir Payement Client</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('finances.wise.report') }}"
+                        class="nav-link {{ request()->routeIs('finances.wise.report')? 'active' : '' }}">
+                        <i class="far fas fa-long-arrow-alt-right"></i>
+                        <p>Rapport Client</p>
+                    </a>
+                 </li>
             </ul>
         </li>
 

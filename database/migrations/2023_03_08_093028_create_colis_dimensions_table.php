@@ -17,13 +17,14 @@ return new class extends Migration
             $table->id();
             $table->integer('invoice_id')->nullable();
             $table->string('status')->default('0');
+            $table->string('livre')->default('0');
 
             $table->string('code_zip')->nullable();
             $table->integer('charge')->nullable();
             $table->integer('decharge')->nullable();
-            $table->integer('vehicule_id')->nullable();
+            // $table->integer('vehicule_id')->nullable();
             $table->integer('entrepot_id')->nullable();
-            $table->integer('unit_id')->nullable();
+            // $table->integer('unit_id')->nullable();
             
             $table->string('titre');
             $table->double('largeur')->nullable();

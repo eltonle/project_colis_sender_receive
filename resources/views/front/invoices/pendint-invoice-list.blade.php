@@ -73,7 +73,9 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+ 
                                         @foreach ($allData as $key => $invoice)
+                                        
                                         <tr>
 
                                             <td style="color:#2962FF;font-weight: 900; ">
@@ -90,18 +92,23 @@
                                             <td>{{ number_format($invoice['payement']['paid_amount'],0,' ',',')}} FCFA
 
                                             <td class="livraison">
+                                            
                                                 @if ($invoice->status_livraison == 'en embarcation')
-                                                <span class="badge"
-                                                    style="background: #2962FF;color:white; padding: 3px;">
-                                                    <i class="fa fa-ship"></i> En Embarcation</span>
-                                                @elseif ($invoice->status_livraison == "en cours d'expedition")
-                                                <span class="badge"
-                                                    style="background: #010742; color:white; padding: 3px;">
-                                                    <i class="fa fa-globe-americas"></i> En Cours d'Expedition</span>
-                                                @elseif ($invoice->status_livraison == 'livre')
-                                                <span class="badge"
-                                                    style="background:  #B61418; color:white; padding: 3px;">
-                                                    <i class="fa fa-check"></i> Livré</span>
+                                                    <span class="badge"
+                                                        style="background: #2962FF;color:white; padding: 3px;">
+                                                        <i class="fa fa-ship"></i> En Embarcation</span>
+                                                    @elseif ($invoice->status_livraison == "en cours d'expedition")
+                                                    <span class="badge"
+                                                        style="background: #010742; color:#00E5FF; padding: 3px;">
+                                                        <i class="fa fa-globe-americas"></i> En Cours d'Expedition</span>
+                                                    @elseif ($invoice->status_livraison == "en transit")
+                                                    <span class="badge"
+                                                        style="background: #010742; color:white; padding: 3px;">
+                                                        <i class="fa fa-globe-americas"></i> En Transit</span>
+                                                    @elseif ($invoice->status_livraison == 'livre')
+                                                    <span class="badge"
+                                                        style="background:  #34eb3d; color:white; padding: 3px;">
+                                                        <i class="fa fa-check"></i> Livré</span>
                                                 @endif
                                             </td>
                                             <td hidden>
@@ -128,11 +135,7 @@
                                                     <i class="fas fa-thumbs-up"></i> Payer</span>
                                                 @endif
                                             </td>
-                                            <td class="">
-                                                {{-- @if ($invoice->status == '0')
-                                                <span class="badge"
-                                                    style="background: #EF2856;color:white; padding: 3px;"> En
-                                                    Attente</span> --}}
+                                            <td class="">                                        
                                                 @if ($invoice->status == '1')
                                                 <span class="badge"
                                                     style="background: #B61418; color:white; padding: 3px;">
@@ -141,29 +144,11 @@
                                             </td>
 
                                             <td>
-                                                {{-- @if ($invoice->status=='1')
-                                                <div style="display: flex; align-items: center">
-                                                    <a href="{{ route('invoices.approve',$invoice->id) }}"
-                                                        title="verifier la saisier et valider"
-                                                        class="btn btn-sm btn-success mr-1"><i
-                                                            class="fa fa-eye"></i></a>
-
-                                                    <form method="POST"
-                                                        action="{{ route('invoices.delete', $invoice->id) }}">
-                                                        @csrf
-                                                        <input name="_method" type="hidden" value="DELETE">
-                                                        <button type="submit"
-                                                            class="btn btn-sm rounded btn-danger  show_confirm"
-                                                            data-toggle="tooltip" title='Supprimer'><i
-                                                                class="fa fa-trash"></i></button>
-                                                    </form>
-                                                </div>
-                                                @endif --}}
+                                                
                                                 @if ($invoice->status=='1')
 
                                                 <div class="btn-group">
-                                                    {{-- <button type="button" class="btn btn-default">Action</button>
-                                                    --}}
+                                                   
                                                     <button type="button" style="background: #43BD00"
                                                         class="btn  btn-flat btn-sm dropdown-toggle dropdown-icon"
                                                         data-toggle="dropdown">
@@ -176,23 +161,24 @@
                                                             class="dropdown-item"><span
                                                                 class="text-xs text-dark font-weight-bold"><i
                                                                     class="fa fa-eye"></i> Voir l'Expedition</span></a>
+                                                       @php                                                      
+                                                        $count = App\Models\PayementDetail::where('invoice_id', $invoice->id)->count();                                                        
+                                                       @endphp
 
-                                                        <a href="{{ route('invoices.edit_invoice',$invoice->id) }}"
+                                                       @if($count <= 1)
+                                                       <a href="{{ route('invoices.edit_invoice',$invoice->id) }}"
                                                             type="button" title="editer l'expedition
                                                             " class="dropdown-item">
                                                             <span class="text-xs text-dark font-weight-bold"><i
                                                                     class="fas fa-edit"></i> Editer
                                                                 l'Expedition</span>
-                                                        </a>
+                                                        </a> 
+                                                       
+
+                                                        
+
                                                         <div class="dropdown-item">
-                                                            {{-- <form method="POST"
-                                                                action="{{ route('invoices.delete', $invoice->id) }}">
-                                                                @csrf
-                                                                <input name="_method" type="hidden" value="DELETE">
-                                                                <button type="submit" class="  show_confirm"
-                                                                    data-toggle="tooltip" title='Supprimer'><i
-                                                                        class="fa fa-trash"></i></button>
-                                                            </form> --}}
+                                                            
                                                             <form method="POST"
                                                                 action="{{ route('invoices.delete', $invoice->id) }}">
                                                                 @csrf
@@ -205,6 +191,8 @@
                                                                         l'Expedition</span></button>
                                                             </form>
                                                         </div>
+                                                                                                                
+                                                        @endif
                                                         <a href="#" type="button"
                                                             title="modifier le status de livraison"
                                                             class="btn btn-default dropdown-item modal-lg1 editStatu"
@@ -315,8 +303,7 @@
                     @csrf
                     @method('PUT')
                     <div class="modal-body">
-                        {{-- <p>One fine body&hellip;</p> --}}
-                        {{-- <input type="hidden" name="invoice_id" id="invoice_id" value=""> --}}
+                        
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -365,13 +352,15 @@
 
                                 <div class="form-group col-md-4">
                                     <label for=""> <i class="fas fa-donate" style="color:#EF2856"></i> Status du
-                                        Colis</label>
+                                        Bon d'Expedition</label> 
                                     <select name="status_livraison" class="form-control  form-control"
                                         id="status_livraison" aria-placeholder="modifier le status du colis">
+                                        <option value="">selection un status</option>
                                         <option value="en embarcation">En Embarcation</option>
+                                        <option value="en transit">En Transit</option>
                                         <option value="en cours d'expedition">En cours d'Expedition
                                         </option>
-                                        <option value="livre">Livree</option>
+                                        <option value="livre">Livré</option>
                                     </select>
                                 </div>
                             </div>
@@ -402,10 +391,8 @@
                 </div>
                 <form action="/invoices/update_facture" id="editForm1" method="POST" enctype="multipart/form-data">
                     @csrf
-                    {{-- @method('PUT') --}}
                     <div class="modal-body">
-                        {{-- <p>One fine body&hellip;</p> --}}
-                        {{-- <input type="hidden" name="invoice_id" id="invoice_id" value=""> --}}
+                  
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -697,13 +684,13 @@
             // $('#due_amount').val(data[7]);
             // $('#due_amount1').val(data[12]);
             $('#total_amount').val(data[13]);
-            $('#editForm').attr('action','/invoices/modifier_status/'+data[11]);
+            $('#editForm').attr('action','/expeditions/modifier_status/'+data[11]);
         
          })
     }) 
 </script>
 
-{{-- modal update Payemeny --}}
+{{-- modal update Payement --}}
 <script>
     $(document).ready(function() {
          var table = $('#example1').DataTable();
@@ -760,7 +747,8 @@
               
             })
 
-            $('#editForm1').attr('action','/invoices/update_facture/'+data[11]);
+            $('#editForm1').attr('action','/expeditions/update_facture/'+data[11]);
+            // $('#editForm1').attr('action','/invoices/update_facture/'+data[11]);
          })
 
         

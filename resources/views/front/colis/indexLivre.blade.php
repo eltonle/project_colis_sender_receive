@@ -41,11 +41,8 @@
                     {{-- custom tabs --}}
                     <div class="card">
                         <div class="card-header">
-                            <h3> Listes des Colis
-                                {{-- <a href="{{ route('countries.create') }}"
-                                class="btn btn-success float-right btn-sm">
-                                <i class="fa fa-plus-circle"></i> AJOUTER UN PAYS
-                                </a> --}}
+                            <h3> Listes des Colis Livrés
+                                
                             </h3>
                         </div><!-- /.card-header -->
 
@@ -85,15 +82,12 @@
                                                 <td>{{ number_format($ul->prix ,0,' ',',')}} FCFA</td>
 
                                                 <td>
-                                                    @if ($ul->charge == 1)
+                                                    @if (($ul->charge == 2 &&$ul->decharge == 1 &&$ul->livre == 1))
                                                     <span class="badge" style="background: #2962FF;color:white; padding: 3px;">
-                                                        <i class="fas fa-truck"></i> Colis Chargé</span>
-                                                    @elseif (($ul->charge == 2) && ($ul->decharge == 1))
-                                                    <span class="badge " style="background:  #fa03d1; color:white; padding: 3px;">
-                                                        <i class="fas fa-check"></i> Colis Dechargé</span>
+                                                        <i class="fas fa-truck"></i> Colis Livré</span>                                                
                                                     @else
                                                     <span class="badge " style="background:  #B61418; color:white; padding: 3px;">
-                                                        <i class="fas fa-times"></i> Colis Non Chargé</span>
+                                                        <i class="fas fa-times"></i> Colis Non Livré</span>
                                                     @endif
                                                 </td>
                                                 <td>
@@ -157,7 +151,7 @@
             </div>
             <!-- /.row -->
 
-            {{-- MODAL DES DETAILS DES COLIS --}}   
+            {{-- MODAL DES DETAILS DES COLIS --}}
             <div class="modal fade" id="modal-lg">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
@@ -309,64 +303,71 @@
   </div>
 </div>
                         <div class="modal-body">
-                            <div  id="loading-indicator1" style="display: none;">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="text-center">
-                                            <h4 style="color: #3D5AFE;">entrepots de depart</h4>
-                                        </div>
-                                        <table class="table table-bordered border-primary">
-                                            <thead>
-                                                <tr>
-                                                    <th style="border: 1px solid #0D47A1; padding: 8px;">Nom de l'Entrepôt</th>
-                                                    <th style="border: 1px solid #0D47A1; padding: 8px;">Ville</th>
-                                                    <th style="border: 1px solid #0D47A1; padding: 8px;">Date</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="historique-colis-depart">
-                                                <!-- Les données seront affichées ici -->
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="col-md-6">
+                           <div  id="loading-indicator1" style="display: none;">
+                            <div class="row">
+                                <div class="col-md-6">
                                     <div class="text-center">
-                                            <h4 style="color: #3D5AFE;">entrepots d'arrivé</h4>
-                                        </div>
-                                        <table class="table table-bordered border-primary">
-                                            <thead>
-                                                <tr>
-                                                    <th style="border: 1px solid #0D47A1; padding: 8px;">Nom de l'Entrepôt</th>
-                                                    <th style="border: 1px solid #0D47A1; padding: 8px;">Ville</th>
-                                                    <th style="border: 1px solid #0D47A1; padding: 8px;">Date</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="historique-colis-arrive">
-                                                <!-- Les données seront affichées ici -->
-                                            </tbody>
-                                        </table>
+                                        <h4 style="color: #3D5AFE;">entrepots de depart</h4>
                                     </div>
+                                    <table class="table table-bordered border-primary">
+                                        <thead>
+                                            <tr>
+                                                <th style="border: 1px solid #0D47A1; padding: 8px;">Nom de l'Entrepôt</th>
+                                                <th style="border: 1px solid #0D47A1; padding: 8px;">Ville</th>
+                                                <th style="border: 1px solid #0D47A1; padding: 8px;">Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="historique-colis-depart">
+                                            <!-- Les données seront affichées ici -->
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="text-center">
-                                            <h4 style="color: #3D5AFE;">conteneurs </h4>
-                                        </div>
-                                        <table class="table table-bordered border-primary">
-                                            <thead>
-                                                <tr>
-                                                    <th style="border: 1px solid #0D47A1; padding: 8px;">Numero du conteneur</th>
-                                                    <th style="border: 1px solid #0D47A1; padding: 8px;">Nom du conteneur</th>
-                                                    <th style="border: 1px solid #0D47A1; padding: 8px;">Status</th>
-                                                    <th style="border: 1px solid #0D47A1; padding: 8px;">Date</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="historique-colis-conteneurs">
-                                                <!-- Les données seront affichées ici -->
-                                            </tbody>
-                                        </table>
-                                    </div>                               
+                                <div class="col-md-6">
+                                <div class="text-center">
+                                        <h4 style="color: #3D5AFE;">entrepots d'arrivé</h4>
+                                    </div>
+                                    <table class="table table-bordered border-primary">
+                                        <thead>
+                                            <tr>
+                                                <th style="border: 1px solid #0D47A1; padding: 8px;">Nom de l'Entrepôt</th>
+                                                <th style="border: 1px solid #0D47A1; padding: 8px;">Ville</th>
+                                                <th style="border: 1px solid #0D47A1; padding: 8px;">Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="historique-colis-arrive">
+                                            <!-- Les données seront affichées ici -->
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="text-center">
+                                        <h4 style="color: #3D5AFE;">conteneurs </h4>
+                                    </div>
+                                    <table class="table table-bordered border-primary">
+                                        <thead>
+                                            <tr>
+                                                <th style="border: 1px solid #0D47A1; padding: 8px;">Numero du conteneur</th>
+                                                <th style="border: 1px solid #0D47A1; padding: 8px;">Nom du conteneur</th>
+                                                <th style="border: 1px solid #0D47A1; padding: 8px;">Status</th>
+                                                <th style="border: 1px solid #0D47A1; padding: 8px;">Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="historique-colis-conteneurs">
+                                            <!-- Les données seront affichées ici -->
+                                        </tbody>
+
+                                    </table>
+                                    <table class="table table-bordered border-primary">
+  <tr>
+    <td class="text-center ">Status</td>
+    <td class="text-center "> <span id="status_colis" style="color: #00C853; font-weight: bold;"></span></td>
+  </tr>
+</table>
+                                </div>                               
+                            </div>
+                          </div>
                         </div>
                         <div class="modal-footer float-right">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
@@ -488,7 +489,7 @@
         $(".btn-show-historique").click(function() {
             var colis_id = $(this).data("colis-id");
 
-            // Affichez l'indicateur de chargement
+             // Affichez l'indicateur de chargement
            $("#loading-indicator").show();
            $("#loading-indicator1").hide();
 
@@ -505,7 +506,7 @@
                    console.log('---------------------');
                     console.log(data);
                     // Cachez l'indicateur de chargement
-                     $("#loading-indicator").hide();
+                    $("#loading-indicator").hide();
                      $("#loading-indicator1").show();
                     console.log('---------------------');
                     var colis = data.colis;
@@ -517,7 +518,8 @@
                         newRow += '</tr>';
                         $('#colis_infos').append(newRow);
 
-
+                    var statusText = colis.livre == 1 ? "Livré" : "Non Livré";
+                    $("#status_colis").text(statusText);
 
                     var historiques = data[0].historiques;
                     historiques.forEach(function(historique) {

@@ -31,10 +31,7 @@
                     <div class="card">
                         <div class="card-header text-center">
                             <h3> Listes des Colis a Charges
-                                {{-- <a href="{{ route('units.create') }}" class="btn  float-right btn-sm"
-                                    style="background: #563DEA;color: #fff">
-                                    <i class="fa fa-plus-circle"></i> AJOUTER UN CONTENEUR
-                                </a> --}}
+                                
                             </h3>
 
                         </div>
@@ -44,15 +41,14 @@
                                 strtoupper($unit->statut) }})
                             </h4>
 
-                           @if ($unit->statut !== 'Non Charge')                                                         
+                                                                                 
                             <div class="float-right">
-                                <form id="form-modifier-statut" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="conteneur_id" value="{{ $unit->id }}">
-                                    <input id="btn-modifier-statut" class="btn btn-danger" type="submit" value="Fermer le Conteneur (fin de Chargement)">
-                                  </form>
+                                <a href="{{route('units.index')}}" class="btn  float-right btn-sm"
+                                        style="background: #563DEA;color: #fff">
+                                        <i class="fa fa-list"></i>  Listes des Conteneurs
+                                </a>
                             </div>
-                            @endif
+                            
 
                         </div>
                         <div class="card-body" style="margin-top: -20px;">
@@ -68,15 +64,7 @@
                                                 tous les colis</button>
                                             <button type="button" class="btn btn-secondary"
                                                 id="deselect-all">Désélectionner tous les colis</button>
-                                            <div class="float-end"> 
-                                                {{-- <form id="form-modifier-statut" method="POST">
-                                                    @csrf
-                                                    <input type="hidden" name="conteneur_id" value="{{ $unit->id }}">
-                                                    <button id="btn-modifier-statut" class="btn btn-danger" type="submit">Modifier le statut</button>
-                                                  </form> --}}
-                                                {{-- <button id="btn-changer-statut" data-conteneur-id="{{ $conteneur->id }}">Changer le statut</button>                                              --}}
-                                                {{-- <button id="btn-changer-statut" data-conteneur-id="{{ $unit->id }}" class="btn btn-info"> <i class="fas fa-times text-danger"></i> Fermer le Conteneur</button> --}}
-                                            </div>
+                                            
                                         </div>
                                         <thead style="margin-top: -30px">
                                             <tr>
@@ -140,17 +128,12 @@
                                             </tr>
                                         </tfoot>
                                     </table>
-                                    @if ($unit->statut == 'Ferme')
-                                    <div class="text-center bg-indigo">
-
-                                       <p><strong>Le Conteneur est fermé vous ne pouvez par effectuer de Chargement</strong></p>
-                                    </div>
-                                    @else
+                                   
                                     <div class="text-center">
 
                                         <button type="submit" class="btn btn-primary">Charger Le Conteneur</button>
                                     </div>
-                                    @endif
+                                 
                                    
                                 </form>
                             </div>
@@ -213,10 +196,11 @@
       event.preventDefault();
       var conteneurId = $('input[name="conteneur_id"]').val();
       
-      $.ajax({
+      $.ajax({ 
         type: 'POST',
         // url: '{{ route("conteneurs.modifierStatut", $unit->id) }}',
-        url: '/units/conteneurs/' + conteneurId + '/modifier-statut',
+        url: '/conteneurs/conteneurs/' + conteneurId + '/modifier-statut',
+        // url: '/units/conteneurs/' + conteneurId + '/modifier-statut',
         data: {
           _token: '{{ csrf_token() }}',
           conteneur_id: conteneurId

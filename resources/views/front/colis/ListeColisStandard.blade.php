@@ -70,9 +70,9 @@
                                             <tr>
                                                 <td> {{ strtoupper($unit->titre) }}</td>
                                                 <td> {{ number_format($unit->prix,0,' ',',')}} FCFA</td>
-                                                <td>{{ $unit->longueur }} m</td>
-                                                <td>{{ $unit->largeur }} m</td>
-                                                <td>{{ $unit->hauteur }} m</td>
+                                                <td>{{ $unit->longueuer ? $unit->longueuer . ' m' : '0' }} </td>
+                                                <td>{{ $unit->largeur ? $unit->largeur . ' m' : '0' }}</td>
+                                                <td>{{ $unit->hauteur ? $unit->hauteur . ' m' : '0' }}</td>
                                                 <td>
                                                     <div style="display: flex; align-items: center">
 
@@ -174,10 +174,7 @@
                                                             title="edit" class="btn btn-sm btn-primary mr-1">
                                                             <i class="fa fa-edit"></i>
                                                         </a>
-                                                        {{-- <a href="#" title="delete" id="delete"
-                                                            class="btn btn-sm btn-danger">
-                                                            <i class="fa fa-trash"></i>
-                                                        </a> --}}
+                                                      
                                                         <form method="POST"
                                                             action="{{ route('colis.deleteStandard', $unit->id) }}">
                                                             @csrf
@@ -259,7 +256,7 @@
                                                 <td> {{ strtoupper($unit->titre) }}</td>
                                                 <td> {{ number_format($unit->prix,0,' ',',')}} FCFA</td>
                                                 <td>{{ $unit->type }} </td>
-                                                <td>{{ $unit->longueur }} m</td>
+                                                <td>{{ $unit->longueur ? $unit->longueur . ' m' : '0' }} </td>
                                                 <td>{{ $unit->capacite }} </td>
                                                 <td>
                                                     <div style="display: flex; align-items: center">
@@ -269,10 +266,7 @@
                                                             title="edit" class="btn btn-sm btn-primary mr-1">
                                                             <i class="fa fa-edit"></i>
                                                         </a>
-                                                        {{-- <a href="#" title="delete" id="delete"
-                                                            class="btn btn-sm btn-danger">
-                                                            <i class="fa fa-trash"></i>
-                                                        </a> --}}
+                                                       
                                                         <form method="POST"
                                                             action="{{ route('colis.deleteStandard', $unit->id) }}">
                                                             @csrf

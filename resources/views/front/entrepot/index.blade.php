@@ -61,8 +61,7 @@
                                                                                     
                                             <td>
                                             <div class="btn-group" >
-                                                {{-- <button type="button" class="btn btn-default">Action</button>
-                                                --}}
+                                            
                                                 <button type="button" style="background: #43BD00"
                                                     class="btn  btn-flat btn-sm dropdown-toggle dropdown-icon"
                                                     data-toggle="dropdown">
@@ -84,12 +83,20 @@
                                                                 class="fas fa-truck-moving"></i> Entrepot et Colis </span>
                                                             
                                                     </a>
+                                                    <a href="{{ route('entrepots.show.decharge', ['entrepot' => $entrepot->id]) }}"
+                                                        title="entrepot et colis"
+                                                        class="dropdown-item"><span
+                                                            class="text-xs text-dark font-weight-bold"><i
+                                                                class="fas fa-truck-moving"></i> Entrepot et Colis dechargés </span>
+                                                            
+                                                    </a>
                                                    
 
                                                 
                                                     <div class="dropdown-item">
-                                                       
-                                                       
+                                                       @if(!count($entrepot->colis))
+
+                                                                                                             
                                                         <form method="POST"
                                                             action="{{  route('entrepots.delete', $entrepot->id) }}">
                                                             @csrf
@@ -101,16 +108,17 @@
                                                                         class="fa fa-trash"></i> Supprimer
                                                                     l'entrepot</span></button>
                                                         </form>
+                                                        @endif 
                                                     </div>                                                                                                       
 
                                                        
-                                                        {{-- <a href="{{ route('invoices.etiquette',$invoice->id) }}"
+                                                       <!-- {{-- <a href="{{ route('invoices.etiquette',$invoice->id) }}"
                                                             target="_blank" title="imprimer l'étiquette"
                                                             class="dropdown-item">
                                                             <span class="text-xs text-dark font-weight-bold"><i
                                                                     class="fa fa-print"></i> Imprimer
                                                                 l'Etiquette</span>
-                                                        </a> --}}
+                                                        </a> --}} -->
                                                 </div>
                                             </div>
 

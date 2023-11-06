@@ -32,9 +32,9 @@
             <table>
                 <tbody>
                     <tr>
-                        <td width="25%"></td>
-                        <td width=""><strong>Rapport Journalier ({{ date('d-M-Y',strtotime($start_date)) }}-{{
-                                date('d-M-Y',strtotime($end_date)) }})</strong></td>
+                        <td width="33%"></td>
+                        <td width=""><strong>Rapport du {{ date('d-M-Y',strtotime($start_date)) }} Au {{
+                                date('d-M-Y',strtotime($end_date)) }}</strong></td>
                         <td width="15%"></td>
                     </tr>
                 </tbody>
@@ -67,7 +67,17 @@
                             ( {{ $invoice['payement']['customer']['phone'] }})
                         </td>
                         <td>{{ date('d-m-Y',strtotime($invoice->date)) }}</td>
-                        <td>{{ $invoice['payement']['paid_status'] }}</td>
+                        <td>
+                            @if ($invoice['payement']['paid_status'] === 'full_paid')
+                                <span style="color: green;">Payé</span>
+                                @elseif ($invoice['payement']['paid_status'] === 'partial_paid')
+                                <span style="color:#7CB342;">partielement payé</span> 
+                                @elseif ($invoice['payement']['paid_status'] === 'full_due')
+                                <span style="color: #B00020;">non payé</span>
+                                @else
+                                <span>Statut inconnu</span>
+                            @endif
+                        </td>
                         <td>{{ number_format($invoice['payement']['paid_amount'] ,0,' ',',') }}Fcfa</td>
                         @php
                         $total_sum += $invoice['payement']['paid_amount']
@@ -101,18 +111,6 @@
     </div>
 
 
-
-
-
-    <div style="margin-top: 100px">
-        <h5><i class="fas fa-info"></i> Note:</h5>
-        This page has been enhanced for printing. Click the print button at the bottom of the invoice to
-        test.
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint optio perspiciatis libero, et ipsa
-        dolorum reprehenderit modi aspernatur doloribus nam unde. Maxime iste, dolorum ab nostrum nulla
-        fugit quasi expedita?
-
-    </div>
 
 </body>
 
