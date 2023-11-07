@@ -781,7 +781,7 @@
                             <strong>Enregistrer un Colis</strong>
                         </h2>
                     </div>
-                    <div class="text-center mt-5">
+                    <div class="text-center mt-3">
                         <p id="messagePrix" style="display: none; color: #2962FF; font-size: 25px;"></p>
                     </div>
                     <div class="card-body ">
@@ -790,8 +790,6 @@
 
                             <div class="row" style="width: 100%; margin-left: 4px; height:300px ;background:#f2f2f6;">
                                 <h5 class=" text-center mt-2"><strong>Ajout d'un colis standard</strong></h5>
-
-
                             
                                 <div class=" col-sm-12 text-center mt-2">
                                     <input type="text" name="titre" class="form-control" placeholder="titre...">
@@ -1481,7 +1479,7 @@
              $('#tableColisStandard tbody' ).empty(); // vider la div
             $.each(data, function(index, element) {
               var loop = index + 1;
-              var cardHtml = "<tr class='data-row'  data-id='" + element.id + "'>" +
+              var cardHtml = "<tr class='data-row cursor-pointer' title='cliquer pour ajouter' data-id='" + element.id + "'>" +
                                 "<td>"+ "#" + loop + "</td>" +
                                 "<td>" + element.nature + "</td>" +
                                 "<td>" + element.titre + "</td>" +

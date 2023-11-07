@@ -43,7 +43,8 @@
 
                 <li class="nav-item ">
                     <a href="{{ route('home') }}" class="nav-link {{ request()->is('home') ? 'active' : '' }}">
-                        <i class="nav-icon fa fa-home"></i>
+                        <!-- <i class="nav-icon fa fa-home"></i> -->
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Tableau De Bord
                             {{-- <i class="right fas fa-angle-left"></i> --}}

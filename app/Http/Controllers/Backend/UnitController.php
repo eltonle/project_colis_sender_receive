@@ -104,7 +104,7 @@ class UnitController extends Controller
                     $packageBarcodes = explode(',', $multipleCodes);
                     foreach ($packageBarcodes as $packageBarcode) {
                         // Recherche le colis par code-barres
-                        $package = ColisDimension::where('code_zip', $packageBarcode)->first();
+                        $package = ColisDimension::where('code_zip', $packageBarcode)->where('livre', '0')->first();
                         if ($package) {
                             $colisId= $package->id;
 
@@ -142,7 +142,7 @@ class UnitController extends Controller
                 // Traite le colis unique
                 if ($singlePackage) {
                     // Recherche le colis par code-barres
-                    $package = ColisDimension::where('code_zip', $singlePackage)->first();
+                    $package = ColisDimension::where('code_zip', $singlePackage)->where('livre', '0')->first();
                     if ($package) {
                         $colisId = $package->id;
 
@@ -223,7 +223,7 @@ class UnitController extends Controller
                    $packageBarcodes = explode(',', $multipleCodes);
                    foreach ($packageBarcodes as $packageBarcode) {
                        // Recherche le colis par code-barres
-                       $package = ColisDimension::where('code_zip', $packageBarcode)->first();
+                       $package = ColisDimension::where('code_zip', $packageBarcode)->where('livre', '0')->first();
                        
                        if ($package) {
                            $colisId = $package->id;
@@ -256,7 +256,7 @@ class UnitController extends Controller
                // Traite le colis unique
                if ($singlePackage) {
                    // Recherche le colis par code-barres
-                   $package = ColisDimension::where('code_zip', $singlePackage)->first();
+                   $package = ColisDimension::where('code_zip', $singlePackage)->where('livre', '0')->first();
                    if ($package) {
                        $colisId = $package->id;
 
@@ -448,7 +448,7 @@ class UnitController extends Controller
         
         // Parcourir les codes scannés et vérifier s'ils existent dans la base de données
         foreach ($codesScannes as $codeScan) {
-            $colis = ColisDimension::where('code_zip', $codeScan)->first();
+            $colis = ColisDimension::where('code_zip', $codeScan)->where('livre', '0')->first();
             $colisItem = $colis->id;
 
             $unit->colis_historiques()->attach($colisItem, [
@@ -456,7 +456,7 @@ class UnitController extends Controller
                 'date_action' => now(),
             ]);
             if (!$colis) {
-                return redirect()->back()->with(['warning' => 'Le code-barre ' . $codeScan . ' n\'existe pas dans la base de données.'])->withInput();
+                return redirect()->back()->with(['warning' => 'Le code-barre ' . $codeScan . ' n\'existe ou deja livré.'])->withInput();
             }
 
             
@@ -494,7 +494,7 @@ class UnitController extends Controller
         $codesScannes = explode(',', $request->input('codes_scannes'));
         // Parcourir les codes scannés et vérifier s'ils existent dans la base de données
         foreach ($codesScannes as $codeScan) {
-            $colis = ColisDimension::where('code_zip', $codeScan)->first();
+            $colis = ColisDimension::where('code_zip', $codeScan)->where('livre', '0')->first();
             if (!$colis) {
                 return redirect()->back()->with(['warning' => ' Code-barre inexistant 📛'])->withInput();
             }

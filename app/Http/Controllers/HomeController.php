@@ -38,7 +38,10 @@ class HomeController extends Controller
          $startDate = now()->startOfDay();
          $endDate = now()->endOfDay();
  
-         if ($d == '7') {
+         if ($d === 'day') {
+            $startDate = now()->startOfDay();
+            $endDate = now()->endOfDay();
+        }elseif($d == '7') {
              $startDate = now()->subDays(7)->startOfDay();
          }
          elseif ($d == '30') {
@@ -53,10 +56,6 @@ class HomeController extends Controller
          } elseif ($d === 'lastYear') {
              $startDate = now()->subYear()->startOfYear();
              $endDate = now()->subYear()->endOfYear();
-         }
-         elseif ($d === 'day') {
-             $startDate = now()->startOfDay();
-             $endDate = now()->endOfDay();
          }
  
          $data = DB::table('payements')

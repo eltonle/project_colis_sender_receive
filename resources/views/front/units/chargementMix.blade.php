@@ -108,7 +108,7 @@
                                              
                                             <div class="form-group col-md-12">
                                                 <select class="form-control" id="unit_id" name="unit_id"
-                                                    style="font-size: 22px;">
+                                                    >
                                                     <option value="">Sélectionner un Conteneur</option>
                                                     @foreach ($units as $unit)
                                                     <option value="{{ $unit->id }}">{{ $unit->name }} (No {{

@@ -85,9 +85,11 @@
                                         <!-- <div class="form-group col-md-6">
                                             <input type="text" class="form-control" id="conteneur-barcode" name="conteneur-barcode" placeholder="Saisir le code du conteneur">
                                         </div> -->
+                                   
 
+                                   
                                         <div class="form-group col-md-6">
-                                            <select class="form-control" id="conteneur" name="conteneur_id" style="font-size: 22px;">
+                                            <select class="form-control" id="conteneur" name="conteneur_id" >
                                                 <option value="">Sélectionner un conteneur</option>
                                                 @foreach ($units as $unit)
                                                 <option value="{{ $unit->id }}">{{ $unit->name }} ( {{
@@ -96,7 +98,7 @@
                                             </select>
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <select class="form-control" id="entrepot_id" name="entrepot_id" style="font-size: 22px;">
+                                            <select class="form-control" id="entrepot_id" name="entrepot_id" >
                                                 <option value="">Sélectionner un entrepot</option>
                                                 @foreach ($entrepots as $entrepot)
                                                 <option value="{{ $entrepot->id }}">{{ $entrepot->name }} ( {{
@@ -105,6 +107,7 @@
                                                 @endforeach
                                             </select>
                                         </div>
+                                
                                         <div id="messageContainer" style="display: none;">
                                             <div style="display: flex; justify-content: space-between;align-items: center;">
                                                 <p id="codeNonTrouveMessage" style="color: #563DEA;font-weight: bold;"></p>
