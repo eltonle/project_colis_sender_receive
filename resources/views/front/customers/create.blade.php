@@ -25,7 +25,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h3 class="m-0 font-weight-bold">Gestions des Clients</h3>
+                    <h3 class="m-0 font-weight-bold">Gestions des Clients <i class="fas fa-users"></i></h3>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -48,8 +48,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h3> Ajouter Client
-                                <a href="{{ route('customers.index') }}" class="btn float-right btn-sm"
-                                    style="background: #563DEA;color: #fff">
+                                <a href="{{ route('customers.index') }}" class="btn float-right btn-sm" style="background: #563DEA;color: #fff">
                                     <i class="fa fa-list"></i> LISTES DES CLIENTS
                                 </a>
                             </h3>
@@ -57,8 +56,7 @@
                         <div class="card-body">
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <form action="{{ route('customers.store') }}" method="POST" id="myForm"
-                                    enctype="multipart/form-data">
+                                <form action="{{ route('customers.store') }}" method="POST" id="myForm" enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-row">
 
@@ -89,8 +87,7 @@
                                             <span id="error-msg" class="hide error1"></span>
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <input type="submit" value="ENREGISTRER" class="btn"
-                                                style="background: #563DEA;color: #fff">
+                                            <input type="submit" value="ENREGISTRER" class="btn" style="background: #563DEA;color: #fff">
                                         </div>
                                     </div>
 
@@ -115,39 +112,39 @@
 <script src="{{ asset('build/js/intlTelInput.js') }}"></script>
 <script>
     var input = document.querySelector("#phone"),
-    errorMsg = document.querySelector("#error-msg"),
-    validMsg = document.querySelector("#valid-msg");
+        errorMsg = document.querySelector("#error-msg"),
+        validMsg = document.querySelector("#valid-msg");
 
     // here, the index maps to the error code returned from getValidationError - see readme
     var errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
 
     // initialise plugin
     var iti = window.intlTelInput(input, {
-    utilsScript: "{{ asset('build/js/utils.js') }}", 
-    initialCountry:"tr",
-    nationalMode: false
+        utilsScript: "{{ asset('build/js/utils.js') }}",
+        initialCountry: "tr",
+        nationalMode: false
     });
 
     var reset = function() {
-    input.classList.remove("error");
-    errorMsg.innerHTML = "";
-    errorMsg.classList.add("hide");
-    validMsg.classList.add("hide");
+        input.classList.remove("error");
+        errorMsg.innerHTML = "";
+        errorMsg.classList.add("hide");
+        validMsg.classList.add("hide");
     };
 
     // on blur: validate
     input.addEventListener('blur', function() {
-    reset();
-    if (input.value.trim()) {
-    if (iti.isValidNumber()) {
-    validMsg.classList.remove("hide");
-    } else {
-    input.classList.add("error");
-    var errorCode = iti.getValidationError();
-    errorMsg.innerHTML = errorMap[errorCode];
-    errorMsg.classList.remove("hide");
-    }
-    }
+        reset();
+        if (input.value.trim()) {
+            if (iti.isValidNumber()) {
+                validMsg.classList.remove("hide");
+            } else {
+                input.classList.add("error");
+                var errorCode = iti.getValidationError();
+                errorMsg.innerHTML = errorMap[errorCode];
+                errorMsg.classList.remove("hide");
+            }
+        }
     });
 
     // on keyup / change flag: reset
@@ -156,44 +153,44 @@
 </script>
 <!-- Page specific script -->
 <script type="text/javascript">
-    $(document).ready(function(){
-    $('#myForm').validate({
-        rules:{
-            nom: {
-                required:true,
-                rangelength :[3,30]
+    $(document).ready(function() {
+        $('#myForm').validate({
+            rules: {
+                nom: {
+                    required: true,
+                    rangelength: [3, 30]
+                },
+                prenom: {
+                    required: true,
+                    rangelength: [3, 30]
+                },
+                email: {
+                    required: true,
+                    email: true,
+                },
+                address: {
+                    required: true,
+                },
+                phone: {
+                    required: true,
+                },
             },
-            prenom: {
-                required:true,
-                rangelength :[3,30]
-            },
-            email: {
-                required:true,
-                email:true,
-            },
-            address: {
-                required:true,
-            },
-            phone: {
-                required:true,
-            },
-        },
             messages: {
 
             },
             errorElement: 'span',
-            errorPlacement:function(error,element){
+            errorPlacement: function(error, element) {
                 error.addClass('invalid-feedback');
                 element.closest('.form-group').append(error);
             },
-            highlight:function(element,errorClass,validClass){
+            highlight: function(element, errorClass, validClass) {
                 $(element).addClass('is-invalid');
             },
-            unhighlight: function(element,errorClass,validClass){
+            unhighlight: function(element, errorClass, validClass) {
                 $(element).removeClass('is-invalid');
             }
+        })
     })
- })
 </script>
 
 

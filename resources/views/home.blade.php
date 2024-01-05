@@ -8,11 +8,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h3 class="m-0 font-weight-bold"> Tableau de Bord</h3>
+                    <h3 class="m-0 font-weight-bold"> Tableau de Bord <i class="nav-icon fas fa-tachometer-alt"></i></h3>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Tableau de Bord</a></li>                        
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Tableau de Bord</a></li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -23,53 +23,53 @@
     <!-- Main content -->
     <div class="mb-5">
         <div class="container-fluid">
-        <div class="row">
-            <div>
-                <div class="text-right" style="margin-right: 110px;">
-                    <label for="year">Filtre :</label>
-                    <select id="year">
-                        <!-- Remplacez les années par les années disponibles dans votre base de données -->
-                        <option value="day">aujourd'hui</option>
-                        <option value="7">7 derniers jours</option>
-                        <option value="30">30 derniers jours</option>
-                        <option value="lastMonth">Le mois dernier</option>
-                        <option value="thisMonth">Le mois en cours</option>
-                        <option value="thisYear"> Année en cours</option>
-                        <option value="lastYear">Année derniere</option>
-                    </select>
-                </div>
-            </div>
-
-
             <div class="row">
-                <div class="col-xl-4 col-md-6">
-                    <div class="card bg-primary text-white">
-                        <div class="card-body">
-                            Total versements net
-                            <h5 id="totalPayeDiv"></h5>
-                        </div>
-
+                <div>
+                    <div class="text-right modif">
+                        <label for="year">Filtre :</label>
+                        <select id="year">
+                            <!-- Remplacez les années par les années disponibles dans votre base de données -->
+                            <option value="day">aujourd'hui</option>
+                            <option value="7">7 derniers jours</option>
+                            <option value="30">30 derniers jours</option>
+                            <option value="lastMonth">Le mois dernier</option>
+                            <option value="thisMonth">Le mois en cours</option>
+                            <option value="thisYear"> Année en cours</option>
+                            <option value="lastYear">Année derniere</option>
+                        </select>
                     </div>
                 </div>
-                <div class="col-xl-4 col-md-6">
-                    <div class="card bg-success text-white">
-                        <div class="card-body"> 
-                            Total somme perçue
-                            <h5 id="totalNetPayeDiv"></h5>
-                        </div>
 
-                    </div>
-                </div>
-                <div class="col-xl-4 col-md-6">
-                    <div class="card bg-danger text-white">
-                        <div class="card-body">
-                            Total somme credit
-                            <h5 id="totalDueDiv"></h5>
-                        </div>
 
+                <div class="row">
+                    <div class="col-xl-4 col-md-6">
+                        <div class="card bg-primary text-white">
+                            <div class="card-body">
+                                Total versements net
+                                <h5 id="totalPayeDiv"></h5>
+                            </div>
+
+                        </div>
                     </div>
-                </div>
-                <!-- <div class="col-xl-3 col-md-6">
+                    <div class="col-xl-4 col-md-6">
+                        <div class="card bg-success text-white">
+                            <div class="card-body">
+                                Total somme perçue
+                                <h5 id="totalNetPayeDiv"></h5>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-md-6">
+                        <div class="card bg-danger text-white">
+                            <div class="card-body">
+                                Total somme credit
+                                <h5 id="totalDueDiv"></h5>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- <div class="col-xl-3 col-md-6">
                     <div class="card bg-info text-white">
                         <div class="card-body">
                             Total somme remise
@@ -79,22 +79,25 @@
                     </div>
                 </div> -->
 
-            </div>
-
-        </div>
-
-        <!-- CHARTJS -->
-
-        <div style="display: flex;">
-            <div style="flex: 2; padding: 10px;width: 100%; height: 300px;">
-                <canvas id="myChart"></canvas>
-            </div>
-            <div style="flex: 1; padding: 10px;">
-                <div style="height: 300px; width: 100%;">
-                    <canvas id="myChartPie"></canvas>
                 </div>
+
             </div>
-        </div>      
+
+            <!-- CHARTJS -->
+
+            <div class="coupe">
+
+                <div class="chart h-300 p-2">
+                    <canvas id="myChart"></canvas>
+                </div>
+
+                <div class="charte p-2">
+                    <div class="h-300">
+                        <canvas id="myChartPie"></canvas>
+                    </div>
+                </div>
+
+            </div>
         </div><!-- /.container-fluid -->
     </div>
     <!-- /.content -->
@@ -103,7 +106,7 @@
 @endsection
 
 @section('scripts')
-   
+
 <script>
     var ctx = document.getElementById('myChart').getContext('2d');
     var ctxPie = document.getElementById('myChartPie').getContext('2d');
@@ -184,7 +187,7 @@
                             //     borderColor: 'rgba(255, 99, 132, 1)',
                             //     backgroundColor: 'rgba(255, 99, 132, 0.2)',
                             // },
-                            
+
                             {
                                 label: 'details Paye',
                                 data: details_paiements,

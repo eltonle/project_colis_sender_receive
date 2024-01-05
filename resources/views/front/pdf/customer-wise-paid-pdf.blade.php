@@ -40,7 +40,7 @@
                 </tbody>
             </table>
         </div>
-
+        @if(count($allData) > 0)
         <div>
             <table border="1" width="100%" cellspacing="0">
                 <thead>
@@ -67,7 +67,19 @@
                             ( {{ $payment['customer']['phone'] }})
                         </td>
                         <td>{{ date('d-m-Y',strtotime($payment['invoice']['date'])) }}</td>
-                        <td>{{ $payment->paid_status}}</td>
+
+                        <td style="text-align: center;">
+                            @if ($payment['paid_status'] === 'full_paid')
+                            <span style="color: green;">Payé</span>
+                            @elseif ($payment['paid_status'] === 'partial_paid')
+                            <span style="color:#7CB342;">partielement payé</span>
+                            @elseif ($payment['paid_status'] === 'full_due')
+                            <span style="color: #B00020;">non payé</span>
+                            @else
+                            <span>Statut inconnu</span>
+                            @endif
+
+                        </td>
                         <td>{{ number_format($payment->paid_amount ,0,' ',',')}}Fcfa</td>
                         @php
                         $total_paid += $payment ->paid_amount;
@@ -81,7 +93,17 @@
                 </tbody>
             </table>
         </div>
-
+        @else
+        <table border="1" width="100%" cellspacing="0">
+            <tbody>
+                <tr>
+                    <td width="23%"></td>
+                    <td style="text-align: center;"><strong style="color: #B00020;">Aucun paiement effectué </strong></td>
+                    <td width="23%"></td>
+                </tr>
+            </tbody>
+        </table>
+        @endif
     </div>
 
     <div>

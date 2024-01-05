@@ -40,7 +40,7 @@
                 </tbody>
             </table>
         </div>
-
+        @if(count($allData) > 0)
         <div>
             <table border="1" width="100%" cellspacing="0">
                 <thead>
@@ -68,14 +68,14 @@
                         </td>
                         <td>{{ date('d-m-Y',strtotime($payment['invoice']['date'])) }}</td>
                         <td>
-                         @if ($payment['paid_status'] === 'full_paid')
-                                 <span style="color: green;">Payé</span>
-                                @elseif ($payment['paid_status'] === 'partial_paid')
-                                <span style="color:#7CB342;">partielement payé</span> 
-                                @elseif ($payment['paid_status'] === 'full_due')
-                                <span style="color: #B00020;">non payé</span>
-                                @else
-                                <span>Statut inconnu</span>
+                            @if ($payment['paid_status'] === 'full_paid')
+                            <span style="color: green;">Payé</span>
+                            @elseif ($payment['paid_status'] === 'partial_paid')
+                            <span style="color:#7CB342;">partielement payé</span>
+                            @elseif ($payment['paid_status'] === 'full_due')
+                            <span style="color: #B00020;">non payé</span>
+                            @else
+                            <span>Statut inconnu</span>
                             @endif
                         </td>
                         <td>{{ number_format($payment->due_amount ,0,' ',',')}} fcfa</td>
@@ -91,6 +91,18 @@
                 </tbody>
             </table>
         </div>
+        @else
+        <table border="1" width="100%" cellspacing="0">
+            <tbody>
+                <tr>
+                    <td width="23%"></td>
+                    <td style="text-align: center;"><strong style="color: #B00020;">Aucune dette enregistrée </strong></td>
+                    <td width="23%"></td>
+                </tr>
+            </tbody>
+        </table>
+        @endif
+
 
     </div>
 

@@ -19,7 +19,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h3 class="m-0 font-weight-bold">Gestions des Colis</h3>
+                    <h3 class="m-0 font-weight-bold">Gestions des Colis <i class="fas fa-box"></i></h3>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -111,11 +111,11 @@
                                                             <!-- <a href="{{ route('colis.mouvements',$ul->id) }}"   class="btn btn-default" >
                                                                 <span class="text-xs text-dark font-weight-bold"><i class="fa fa-eye"></i> mouvements
                                                                     du Colis</span> -->
-</a>                                                          
+                                                            </a>
                                                             <button data-colis-id="{{ $ul->id }}" type="button" class="btn btn-default dropdown-item btn-show-historique" data-toggle="modal" data-target="#modal-historique">
                                                                 <span class="text-xs text-dark font-weight-bold"><i class="fa fa-eye"></i> mouvements
                                                                     du Colis</span>
-                                                            </button>                                                          
+                                                            </button>
 
                                                             <a href="{{ route('colis.print',$ul->id) }}" target="_blank" title="imprimer recépissé" class="dropdown-item">
                                                                 <span class="text-xs text-dark font-weight-bold"><i class="fa fa-print"></i> Imprimer
@@ -157,7 +157,7 @@
             </div>
             <!-- /.row -->
 
-            {{-- MODAL DES DETAILS DES COLIS --}}   
+            {{-- MODAL DES DETAILS DES COLIS --}}
             <div class="modal fade" id="modal-lg">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
@@ -225,27 +225,27 @@
 
                                                 <ul class="ml-4 mb-0 fa-ul text-muted">
                                                     <li class="small">
-                                                        
+
                                                         <span class="text-md font-weight-bold">Type colis :</span>
                                                         <span id="type"></span>
                                                     </li>
                                                     <li class="small long">
-                                                        
+
                                                         <span class="text-md font-weight-bold">Longueur :</span> <span id="longueur"></span>
-                                                            <span>Cm</span>
+                                                        <span>Cm</span>
                                                     </li>
                                                     <li class="small larg">
-                                                       
+
                                                         <span class="text-md font-weight-bold">Largeur :</span> <span id="largeur"></span>
                                                         <span>Cm</span>
                                                     </li>
                                                     <li class="small haut">
-                                                        
+
                                                         <span class="text-md font-weight-bold">Hauteur : </span> <span id="hauteur"></span>
                                                         <span>Cm</span>
                                                     </li>
                                                     <li class="small">
-                                                       
+
                                                         <span class="text-md font-weight-bold">Prix :</span> <span id="prix"></span>
                                                         <span>FCFA</span>
                                                     </li>
@@ -292,9 +292,9 @@
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            
-                                <h4 class="modal-title" style="color: #212121; font-weight: bold;" id="colis_infos"></h4>
-                           
+
+                            <h4 class="modal-title" style="color: #212121; font-weight: bold;" id="colis_infos"></h4>
+
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -302,14 +302,14 @@
                         <div id="loading-indicator" style="display: none;
   align-items: center;
   justify-content: center; margin-top: 40px;">
-  <div class="text-center">
-    <div class="spinner-border text-secondary" role="status">
-      <span class="visually-hidden">Loading...</span>
-    </div>
-  </div>
-</div>
+                            <div class="text-center">
+                                <div class="spinner-border text-secondary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
                         <div class="modal-body">
-                            <div  id="loading-indicator1" style="display: none;">
+                            <div id="loading-indicator1" style="display: none;">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="text-center">
@@ -329,7 +329,7 @@
                                         </table>
                                     </div>
                                     <div class="col-md-6">
-                                    <div class="text-center">
+                                        <div class="text-center">
                                             <h4 style="color: #3D5AFE;">entrepots d'arrivé</h4>
                                         </div>
                                         <table class="table table-bordered border-primary">
@@ -364,7 +364,7 @@
                                                 <!-- Les données seront affichées ici -->
                                             </tbody>
                                         </table>
-                                    </div>                               
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -489,8 +489,8 @@
             var colis_id = $(this).data("colis-id");
 
             // Affichez l'indicateur de chargement
-           $("#loading-indicator").show();
-           $("#loading-indicator1").hide();
+            $("#loading-indicator").show();
+            $("#loading-indicator1").hide();
 
             // console.log(colis_id);
             $('#colis_infos').empty();
@@ -502,26 +502,26 @@
                 type: "GET",
                 dataType: "json",
                 success: function(data) {
-                   console.log('---------------------');
+                    console.log('---------------------');
                     console.log(data);
                     // Cachez l'indicateur de chargement
-                     $("#loading-indicator").hide();
-                     $("#loading-indicator1").show();
+                    $("#loading-indicator").hide();
+                    $("#loading-indicator1").show();
                     console.log('---------------------');
                     var colis = data.colis;
                     var newRow = '<tr>';
-                        newRow += '<td ">' + colis.type + '----' +'</td>';
-                        newRow += '<td >' + colis.titre + ' ----' + '</td>';
-                        newRow += '<td >'+' code_zip: ' + colis.code_zip + '</td>';
-                        newRow += '<td >   </td>';
-                        newRow += '</tr>';
-                        $('#colis_infos').append(newRow);
+                    newRow += '<td ">' + colis.type + '----' + '</td>';
+                    newRow += '<td >' + colis.titre + ' ----' + '</td>';
+                    newRow += '<td >' + ' code_zip: ' + colis.code_zip + '</td>';
+                    newRow += '<td >   </td>';
+                    newRow += '</tr>';
+                    $('#colis_infos').append(newRow);
 
 
 
                     var historiques = data[0].historiques;
                     historiques.forEach(function(historique) {
-                        
+
                         var entrepotDepart = historique.entrepotDepart;
                         if (entrepotDepart) {
                             var newRow = '<tr>';
@@ -537,19 +537,19 @@
                     historiques.forEach(function(historique) {
                         var entrepotArrive = historique.entrepotArrive;
                         if (entrepotArrive) {
-                        var newRow = '<tr>';
-                        newRow += '<td "table-cell">' + (entrepotArrive ? entrepotArrive.name : 'En attente') + '</td>';
-                        newRow += '<td "table-cell">' + (entrepotArrive ? entrepotArrive.ville : 'En attente') + '</td>';
-                        newRow += '<td "table-cell">' + (entrepotArrive ? historique.date_action.date_action : 'En attente')+ '</td>';
-                        newRow += '</tr>';
-                        $('#historique-colis-arrive').append(newRow);
-                       }
+                            var newRow = '<tr>';
+                            newRow += '<td "table-cell">' + (entrepotArrive ? entrepotArrive.name : 'En attente') + '</td>';
+                            newRow += '<td "table-cell">' + (entrepotArrive ? entrepotArrive.ville : 'En attente') + '</td>';
+                            newRow += '<td "table-cell">' + (entrepotArrive ? historique.date_action.date_action : 'En attente') + '</td>';
+                            newRow += '</tr>';
+                            $('#historique-colis-arrive').append(newRow);
+                        }
                     });
 
-                   
+
                     var conteneurs = data[0].conteneurs;
                     conteneurs.forEach(function(conteneur) {
-                        
+
                         var newRow = '<tr>';
                         newRow += '<td "table-cell">' + conteneur.numero_id + '</td>';
                         newRow += '<td "table-cell">' + conteneur.name + '</td>';

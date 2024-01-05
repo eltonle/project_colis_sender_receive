@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h3 class="m-0 font-weight-bold"> Gestions des Colis Standards</h3>
+                    <h3 class="m-0 font-weight-bold"> Gestions des Colis Standards <i class="fas fa-box"></i></h3>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -31,8 +31,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h3> Listes Colis Type Normal
-                                <a href="{{ route('colis.createStandard') }}" class="btn  float-right btn-sm"
-                                    style="background: #563DEA;color: #fff">
+                                <a href="{{ route('colis.createStandard') }}" class="btn  float-right btn-sm" style="background: #563DEA;color: #fff">
                                     <i class="fa fa-plus-circle"></i> AJOUTER UN COLIS STANDARD
                                 </a>
                             </h3>
@@ -46,8 +45,7 @@
                                     <h3 class="card-title">Liste des colis Enregistrés</h3>
 
                                     <div class="card-tools">
-                                        <button type="button" class="btn btn-tool" data-card-widget="collapse"
-                                            title="Collapse">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                                             <i class="fas fa-minus"></i>
                                         </button>
                                     </div>
@@ -77,22 +75,17 @@
                                                     <div style="display: flex; align-items: center">
 
 
-                                                        <a href="{{ route('colis.editStandard',$unit->id) }}"
-                                                            title="edit" class="btn btn-sm btn-primary mr-1">
+                                                        <a href="{{ route('colis.editStandard',$unit->id) }}" title="edit" class="btn btn-sm btn-primary mr-1">
                                                             <i class="fa fa-edit"></i>
                                                         </a>
                                                         {{-- <a href="#" title="delete" id="delete"
                                                             class="btn btn-sm btn-danger">
                                                             <i class="fa fa-trash"></i>
                                                         </a> --}}
-                                                        <form method="POST"
-                                                            action="{{ route('colis.deleteStandard', $unit->id) }}">
+                                                        <form method="POST" action="{{ route('colis.deleteStandard', $unit->id) }}">
                                                             @csrf
                                                             <input name="_method" type="hidden" value="DELETE">
-                                                            <button type="submit"
-                                                                class="btn btn-sm rounded btn-danger btn-flat show_confirm"
-                                                                data-toggle="tooltip" title='Delete'><i
-                                                                    class="fa fa-trash"></i></button>
+                                                            <button type="submit" class="btn btn-sm rounded btn-danger btn-flat show_confirm" data-toggle="tooltip" title='Delete'><i class="fa fa-trash"></i></button>
                                                         </form>
                                                     </div>
                                                 </td>
@@ -126,8 +119,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h3> Listes Colis Type Voiture
-                                <a href="{{ route('colis.createStandardVoiture') }}" class="btn  float-right btn-sm"
-                                    style="background: #563DEA;color: #fff">
+                                <a href="{{ route('colis.createStandardVoiture') }}" class="btn  float-right btn-sm" style="background: #563DEA;color: #fff">
                                     <i class="fa fa-plus-circle"></i> AJOUTER UN COLIS STANDARD
                                 </a>
                             </h3>
@@ -141,8 +133,7 @@
                                     <h3 class="card-title">Liste des colis Enregistrés</h3>
 
                                     <div class="card-tools">
-                                        <button type="button" class="btn btn-tool" data-card-widget="collapse"
-                                            title="Collapse">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                                             <i class="fas fa-minus"></i>
                                         </button>
                                     </div>
@@ -170,19 +161,14 @@
                                                     <div style="display: flex; align-items: center">
 
 
-                                                        <a href="{{ route('colis.editStandardVoiture',$unit->id) }}"
-                                                            title="edit" class="btn btn-sm btn-primary mr-1">
+                                                        <a href="{{ route('colis.editStandardVoiture',$unit->id) }}" title="edit" class="btn btn-sm btn-primary mr-1">
                                                             <i class="fa fa-edit"></i>
                                                         </a>
-                                                      
-                                                        <form method="POST"
-                                                            action="{{ route('colis.deleteStandard', $unit->id) }}">
+
+                                                        <form method="POST" action="{{ route('colis.deleteStandard', $unit->id) }}">
                                                             @csrf
                                                             <input name="_method" type="hidden" value="DELETE">
-                                                            <button type="submit"
-                                                                class="btn btn-sm rounded btn-danger btn-flat show_confirm"
-                                                                data-toggle="tooltip" title='Delete'><i
-                                                                    class="fa fa-trash"></i></button>
+                                                            <button type="submit" class="btn btn-sm rounded btn-danger btn-flat show_confirm" data-toggle="tooltip" title='Delete'><i class="fa fa-trash"></i></button>
                                                         </form>
                                                     </div>
                                                 </td>
@@ -216,8 +202,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h3> Lists Colis Type Camion
-                                <a href="{{ route('colis.createStandardCamion') }}" class="btn  float-right btn-sm"
-                                    style="background: #563DEA;color: #fff">
+                                <a href="{{ route('colis.createStandardCamion') }}" class="btn  float-right btn-sm" style="background: #563DEA;color: #fff">
                                     <i class="fa fa-plus-circle"></i> AJOUTER UN COLIS STANDARD
                                 </a>
                             </h3>
@@ -231,8 +216,7 @@
                                     <h3 class="card-title">Liste des colis Enregistrés</h3>
 
                                     <div class="card-tools">
-                                        <button type="button" class="btn btn-tool" data-card-widget="collapse"
-                                            title="Collapse">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                                             <i class="fas fa-minus"></i>
                                         </button>
                                     </div>
@@ -262,19 +246,14 @@
                                                     <div style="display: flex; align-items: center">
 
 
-                                                        <a href="{{ route('colis.editStandardCamion',$unit->id) }}"
-                                                            title="edit" class="btn btn-sm btn-primary mr-1">
+                                                        <a href="{{ route('colis.editStandardCamion',$unit->id) }}" title="edit" class="btn btn-sm btn-primary mr-1">
                                                             <i class="fa fa-edit"></i>
                                                         </a>
-                                                       
-                                                        <form method="POST"
-                                                            action="{{ route('colis.deleteStandard', $unit->id) }}">
+
+                                                        <form method="POST" action="{{ route('colis.deleteStandard', $unit->id) }}">
                                                             @csrf
                                                             <input name="_method" type="hidden" value="DELETE">
-                                                            <button type="submit"
-                                                                class="btn btn-sm rounded btn-danger btn-flat show_confirm"
-                                                                data-toggle="tooltip" title='Delete'><i
-                                                                    class="fa fa-trash"></i></button>
+                                                            <button type="submit" class="btn btn-sm rounded btn-danger btn-flat show_confirm" data-toggle="tooltip" title='Delete'><i class="fa fa-trash"></i></button>
                                                         </form>
                                                     </div>
                                                 </td>
@@ -313,40 +292,41 @@
 @section('scripts')
 <!-- Page specific script -->
 <script>
-    $(function () {
-      $("#example1").DataTable({
-        "responsive": true, "lengthChange": false, "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-      }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-      $('#example2').DataTable({
-        "paging": true,
-        "lengthChange": false,
-        "searching": false,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false,
-        "responsive": true,
-      });
+    $(function() {
+        $("#example1").DataTable({
+            "responsive": true,
+            "lengthChange": false,
+            "autoWidth": false,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+        });
     });
 </script>
 <script type="text/javascript">
     $('.show_confirm').click(function(event) {
-         var form =  $(this).closest("form");
-         var name = $(this).data("name");
-         event.preventDefault();
-         swal({
-            title: `Êtes-vous sûr?`,
-             text: "Si vous le supprimez, il disparaîtra pour toujours.",
-             icon: "warning",
-             buttons: true,
-             dangerMode: true,
-         })
-         .then((willDelete) => {
-           if (willDelete) {
-             form.submit();
-           }
-         });
-     });
- 
+        var form = $(this).closest("form");
+        var name = $(this).data("name");
+        event.preventDefault();
+        swal({
+                title: `Êtes-vous sûr?`,
+                text: "Si vous le supprimez, il disparaîtra pour toujours.",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    form.submit();
+                }
+            });
+    });
 </script>
 @endsection

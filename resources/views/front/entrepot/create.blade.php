@@ -7,7 +7,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h3 class="m-0 font-weight-bold">Gestions des Entrepôts</h3>
+                    <h3 class="m-0 font-weight-bold">Gestions des Entrepôts <i class="nav-icon 	fas fa-cubes"></i></h3>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -29,9 +29,8 @@
                     {{-- custom tabs --}}
                     <div class="card">
                         <div class="card-header">
-                            <h3> AJOUTER UN ENTREPOT
-                                <a href="{{ route('entrepots.index') }}" class="btn float-right btn-sm"
-                                    style="background: #563DEA;color: #fff">
+                            <h3> Ajouter Entrepot
+                                <a href="{{ route('entrepots.index') }}" class="btn float-right btn-sm" style="background: #563DEA;color: #fff">
                                     <i class="fa fa-list"></i> LISTES DES ENTREPOTS
                                 </a>
                             </h3>
@@ -39,32 +38,27 @@
                         <div class="card-body">
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <form action="{{ route('entrepots.store') }}" method="POST" id="myForm"
-                                    enctype="multipart/form-data">
+                                <form action="{{ route('entrepots.store') }}" method="POST" id="myForm" enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-row">
                                         <div class="form-group col-md-12">
                                             <label for="name">Nom de l'Entrepot</label>
-                                            <input type="text" id="name" name="name" class="form-control"
-                                                placeholder="entrer un nom" >
+                                            <input type="text" id="name" name="name" class="form-control" placeholder="entrer un nom">
                                         </div>
-                                        
+
                                         <div class="form-group col-md-6">
                                             <label for="addresse"> Addresse</label>
-                                            <input type="text" id="addresse" name="addresse" class="form-control"
-                                                placeholder="entrer une addresse" >
+                                            <input type="text" id="addresse" name="addresse" class="form-control" placeholder="entrer une addresse">
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="ville">Ville </label>
-                                            <input type="text" id="ville" name="ville" class="form-control" placeholder="entrer une ville"
-                                                >
+                                            <input type="text" id="ville" name="ville" class="form-control" placeholder="entrer une ville">
                                         </div>
-                                        
-                                       
+
+
 
                                         <div class="form-group col-md-6">
-                                            <input type="submit" value="Enregistrer les Informations" class="btn"
-                                                style="background: #563DEA;color: #fff">
+                                            <input type="submit" value="Enregistrer les Informations" class="btn" style="background: #563DEA;color: #fff">
                                         </div>
                                     </div>
 
@@ -87,36 +81,36 @@
 <!-- Page specific script -->
 <script type="text/javascript">
     $(document).ready(function() {
-    $('#myForm').validate({
-        rules: {
-            name: {
-                required: true,
-                rangelength: [3, 30]
+        $('#myForm').validate({
+            rules: {
+                name: {
+                    required: true,
+                    rangelength: [3, 30]
+                },
+                addresse: {
+                    required: true,
+                    rangelength: [3, 30]
+                },
+                ville: {
+                    required: true,
+                    rangelength: [3, 30]
+                },
             },
-            addresse: {
-                required: true,
-                rangelength: [3, 30]
-            },
-            ville: {
-                required: true,
-                rangelength: [3, 30]
-            },
-        },
-        messages: {
+            messages: {
 
-        },
-        errorElement: 'span',
-        errorPlacement: function(error, element) {
-            error.addClass('invalid-feedback');
-            element.closest('.form-group').append(error);
-        },
-        highlight: function(element, errorClass, validClass) {
-            $(element).addClass('is-invalid');
-        },
-        unhighlight: function(element, errorClass, validClass) {
-            $(element).removeClass('is-invalid');
-        }
+            },
+            errorElement: 'span',
+            errorPlacement: function(error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function(element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            }
+        })
     })
-})
 </script>
 @endsection

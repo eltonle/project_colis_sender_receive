@@ -84,7 +84,7 @@
                                     <b style="font-size: 13px;">Bordereau №:</b> #{{ $payment['invoice']['invoice_zip']
                                     }}<br>
 
-                                    {{-- <b>Order ID:</b> 4F3S8J<br> --}}
+
                                     <b>Montant Du :</b> <b class="" style="color: red">{{
                                         number_format($payment->due_amount,0,' ',',') }}
                                     </b>Fcfa<br>
@@ -128,7 +128,7 @@
                         $colis_details = App\Models\ColisDimension::where('invoice_id',$payment->invoice_id)->get();
                         @endphp
                         @foreach ($colis_details as $key =>$details )
-                        <tr class="text-center" >
+                        <tr class="text-center">
                             <td class="text-center" style="background:#ddd; padding:1px;">{{ $key+1 }}
                             </td>
                             <td>{{
@@ -146,7 +146,7 @@
                             </td>
                             <td class="text-center"> <span>{{ number_format($total_sum ,0,' ',',') }}</span>Fcfa</td>
                         </tr>
-                       
+
                         <tr>
                             <td colspan="4" style="text-align: right"><span>Montant Paye</span> </td>
                             <td class="text-center"> <span style="background-color: #0be881">{{

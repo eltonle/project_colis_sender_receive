@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h3 class="m-0 font-weight-bold">Gestion Expedition</h3>
+                    <h3 class="m-0 font-weight-bold">Gestion Expedition <i class="far fa-keyboard"></i></h3>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -31,8 +31,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h3>Récépissé № #{{ $invoice->invoice_no }} du {{ date('d-M-Y',strtotime($invoice->date)) }}
-                                <a href="{{ route('invoices.pending.list') }}"
-                                    class="btn btn-success float-right btn-sm">
+                                <a href="{{ route('invoices.pending.list') }}" class="btn btn-success float-right btn-sm">
                                     <i class="fa fa-list"></i> LISTES DES EXPEDITIONS
                                 </a>
                             </h3>
@@ -54,7 +53,7 @@
                                     </h4>
                                 </div>
                                 <!-- /.col -->
-                            </div> 
+                            </div>
                             <!-- info row -->
                             <div class="row invoice-info">
                                 <div class="col-sm-4 invoice-col">
@@ -111,81 +110,80 @@
 
                         <div class="card-body">
                             {{-- <form action="{{ route('invoices.approval.store', $invoice->id) }}" method="post">
-                                @csrf --}}
+                            @csrf --}}
 
-                                <table class="table-bordered table" width='100%' style="margin-bottom: 10px">
-                                    <thead>
-                                        <tr class="text-center">
-                                            <th class="text-center" style="background:#ddd; padding:1px;">#ID</th>
-                                            <th>Code_zip</th>
-                                            <th>Type</th>
-                                            <th>Titre</th>
-                                            <th>Prix</th>
-                                            <!-- <th>Hauteur</th> -->
-                                            <!-- <th>Prix unit</th> -->
-                                            <!-- <th>Qty</th> -->
-                                            <!-- <th>Total prix</th> -->
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php
-                                        $total_sum = '0'; 
-                                        @endphp
-                                        @foreach ($invoice['colis_dimensions'] as $key =>$details )
-                                        <tr class="text-center">
-                                            <input type="hidden" name="qty[{{ $details->id }}]"
-                                                value="{{ $details->qty }}">
-                                            <td class="text-center" style="background:#ddd; padding:1px;">{{ $key+1 }}
-                                            </td>
-                                            <td>№: {{
+                            <table class="table-bordered table" width='100%' style="margin-bottom: 10px">
+                                <thead>
+                                    <tr class="text-center">
+                                        <th class="text-center" style="background:#ddd; padding:1px;">#ID</th>
+                                        <th>Code_zip</th>
+                                        <th>Type</th>
+                                        <th>Titre</th>
+                                        <th>Prix</th>
+                                        <!-- <th>Hauteur</th> -->
+                                        <!-- <th>Prix unit</th> -->
+                                        <!-- <th>Qty</th> -->
+                                        <!-- <th>Total prix</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @php
+                                    $total_sum = '0';
+                                    @endphp
+                                    @foreach ($invoice['colis_dimensions'] as $key =>$details )
+                                    <tr class="text-center">
+                                        <input type="hidden" name="qty[{{ $details->id }}]" value="{{ $details->qty }}">
+                                        <td class="text-center" style="background:#ddd; padding:1px;">{{ $key+1 }}
+                                        </td>
+                                        <td>№: {{
                                                 $details->code_zip }}</td>
-                                            <td>{{
+                                        <td>{{
                                                 $details->type }}</td>
-                                            <td>{{ $details->titre }}</td>
-                                            <!-- <td>{{ $details->longueur }}</td>
+                                        <td>{{ $details->titre }}</td>
+                                        <!-- <td>{{ $details->longueur }}</td>
                                             <td>{{ $details->largeur }}</td>
                                             <td>{{ $details->hauteur}}</td> -->
-                                            <td>{{ number_format($details->prix,0,' ',',')}} Fcfa</td>
-                                            <!-- <td>{{ $details->qty }}</td> -->
-                                            <!-- <td>{{ number_format($details->item_total,0,' ',',')}} Fcfa</td> -->
-                                            @php
-                                            $total_sum += $details->prix
-                                            @endphp
-                                        </tr>
-                                        @endforeach
-                                        <tr>
-                                            <td colspan="4" class="text-right font-weight-bold"><span>Grand total</span> </td>
-                                            <td class="text-center"> <span class="font-weight-bold">{{
+                                        <td>{{ number_format($details->prix,0,' ',',')}} Fcfa</td>
+                                        <!-- <td>{{ $details->qty }}</td> -->
+                                        <!-- <td>{{ number_format($details->item_total,0,' ',',')}} Fcfa</td> -->
+                                        @php
+                                        $total_sum += $details->prix
+                                        @endphp
+                                    </tr>
+                                    @endforeach
+                                    <tr>
+                                        <td colspan="4" class="text-right font-weight-bold"><span>Grand total</span> </td>
+                                        <td class="text-center"> <span class="font-weight-bold">{{
                                                     number_format($total_sum,0,' ',',') }}</span>
-                                                Fcfa</td>
-                                        </tr>
-                                        <!-- <tr>
+                                            Fcfa</td>
+                                    </tr>
+                                    <!-- <tr>
                                             <td colspan="4" class="text-right"><span>Remise</span> </td>
                                             <td class="text-center"> <span class="font-weight-bold">{{
                                                     number_format($payment->discount_amount,0,' ',',') }}</span> Fcfa
                                             </td> 
                                         </tr> -->
-                                        <tr>
-                                            <td colspan="4" class="text-right text-green font-weight-bold"><span>Montant Paye</span> </td>
-                                            <td class="text-center text-green"> <span class="font-weight-bold ">{{
+                                    <tr>
+                                        <td colspan="4" class="text-right text-green font-weight-bold"><span>Montant Paye</span> </td>
+                                        <td class="text-center text-green"> <span class="font-weight-bold ">{{
                                                     number_format($payment->paid_amount,0,' ',',') }}</span> Fcfa</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="4" class="text-right text-danger font-weight-bold"><span>Montant due</span> </td>
-                                            <td class="text-center text-danger font-weight-bold"> <span class="font-weight-bold">{{
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4" class="text-right text-danger font-weight-bold"><span>Montant due</span> </td>
+                                        <td class="text-center text-danger font-weight-bold"> <span class="font-weight-bold">{{
                                                     number_format($payment->due_amount,0,' ',',') }}</span> Fcfa</td>
-                                        </tr>
-                                        <!-- <tr>
+                                    </tr>
+                                    <!-- <tr>
                                             <td colspan="4" class="text-right"><strong>Grand total</strong> </td>
                                             <td class="text-center"> <strong>{{ number_format($payment->total_amount,0,'
                                                     ',',')}}</strong> Fcfa
                                             </td>
                                         </tr> -->
-                                    </tbody>
-                                </table>
+                                </tbody>
+                            </table>
 
-                                {{-- <button type="submit" class="btn btn-success">Valider les Données</button> --}}
-                                {{--
+                            {{-- <button type="submit" class="btn btn-success">Valider les Données</button> --}}
+                            {{--
                             </form> --}}
                         </div>
                     </div>
@@ -201,40 +199,41 @@
 @section('scripts')
 <!-- Page specific script -->
 <script>
-    $(function () {
-      $("#example1").DataTable({
-        "responsive": true, "lengthChange": false, "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-      }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-      $('#example2').DataTable({
-        "paging": true,
-        "lengthChange": false,
-        "searching": false,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false,
-        "responsive": true,
-      });
+    $(function() {
+        $("#example1").DataTable({
+            "responsive": true,
+            "lengthChange": false,
+            "autoWidth": false,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+        });
     });
 </script>
 <script type="text/javascript">
     $('.show_confirm').click(function(event) {
-         var form =  $(this).closest("form");
-         var name = $(this).data("name");
-         event.preventDefault();
-         swal({
-             title: `Are you sure?`,
-             text: "If you delete this, it will be gone forever.",
-             icon: "warning",
-             buttons: true,
-             dangerMode: true,
-         })
-         .then((willDelete) => {
-           if (willDelete) {
-             form.submit();
-           }
-         });
-     });
- 
+        var form = $(this).closest("form");
+        var name = $(this).data("name");
+        event.preventDefault();
+        swal({
+                title: `Are you sure?`,
+                text: "If you delete this, it will be gone forever.",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    form.submit();
+                }
+            });
+    });
 </script>
 @endsection

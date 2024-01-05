@@ -6,7 +6,6 @@
         color: red;
         font-size: 22px;
     }
-  
 </style>
 @endsection
 
@@ -18,7 +17,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h3 class="m-0 font-weight-bold">Gestions des Conteneurs</h3>
+                    <h3 class="m-0 font-weight-bold">Gestions des Conteneurs <i class="fas fa-sync"></i></h3>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -48,26 +47,26 @@
                         </div><!-- /.card-heade-->
                         <div id="messageErreur" style="display: none; text-align: center;color: red;font-weight: bold;"></div>
                         <div class="card-body">
-                             <!-- partir pour telecharge le fichier text -->
+                            <!-- partir pour telecharge le fichier text -->
 
-                             <div class="row">
-                             <form  method="POST" action="{{ route('upload.file') }}" enctype="multipart/form-data">
+                            <div class="row">
+                                <form method="POST" action="{{ route('upload.file') }}" enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-group row">
-                                    <div class="col-md-6 ">
-                                        <label for="fichier" class="text-center ">{{ __('telecharger le fichier') }}</label>
-            
-                                        <input type="file" name="fichier" id="fichier" class="form-control" readonly>
-                                    </div>
+                                        <div class="col-md-6 ">
+                                            <label for="fichier" class="text-center ">{{ __('telecharger le fichier') }}</label>
+
+                                            <input type="file" name="fichier" id="fichier" class="form-control" readonly>
+                                        </div>
                                         <div class="col-md-6 " style="margin-top: 32px;">
                                             <button type="submit" class="btn btn-primary">
                                                 {{ __(' telecharger') }}
                                             </button>
                                         </div>
                                     </div>
-            
+
                                 </form>
-                             </div>
+                            </div>
                             <!-- /.card-header -->
                             <div class="card-body">
                                 {{-- <div class="container"> --}}
@@ -85,11 +84,11 @@
                                         <!-- <div class="form-group col-md-6">
                                             <input type="text" class="form-control" id="conteneur-barcode" name="conteneur-barcode" placeholder="Saisir le code du conteneur">
                                         </div> -->
-                                   
 
-                                   
+
+
                                         <div class="form-group col-md-6">
-                                            <select class="form-control" id="conteneur" name="conteneur_id" >
+                                            <select class="form-control" id="conteneur" name="conteneur_id">
                                                 <option value="">Sélectionner un conteneur</option>
                                                 @foreach ($units as $unit)
                                                 <option value="{{ $unit->id }}">{{ $unit->name }} ( {{
@@ -98,7 +97,7 @@
                                             </select>
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <select class="form-control" id="entrepot_id" name="entrepot_id" >
+                                            <select class="form-control" id="entrepot_id" name="entrepot_id">
                                                 <option value="">Sélectionner un entrepot</option>
                                                 @foreach ($entrepots as $entrepot)
                                                 <option value="{{ $entrepot->id }}">{{ $entrepot->name }} ( {{
@@ -107,7 +106,7 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                
+
                                         <div id="messageContainer" style="display: none;">
                                             <div style="display: flex; justify-content: space-between;align-items: center;">
                                                 <p id="codeNonTrouveMessage" style="color: #563DEA;font-weight: bold;"></p>
@@ -116,15 +115,15 @@
                                             </div>
 
                                         </div>
-                                        <div  style="text-align: center;">
-                                           
+                                        <div style="text-align: center;">
+
                                             <span id="error-message_champ" style="color: red;"></span>
-                                           
+
                                         </div>
                                         <div class="form-group col-md-12 mt-4">
                                             <label for="multiple-packages">SCAN Multiples des Codes-barres des colis
                                                 (séparés par une
-                                                        virgule les differents codes )</label>
+                                                virgule les differents codes )</label>
                                             <!-- <input type="text" class="form-control" id="multiple-codes" name="multiple-codes" style="height: 110px" placeholder="Exemple: 45364637537,5765378353,3434323433...."> -->
                                             <!-- <textarea name="multiple-codes" id="multiple-codes" class="form-control" id="" cols="10" rows="4"></textarea> -->
                                             <input type="text" id="fileContents" name="codes_scannes" class="form-control">
@@ -137,9 +136,9 @@
                                         </div>
 
                                         <div class="d-flex justify-center items-center mx-auto">
-                                                <button type="submit" class="btn btn-secondary" style="width: 400px">
-                                                    Effectuer l'Action</button>
-                                            </div>
+                                            <button type="submit" class="btn btn-secondary" style="width: 400px">
+                                                Effectuer l'Action</button>
+                                        </div>
                                     </div>
                                 </form>
                                 {{--
@@ -208,16 +207,16 @@
                 // Les deux champs sont remplis, afficher le message d'erreur
                 $('#error-message_champ').text('🛑 Veuillez remplir un champ 🛑.');
                 return false;
-            } 
- 
-            // Vérifier s'il y a des espaces ou des virgules
-        if (input2Value.includes(' ') || input2Value.includes(',')) {
-            // Afficher le message d'erreur
-            $('#error-message').text('Veuillez saisir un seul code : espace et virgule non conseillé 📛.');
-            $('#error-message').css('color', 'red');
-            return false;
+            }
 
-        } 
+            // Vérifier s'il y a des espaces ou des virgules
+            if (input2Value.includes(' ') || input2Value.includes(',')) {
+                // Afficher le message d'erreur
+                $('#error-message').text('Veuillez saisir un seul code : espace et virgule non conseillé 📛.');
+                $('#error-message').css('color', 'red');
+                return false;
+
+            }
 
 
 
@@ -244,28 +243,28 @@
                         $('#messageContainer').show(); // Affiche la div
                         // alert(codeNonTrouveMessage);
                     }
-                    
+
                     // Réinitialise les champs du formulaire
                     $('#conteneur').val('');
                     $('#vehicule_id').val('');
                     $('#fileContents').val('');
                     $('#single-code').val('');
                 },
-                error: function(xhr,error) {
+                error: function(xhr, error) {
                     var errorMessage = JSON.parse(xhr.responseText).error;
                     // alert('Erreur lors du chargement de la vue : ' + errorMessage);
                     // alert('Une erreur est survenue lors de la mise à jour du statut.');
                     $('#messageErreur').text(errorMessage).show();
 
                     // Cachez le message d'erreur après 3 secondes
-                    setTimeout(function () {
+                    setTimeout(function() {
                         $('#messageErreur').hide();
                     }, 3000);
                 }
 
             });
 
-           
+
             // Envoie une requête AJAX pour mettre à jour le statut
             // $.ajax({
             //     url: "{{ route('units.dechargementSubmit') }}",
@@ -290,7 +289,7 @@
             //             $('#messageContainer').show(); // Affiche la div
             //             // alert(codeNonTrouveMessage);
             //         }
-                    
+
             //         // Réinitialise les champs du formulaire
             //         $('#conteneur').val('');
             //         $('#vehicule_id').val('');

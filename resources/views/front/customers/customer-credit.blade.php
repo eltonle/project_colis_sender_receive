@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h3 class="m-0 font-weight-bold">Gestions des Finances</h3>
+                    <h3 class="m-0 font-weight-bold">Gestions des Finances <i class="nav-icon 	fas fa-money-bill-wave"></i></h3>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -31,10 +31,11 @@
                     <div class="card">
                         <div class="card-header">
                             <h3> Listes de Credit des Clients
-                                <a href="{{ route('customers.credit.pdf') }}" target="_blank"
-                                    class="btn btn-success float-right btn-sm">
+                                @if(count($allData) > 0)
+                                <a href="{{ route('customers.credit.pdf') }}" target="_blank" class="btn btn-success float-right btn-sm">
                                     <i class="fa fa-download"></i> TELECHARGER LA LISTE PDF
                                 </a>
+                                @endif
                             </h3>
                         </div><!-- /.card-header -->
                         <div class="card-body">
@@ -67,26 +68,21 @@
                                             </td>
                                             <td>
                                                 {{-- <a href="{{ route('invoices.details.pdf',$payment->invoice_id) }}"
-                                                    target="_blank" title="details" class="btn btn-sm btn-success mr-1">
-                                                    <i class="fa fa-eye"></i>
+                                                target="_blank" title="details" class="btn btn-sm btn-success mr-1">
+                                                <i class="fa fa-eye"></i>
                                                 </a> --}}
                                                 {{-- <a
                                                     href="{{ route('customers.edit.invoice',$payment->invoice_id) }}"
-                                                    target="_blank" title="modifier paiement et status du colis"
-                                                    class="btn btn-sm btn-primary mr-1">
-                                                    <i class="fa fa-edit"></i>
+                                                target="_blank" title="modifier paiement et status du colis"
+                                                class="btn btn-sm btn-primary mr-1">
+                                                <i class="fa fa-edit"></i>
                                                 </a> --}}
                                                 <div class="btn-group">
-                                                    <button type="button" style="background: #43BD00"
-                                                        class="btn  btn-flat btn-sm dropdown-toggle dropdown-icon"
-                                                        data-toggle="dropdown">
-                                                        <span class=""
-                                                            style="background: #43BD00; color: white; padding: 2px">Actions</span>
+                                                    <button type="button" style="background: #43BD00" class="btn  btn-flat btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown">
+                                                        <span class="" style="background: #43BD00; color: white; padding: 2px">Actions</span>
                                                     </button>
                                                     <div class="dropdown-menu" role="menu">
-                                                        <a href="{{ route('invoices.details.pdf',$payment->invoice_id) }}"
-                                                            target="_blank" title="details" class="dropdown-item"><span
-                                                                class="text-xs text-dark font-weight-bold">
+                                                        <a href="{{ route('invoices.details.pdf',$payment->invoice_id) }}" target="_blank" title="details" class="dropdown-item"><span class="text-xs text-dark font-weight-bold">
                                                                 <i class="fa fa-eye"></i> Voir les details
                                                                 credits</span>
                                                         </a>
@@ -135,40 +131,41 @@
 @section('scripts')
 <!-- Page specific script -->
 <script>
-    $(function () {
-      $("#example1").DataTable({
-        "responsive": true, "lengthChange": false, "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-      }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-      $('#example2').DataTable({
-        "paging": true,
-        "lengthChange": false,
-        "searching": false,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false,
-        "responsive": true,
-      });
+    $(function() {
+        $("#example1").DataTable({
+            "responsive": true,
+            "lengthChange": false,
+            "autoWidth": false,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+        });
     });
 </script>
 <script type="text/javascript">
     $('.show_confirm').click(function(event) {
-         var form =  $(this).closest("form");
-         var name = $(this).data("name");
-         event.preventDefault();
-         swal({
-             title: `Are you sure?`,
-             text: "If you delete this, it will be gone forever.",
-             icon: "warning",
-             buttons: true,
-             dangerMode: true,
-         })
-         .then((willDelete) => {
-           if (willDelete) {
-             form.submit();
-           }
-         });
-     });
- 
+        var form = $(this).closest("form");
+        var name = $(this).data("name");
+        event.preventDefault();
+        swal({
+                title: `Are you sure?`,
+                text: "If you delete this, it will be gone forever.",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    form.submit();
+                }
+            });
+    });
 </script>
 @endsection

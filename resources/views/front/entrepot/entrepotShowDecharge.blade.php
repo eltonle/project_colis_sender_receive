@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h3 class="m-0 font-weight-bold"> Gestions des Entrepôts</h3>
+                    <h3 class="m-0 font-weight-bold"> Gestions des Entrepôts <i class="nav-icon	fas fa-cubes"></i></h3>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -36,10 +36,11 @@
                         </div><!-- /.card-header -->
                         <div class="card-header ">
                             <h4><strong>Listes des Colis decharge dans l'Entrepôt</strong>
-
+                                @if( count($colis) > 0)
                                 <a href="{{ route('entrepotListesDecharges.pdf', $entrepot) }}" target="_blank" class="btn btn-success float-right btn-sm ml-2">
                                     <i class="fa fa-download"></i> Telecharger liste des colis decharges Pdf
                                 </a>
+                                @endif
                                 <a href="{{ route('entrepots.index') }}" class="btn  float-right btn-sm" style="background: #563DEA;color: #fff">
                                     <i class="fa fa-list"></i> Listes des Entrepôts
                                 </a>
@@ -88,8 +89,8 @@
                                                         </a> -->
                                                 <form action="{{route('entrepot.livraison',$item->id)}}" method="POST">
                                                     @csrf
-                                                    <button type="submit" class="btn btn-xs btn-success"><span class="text-xs font-weight-bold"><i class="fas fa-check"></i>
-                                                            Livré</span></button>
+                                                    <button type="submit" class="btn btn-sm btn-success"><span class="text-xs "><i class="fas fa-check fa-xs"></i>
+                                                            Valider la livraison</span></button>
                                                 </form>
 
                                             </td>

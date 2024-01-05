@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h3 class="m-0 font-weight-bold"> Gestions des Clients</h3>
+                    <h3 class="m-0 font-weight-bold"> Gestions des Clients <i class="fas fa-users"></i></h3>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -31,8 +31,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h3> Listes des Clients
-                                <a href="{{ route('customers.create') }}" class="btn float-right btn-sm"
-                                    style="background: #563DEA;color: #fff">
+                                <a href="{{ route('customers.create') }}" class="btn float-right btn-sm" style="background: #563DEA;color: #fff">
                                     <i class="fa fa-plus-circle"></i> AJOUTER CLIENT
                                 </a>
                             </h3>
@@ -63,22 +62,17 @@
                                                 <div style="display: flex; align-items: center">
 
 
-                                                    <a href="{{ route('customers.edit',$customer->id) }}" title="edit"
-                                                        class="btn btn-sm btn-primary mr-1">
+                                                    <a href="{{ route('customers.edit',$customer->id) }}" title="edit" class="btn btn-sm btn-primary mr-1">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
-                                                  @php
+                                                    @php
                                                     $customerExist = App\Models\Payement::where('customer_id', $customer->id)->exists();
-                                                  @endphp
-                                                  @if(!$customerExist)                                                  
-                                                    <form method="POST"
-                                                        action="{{ route('customers.delete', $customer->id) }}">
+                                                    @endphp
+                                                    @if(!$customerExist)
+                                                    <form method="POST" action="{{ route('customers.delete', $customer->id) }}">
                                                         @csrf
                                                         <input name="_method" type="hidden" value="DELETE">
-                                                        <button type="submit"
-                                                            class="btn btn-sm rounded btn-danger btn-flat show_confirm"
-                                                            data-toggle="tooltip" title='Delete'><i
-                                                                class="fa fa-trash"></i></button>
+                                                        <button type="submit" class="btn btn-sm rounded btn-danger btn-flat show_confirm" data-toggle="tooltip" title='Delete'><i class="fa fa-trash"></i></button>
                                                     </form>
                                                     @endif
                                                 </div>
@@ -115,40 +109,41 @@
 @section('scripts')
 <!-- Page specific script -->
 <script>
-    $(function () {
-      $("#example1").DataTable({
-        "responsive": true, "lengthChange": false, "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-      }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-      $('#example2').DataTable({
-        "paging": true,
-        "lengthChange": false,
-        "searching": false,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false,
-        "responsive": true,
-      });
+    $(function() {
+        $("#example1").DataTable({
+            "responsive": true,
+            "lengthChange": false,
+            "autoWidth": false,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+        });
     });
 </script>
 <script type="text/javascript">
     $('.show_confirm').click(function(event) {
-         var form =  $(this).closest("form");
-         var name = $(this).data("name");
-         event.preventDefault();
-         swal({
-            title: `Êtes-vous sûr?`,
-             text: "Si vous le supprimez, il disparaîtra pour toujours.",
-             icon: "warning",
-             buttons: true,
-             dangerMode: true,
-         }) 
-         .then((willDelete) => {
-           if (willDelete) {
-             form.submit();
-           }
-         });
-     });
- 
+        var form = $(this).closest("form");
+        var name = $(this).data("name");
+        event.preventDefault();
+        swal({
+                title: `Êtes-vous sûr?`,
+                text: "Si vous le supprimez, il disparaîtra pour toujours.",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    form.submit();
+                }
+            });
+    });
 </script>
 @endsection

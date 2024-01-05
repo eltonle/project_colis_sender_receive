@@ -67,7 +67,17 @@
                             ( {{ $payment['customer']['phone'] }})
                         </td>
                         <td>{{ date('d-m-Y',strtotime($payment['invoice']['date'])) }}</td>
-                        <td>{{ $payment->paid_status}}</td>
+                        <!-- <td>{{ $payment->paid_status}}</td>  -->
+                        <td style="text-align: center;">
+                            @if($payment->paid_status == 'full_paid')
+                            <span style="background-color: green; color: white;"> Payer</span>
+                            @elseif($payment->paid_status == 'full_paid')
+                            <span style="background-color: red; color: white;"> Partiellement</span>
+                            @else
+                            <span style="background-color: red; color: white;"> Non payer</span>
+                            Partiellement
+                            @endif
+                        </td>
                         <td>{{ number_format($payment->paid_amount,0,' ',',')}} Fcfa</td>
                         @php
                         $total_paid += $payment ->paid_amount;

@@ -24,7 +24,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h3 class="m-0 font-weight-bold">Rapport Clients </h3>
+                    <h3 class="m-0 font-weight-bold">Rapport Clients <i class="fas fa-tags"></i></h3>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -52,23 +52,17 @@
                             <div class="row">
                                 <div class="col-sm-12 text-center">
                                     <label for="cc"><strong> Rapport Client Credit</strong></label>
-                                    <input type="checkbox" name="customer_wise_credit" id="cc"
-                                        value="customer_wise_credit"
-                                        class="search_value">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" name="customer_wise_credit" id="cc" value="customer_wise_credit" class="search_value">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <label for="cp"><strong> Rapport Client Paiement </strong></label>
-                                    <input type="checkbox" name="customer_wise_paid" id="cp" value="customer_wise_paid"
-                                        class="search_value">
+                                    <input type="checkbox" name="customer_wise_paid" id="cp" value="customer_wise_paid" class="search_value">
                                 </div>
                             </div>
                             <div class="show_credit" style="display: none">
-                                <form action="{{ route('customers.wise.credit.report') }}" method="get" target="_blank"
-                                    id="customerCreditForm">
+                                <form action="{{ route('customers.wise.credit.report') }}" method="get" target="_blank" id="customerCreditForm">
                                     <div class="form-row">
                                         <div class="col-sm-8">
                                             <label>Nom de L'Expedition Credit</label>
-                                            <select name="customer_id"
-                                                class="form-control select2 select2-danger form-control-sm"
-                                                data-dropdown-css-class="select2-cyan" id="">
+                                            <select name="customer_id" class="form-control select2 select2-danger form-control-sm" data-dropdown-css-class="select2-cyan" id="">
                                                 <option value="">Selectionner un Expediteur</option>
                                                 @foreach ($customers as $customer)
                                                 <option value="{{ $customer->id }}">{{ $customer->nom }}-({{
@@ -86,14 +80,11 @@
                             </div>
 
                             <div class="show_paid" style="display: none">
-                                <form action="{{ route('customers.wise.paid.report') }}" method="get" target="_blank"
-                                    id="customerPaidForm">
+                                <form action="{{ route('customers.wise.paid.report') }}" method="get" target="_blank" id="customerPaidForm">
                                     <div class="form-row">
                                         <div class="col-sm-8">
                                             <label>Nom de d'Expediteur Paiement</label>
-                                            <select name="customer_id"
-                                                class="form-control select2 select2-danger form-control-sm"
-                                                data-dropdown-css-class="select2-cyan" id="status_livraison">
+                                            <select name="customer_id" class="form-control select2 select2-danger form-control-sm" data-dropdown-css-class="select2-cyan" id="status_livraison">
                                                 <option value="">Selectionner un Expediteur</option>
                                                 @foreach ($customers as $customer)
                                                 <option value="{{ $customer->id }}">{{ $customer->nom }}-({{
@@ -123,109 +114,114 @@
 
 @section('scripts')
 <script>
-    $(function () {
-      //Initialize Select2 Elements
-      $('.select2').select2()
+    $(function() {
+        //Initialize Select2 Elements
+        $('.select2').select2()
     })
     //Initialize Select2 Elements
-   
 </script>
 <script type="text/javascript">
-    $(document).ready(function () {
-     $('#customerCreditForm').validate({
-        ignore:[],
-        errorPlacement: function(error, element){
-            if(element.attr("name") == "customer_id"){error.insertAfter(element.next());}
-            else{error.insertAfter(element);}
-        },
-        errorClass:'text-danger',
-        validClass:'text-success',
-        rules: {
-            customer_id: {
-                required: true,
-            }
-        },
-        message: {
+    $(document).ready(function() {
+        $('#customerCreditForm').validate({
+            ignore: [],
+            errorPlacement: function(error, element) {
+                if (element.attr("name") == "customer_id") {
+                    error.insertAfter(element.next());
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+            errorClass: 'text-danger',
+            validClass: 'text-success',
+            rules: {
+                customer_id: {
+                    required: true,
+                }
+            },
+            message: {
 
-        },
-     })
-  })
+            },
+        })
+    })
 </script>
 <script type="text/javascript">
-    $(document).ready(function () {
-     $('#customerPaidForm').validate({
-        ignore:[],
-        errorPlacement: function(error, element){
-            if(element.attr("name") == "customer_id"){error.insertAfter(element.next());}
-            else{error.insertAfter(element);}
-        },
-        errorClass:'text-danger',
-        validClass:'text-success',
-        rules: {
-            customer_id: {
-                required: true,
-            }
-        },
-        message: {
+    $(document).ready(function() {
+        $('#customerPaidForm').validate({
+            ignore: [],
+            errorPlacement: function(error, element) {
+                if (element.attr("name") == "customer_id") {
+                    error.insertAfter(element.next());
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+            errorClass: 'text-danger',
+            validClass: 'text-success',
+            rules: {
+                customer_id: {
+                    required: true,
+                }
+            },
+            message: {
 
-        },
-     })
-  })
+            },
+        })
+    })
 </script>
 <!-- Page specific script -->
 <script type="text/javascript">
-    $(document).ready(function(){
-    $('#myForm').validate({
-        rules:{
-            nom: {
-                required:true,
-                rangelength :[3,30]
+    $(document).ready(function() {
+        $('#myForm').validate({
+            rules: {
+                nom: {
+                    required: true,
+                    rangelength: [3, 30]
+                },
+                prenom: {
+                    required: true,
+                    rangelength: [3, 30]
+                },
+                email: {
+                    required: true,
+                    email: true,
+                },
+                address: {
+                    required: true,
+                },
+                phone: {
+                    required: true,
+                },
             },
-            prenom: {
-                required:true,
-                rangelength :[3,30]
-            },
-            email: {
-                required:true,
-                email:true,
-            },
-            address: {
-                required:true,
-            },
-            phone: {
-                required:true,
-            },
-        },
             messages: {
 
             },
             errorElement: 'span',
-            errorPlacement:function(error,element){
+            errorPlacement: function(error, element) {
                 error.addClass('invalid-feedback');
                 element.closest('.form-group').append(error);
             },
-            highlight:function(element,errorClass,validClass){
+            highlight: function(element, errorClass, validClass) {
                 $(element).addClass('is-invalid');
             },
-            unhighlight: function(element,errorClass,validClass){
+            unhighlight: function(element, errorClass, validClass) {
                 $(element).removeClass('is-invalid');
             }
+        })
     })
- })
 </script>
 
 <script>
-    $(document).on('change','.search_value',function() {
+    $(document).on('change', '.search_value', function() {
         var search_value = $(this).val();
         if (search_value == 'customer_wise_credit') {
             $('.show_credit').show();
-        }else{
+        } else {
             $('.show_credit').hide();
         }
 
         if (search_value == 'customer_wise_paid') {
             $('.show_paid').show();
-        }else{
+        } else {
             $('.show_paid').hide();
         }
     })
